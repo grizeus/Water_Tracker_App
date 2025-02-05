@@ -35,11 +35,11 @@ export const theme = {
   // },
 
   // // Breakpoints
-  breakpoint: {
-    mobile: '320px',
-    tablet: '768px',
-    desktop: '1440px',
-  },
+  // breakpoint: {
+  //   mobile: '320px',
+  //   tablet: '768px',
+  //   desktop: '1440px',
+  // },
 
   // // Animation (transition) on hover & focus
   // transition: {
@@ -57,7 +57,7 @@ export const theme = {
   //   modal: '0 4px 14px rgba(64, 123, 255, 0.3)',
   // },
 
-  
+  lightTheme: {
     // Colors
     color: {
       white: '#FFFFFF',
@@ -89,6 +89,7 @@ export const theme = {
       mobile: '320px',
       tablet: '768px',
       desktop: '1440px',
+    },
   },
 };
 
