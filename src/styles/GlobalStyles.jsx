@@ -1,8 +1,11 @@
 import { css, useTheme } from '@emotion/react';
 import emotionNormalize from 'emotion-normalize';
+
 import RobotoRegular from '../assets/fonts/Roboto-Regular.ttf';
 import RobotoMedium from '../assets/fonts/Roboto-Medium.ttf';
 import RobotoBold from '../assets/fonts/Roboto-Bold.ttf';
+
+
 export const GlobalStyles = () => {
   const theme = useTheme();
   return css`
@@ -185,6 +188,7 @@ export const GlobalStyles = () => {
       font-weight: 700;
       src: url(${RobotoBold}) format('truetype');
     }
+
 
     @font-face {
       font-family: 'font-stars-password';
