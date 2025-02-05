@@ -41,14 +41,13 @@ export const ModalContent = styled.div`
   left: 50%;
   min-width: 280px;
   max-height: 90vh;
-  background: #fff; // Use a static white color
+  background: ${({ theme }) => theme.color.white};
   border-radius: 10px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
   overflow: auto;
   z-index: 1;
 
-  @media screen and (min-width: 768px) {
-    // Use static breakpoint
+  @media screen and (min-width: ${({ theme }) => theme.breakpoint.tablet}) {
     min-width: 592px;
   }
 
@@ -84,7 +83,7 @@ export const ModalHeader = styled.div`
   justify-content: space-between;
   padding: ${({ stylesPadding }) =>
     stylesPadding ? stylesPadding : '24px 12px'};
-  color: #000; // Use a static black color
+  color: ${({ theme }) => theme.color.black};
 
   h2 {
     font-weight: 500;
@@ -92,8 +91,7 @@ export const ModalHeader = styled.div`
     line-height: 1.2;
   }
 
-  @media screen and (min-width: 768px) {
-    // Use static breakpoint
+  @media screen and (min-width: ${({ theme }) => theme.breakpoint.tablet}) {
     padding-left: 24px;
     padding-right: 24px;
     padding-top: 32px;
@@ -110,10 +108,10 @@ export const CloseButton = styled.button`
 export const CloseIcon = styled.svg`
   width: 100%;
   height: 100%;
-  stroke: #ff4081; // Use a static accent color
+  stroke: ${({ theme }) => theme.color.accent};
 
   &:hover,
   &:focus {
-    stroke: #ffeb3b; // Use a static secondary color
+    stroke: ${({ theme }) => theme.color.secondaryYellow};
   }
 `;
