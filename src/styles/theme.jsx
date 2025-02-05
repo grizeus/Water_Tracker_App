@@ -35,11 +35,11 @@ export const theme = {
   // },
 
   // // Breakpoints
-  // breakpoint: {
-  //   mobile: '320px',
-  //   tablet: '768px',
-  //   desktop: '1440px',
-  // },
+  breakpoint: {
+    mobile: '320px',
+    tablet: '768px',
+    desktop: '1440px',
+  },
 
   // // Animation (transition) on hover & focus
   // transition: {
