@@ -1,5 +1,5 @@
 // Common
-export * from './common/BaseModalWindow/BaseModalWindow';
+export * from '../components/common/BaseModalWindow/BaseModalWindow.jsx';
 export * from './common/Button/Button';
 export * from './common/Container/Container';
 export * from './common/Loader/Loader';
