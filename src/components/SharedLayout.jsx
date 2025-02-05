@@ -3,7 +3,7 @@ import { Suspense } from 'react';
 import { Outlet } from 'react-router-dom';
 import { ToastContainer, Zoom } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-import { Wrapper } from './Footer/Footer.styled';
+import { Wrapper } from './Wrapper/Wrapper.jsx';
 
 const SharedLayout = () => {
   return (
