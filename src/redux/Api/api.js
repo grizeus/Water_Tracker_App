@@ -1,7 +1,7 @@
 import axios from 'axios';
 import { formatDate } from '../../helpers/utils/dateUtils';
 
-axios.defaults.baseURL = 'https://watertracker-backend.onrender.com/api';
+axios.defaults.baseURL = 'https://watertrackerbackend-5ymk.onrender.com';
 
 const setToken = token => {
   axios.defaults.headers.common.Authorization = `Bearer ${token}`;
