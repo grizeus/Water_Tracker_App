@@ -230,8 +230,6 @@ export const GlobalStyles = () => {
     body {
       font-family: 'Roboto', sans-serif;
       font-weight: 400;
-      color: ${theme.color.black};
-      background-color: ${theme.color.white};
       transition: all 0.5s linear;
     }
     /* ========================= /Common styles ========================= */
