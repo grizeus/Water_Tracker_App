@@ -189,6 +189,20 @@ export const GlobalStyles = () => {
       src: url(${RobotoBold}) format('truetype');
     }
 
+
+    @font-face {
+      font-family: 'font-stars-password';
+      src: url(${fontStarEot}?59471026);
+      src:
+        url(${fontStarEot}?59471026#iefix) format('embedded-opentype'),
+        url(${fontStarWoff2}?59471026) format('woff2'),
+        url(${fontStarWoff}?59471026) format('woff'),
+        url(${fontStarTtf}?59471026) format('truetype'),
+        url(${fontStarSvg}?59471026#fontello) format('svg');
+      font-weight: normal;
+      font-style: normal;
+    }
+
     input[type='password'] {
       font-family: 'font-stars-password';
       font-style: normal;
