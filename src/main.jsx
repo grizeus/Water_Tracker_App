@@ -5,9 +5,9 @@ import { Provider } from 'react-redux';
 import { PersistGate } from 'redux-persist/integration/react';
 import { persistor, store } from './redux/store';
 
-import { GlobalStyles } from './styles';
+import { GlobalStyles } from './styles/GlobalStyles';
 
-import { Loader } from 'components';
+import { Loader } from './components/common/Loader/Loader';
 import { BrowserRouter } from 'react-router-dom';
 import App from './components/App';
 import { Theme } from './components/Theme/Theme';
