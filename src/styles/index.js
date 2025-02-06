@@ -1,37 +1,36 @@
 // Common
 export * from '../components/common/BaseModalWindow/BaseModalWindow.jsx';
-export * from './common/Button/Button';
-export * from './common/Container/Container';
-export * from './common/Loader/Loader';
-export * from './common/Logo/Logo';
-export * from './common/Section/Section';
+export * from '../components/common/Button/Button.jsx';
+export * from '../components/common/Container/Container';
+export * from '../components/common/Loader/Loader';
+export * from '../components/common/Logo/Logo';
+export * from '../components/common/Section/Section';
 // Basic
-export * from './ForgotPasswordForm/ForgotPasswordForm';
-export * from './ForgotPasswordForm/ResetPasswordForm';
-export * from './Header/Header';
+export * from '../components/ForgotPasswordForm/ResetPasswordForm';
+export * from '../components/Header/Header';
 // Home
-export * from './Home/DailyNorma/DailyNorma';
-export * from './Home/DailyNormaModal/DailyNormaModal';
-export * from './Home/DaysGeneralStats/DaysGeneralStats';
-export * from './Home/DeletingEntryModal/DeletingEntryModal';
-export * from './Home/MonthStatsTable/MonthStatsTable';
-export * from './Home/TodayListModal/TodayListModal';
-export * from './Home/TodayWaterList/TodayWaterList';
-export * from './Home/WaterRatioPanel/WaterRatioPanel';
+export * from '../components/Home/DailyNorma/DailyNorma';
+export * from '../components/Home/DailyNormaModal/DailyNormaModal';
+export * from '../components/Home/DaysGeneralStats/DaysGeneralStats';
+export * from '../components/Home/DeletingEntryModal/DeletingEntryModal';
+export * from '../components/Home/MonthStatsTable/MonthStatsTable';
+export * from '../components/Home/TodayListModal/TodayListModal';
+export * from '../components/Home/TodayWaterList/TodayWaterList';
+export * from '../components/Home/WaterRatioPanel/WaterRatioPanel';
 // SignIn
-export * from './SignIn/SettingModal/SettingModal';
-export * from './SignIn/SignInForm/SignInForm';
-export * from './SignIn/UserAuth/UserAuth';
-export * from './SignIn/UserLogo/UserLogo';
-export * from './SignIn/UserLogoModal/UserLogoModal';
-export * from './SignIn/UserLogoutModal/UserLogoutModal';
+export * from '../components/SignIn/SettingModal/SettingModal';
+export * from '../components/SignIn/SignInForm/SignInForm';
+export * from '../components/SignIn/UserAuth/UserAuth';
+export * from '../components/SignIn/UserLogo/UserLogo';
+export * from '../components/SignIn/UserLogoModal/UserLogoModal';
+export * from '../components/SignIn/UserLogoutModal/UserLogoutModal';
 // SignUp
-export * from './SignUp/SignUpForm/SignUpForm';
+export * from '../components/SignUp/SignUpForm/SignUpForm';
 // Welcome
-export * from './Welcome/Main/MainContent';
-export * from './Welcome/WaterConsumptionTracker/WaterConsumptionTracker';
-export * from './Welcome/WhyDrinkWater/WhyDrinkWater';
+export * from '../components/Welcome/Main/MainContent';
+export * from '../components/Welcome/WaterConsumptionTracker/WaterConsumptionTracker';
+export * from '../components/Welcome/WhyDrinkWater/WhyDrinkWater';
 // Error
-export * from './NotFound/NotFound';
+export * from '../components/NotFound/NotFound';
 // ThemeProvider
-export * from './Theme/Theme';
+export * from '../components/Theme/Theme';
