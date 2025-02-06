@@ -33,4 +33,4 @@ export * from '../components/Welcome/WhyDrinkWater/WhyDrinkWater';
 // Error
 export * from '../components/NotFound/NotFound';
 // ThemeProvider
-export * from '../components/Theme/Theme';
+export * from '../components/Theme/Theme.jsx';
