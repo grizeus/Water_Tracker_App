@@ -59,7 +59,7 @@ export const DailyNormaModal = () => {
           </Formula>
           <Description>
             <p>
-              {/* стилізувати елемент * через псевдоелемент after */}* V is the
+              V is the
               volume of the water norm in liters per day, M is your body weight,
               T is the time of active sports, or another type of activity
               commensurate in terms of loads (in the absence of these, you must
