@@ -10,7 +10,7 @@ import { GlobalStyles } from './styles';
 import { Loader } from 'components';
 import { BrowserRouter } from 'react-router-dom';
 import App from './components/App';
-import { Theme } from './components';
+import { Theme } from './components/Theme/Theme';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
