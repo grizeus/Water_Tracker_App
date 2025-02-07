@@ -1,3 +1,5 @@
+import styles from './WhyDrinkWater.module.css'
+
 export const WhyDrinkWater = () => {
   const advantagesList = [
     'Supply of nutrients to all organs',
@@ -10,11 +12,11 @@ export const WhyDrinkWater = () => {
   ];
 
   return (
-    <div>
-      <h2>Why drink water</h2>
-      <ul>
+    <div className={styles.wrapper}>
+      <h2 className={styles.title}>Why drink water</h2>
+      <ul className={styles.list}>
         {advantagesList.map((item, index) => (
-          <li key={index}>{item}</li>
+          <li key={index} className={styles.item}>{item}</li>
         ))}
       </ul>
     </div>
