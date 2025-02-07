@@ -1,10 +1,11 @@
 import { SignInForm } from '../../components/SignIn/SignInForm/SignInForm';
+import { SignInSection } from './SignIn.styled';
 
 const SignIn = () => {
   return (
-    <div>
+    <SignInSection>
       <SignInForm />
-    </div>
+    </SignInSection>
   );
 };
 
