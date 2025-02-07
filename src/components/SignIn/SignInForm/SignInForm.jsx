@@ -8,6 +8,7 @@ import sprite from '../../../assets/images/sprite/sprite.svg';
 import { selectIsLoading } from '../../../redux/root/rootSelectors';
 import { logInThunk } from '../../../redux/auth/authOperations';
 
+import { SignInLink } from './SignInForm.styled';
 import {
   BootleImg,
   ErrorSpan,
@@ -71,11 +72,13 @@ export const SignInForm = () => {
               <SignStyledInput type="email" name="email" placeholder="E-mail" />
             </SignStyledLabel>
             <SignStyledLabel>
+              Enter your password
               <SignStyledInput name="password" placeholder="Password" />
             </SignStyledLabel>
             <SignButton type="submit">Sign In</SignButton>
           </SignForm>
         </Formik>
+        <SignInLink to="/signup">Sign up</SignInLink>
       </FormContainer>
     </SignUpContainer>
   );
