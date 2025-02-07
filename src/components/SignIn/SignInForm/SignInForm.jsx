@@ -41,6 +41,11 @@ const initialValues = { email: '', password: '' };
 export const SignInForm = () => {
   const dispatch = useDispatch();
   const { isLoading } = useSelector(selectIsLoading);
+  const [iconStatus, setIconStatus] = useState(false);
+
+  const iconClick = () => {
+    setIconStatus(!iconStatus);
+  };
 
   const handleLoginSubmit = (values, { setSubmitting, setStatus }) => {
     dispatch(logInThunk(values))
@@ -49,7 +54,7 @@ export const SignInForm = () => {
         if (status === 401) {
           setStatus('Email or password is wrong');
         } else {
-          setStatus(`${message}` || 'Something went wrong. Please try again.');
+          setStatus('Something went wrong. Please try again.');
         }
       })
       .finally(() => {
@@ -76,6 +81,7 @@ export const SignInForm = () => {
                   type="email"
                   name="email"
                   placeholder="E-mail"
+                  autoComplete="username"
                 />
                 <ErrorMessage name="email" component={ErrorSpan} />
                 {errors.email && values.email && <ErrorSvg />}
@@ -85,10 +91,21 @@ export const SignInForm = () => {
                 Enter your password
                 <SignStyledInput
                   className={errors.password ? 'input-with-error' : null}
+                  type={iconStatus ? 'text' : 'password'}
                   name="password"
                   placeholder="Password"
+                  autoComplete="current-password"
                 />
                 <ErrorMessage name="password" component={ErrorSpan} />
+                {!iconStatus ? (
+                  <EyeSlashIcon onClick={iconClick}>
+                    <use href={`${sprite}#icon-to-hide`}></use>
+                  </EyeSlashIcon>
+                ) : (
+                  <EyeSlashIcon onClick={iconClick}>
+                    <use href={`${sprite}#icon-to-open`}></use>
+                  </EyeSlashIcon>
+                )}
               </SignStyledLabel>
               {status && <ErrorSpan>{status}</ErrorSpan>}
               <SignButton
