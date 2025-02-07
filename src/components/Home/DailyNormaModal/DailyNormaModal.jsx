@@ -1,6 +1,8 @@
 import { toast } from 'react-toastify';
 import { Formik, Form, Field } from 'formik';
 import * as Yup from 'yup';
+import { useDispatch, useSelector } from 'react-redux';
+import { useState } from 'react';
 
 import {
   CalculateWater,
@@ -21,6 +23,13 @@ const MyDailyNormSchema = Yup.object().shape({
 });
 
 export const DailyNormaModal = () => {
+  const dispatch = useDispatch();
+
+  const [gender, setGender] = useState('woman');
+  const [weight, setWeigth] = useState('');
+  const [timeOfActive, setTimeOfActive] = useState();
+  const [waterDrunk, setWaterDrunk] = useState();
+
   const initialValues = {
     gender: '',
     weight: '',
@@ -50,7 +59,7 @@ export const DailyNormaModal = () => {
           </Formula>
           <Description>
             <p>
-              {/* стилізувати елемент * через псевдоелемент after */}* V is the
+              V is the
               volume of the water norm in liters per day, M is your body weight,
               T is the time of active sports, or another type of activity
               commensurate in terms of loads (in the absence of these, you must
@@ -84,7 +93,7 @@ export const DailyNormaModal = () => {
             <Field type="number" name="timeOfActive" />
           </div>
           <CalculateWater>
-            The required amount of water in liters per day:{' '}
+            The required amount of water in liters per day:
             <span>Calculate Norma</span>
           </CalculateWater>
           <div>
