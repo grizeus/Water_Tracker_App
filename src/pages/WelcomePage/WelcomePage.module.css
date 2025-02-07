@@ -1,0 +1,13 @@
+/* import imgMob1x from '../../assets/images/background/WelcomePage/mob/bg_mob_1x.png';
+import imgMob2x from '../../assets/images/background/WelcomePage/mob/bg_mob_2x.png';
+import imgTab1x from '../../assets/images/background/WelcomePage/tab/bg_tab_1x.png';
+import imgTab2x from '../../assets/images/background/WelcomePage/tab/bg_tab_2x.png';
+import imgDesk1x from '../../assets/images/background/WelcomePage/desktop/bg_img_1x.png';
+import imgDesk2x from '../../assets/images/background/WelcomePage/desktop/bg_img_2x.png';
+import imgDesk1x_before from '../../assets/images/background/WelcomePage/desktop/bg_img_1x_bubbles.png';
+import imgDesk2x_before from '../../assets/images/background/WelcomePage/desktop/bg_img_2x_bubbles.png'; */
+
+.wrapper {
+    display: flex;
+    justify-content: center;
+}
