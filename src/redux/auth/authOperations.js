@@ -14,7 +14,7 @@ import {
 } from '../Api/api';
 
 export const registerThunk = createAsyncThunk(
-  'auth/register',
+  'auth/signup',
   async (credentials, { rejectWithValue }) => {
     try {
       const data = await signup(credentials);
@@ -29,7 +29,7 @@ export const registerThunk = createAsyncThunk(
 );
 
 export const logInThunk = createAsyncThunk(
-  'auth/login',
+  'auth/signin',
   async (credentials, { rejectWithValue }) => {
     try {
       const data = await signin(credentials);
@@ -142,7 +142,7 @@ export const updateAvatarThunk = createAsyncThunk(
 );
 
 export const editUserInfoThunk = createAsyncThunk(
-  'user/edit',
+  'user',
   async (body, { rejectWithValue }) => {
     try {
       const data = await editUserInfo(body);

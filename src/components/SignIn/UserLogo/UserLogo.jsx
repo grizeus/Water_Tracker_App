@@ -13,13 +13,13 @@ import {
   UserLogoTitle,
   UserModalIcon,
 } from './UserLogo.styled';
-import { el } from 'date-fns/locale';
+// import { el } from 'date-fns/locale';
 
 export const UserLogo = () => {
   const myRef = useRef();
 
   const [modalIsOpen, setModalIsOpen] = useState(false);
-  const { name, avatarURL } = useSelector(selectUser);
+  const { name , avatarURL} = useSelector(selectUser);
 
   const showModal = () => {
     setModalIsOpen(!modalIsOpen);

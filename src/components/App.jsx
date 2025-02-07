@@ -9,7 +9,7 @@ import { refreshUserThunk } from '../redux/auth/authOperations';
 import { selectIsRefreshing } from '../redux/auth/authSelectors';
 import SharedLayout from './SharedLayout';
 
-const WelcomePage = lazy(() => import('../pages/Welcome/Welcome'));
+const WelcomePage = lazy(() => import('../pages/WelcomePage/WelcomePage'));
 const HomePage = lazy(() => import('../pages/Home/Home'));
 const SigninPage = lazy(() => import('../pages/SignIn/SignIn'));
 const SignUpPage = lazy(() => import('../pages/SignUp/SignUp'));
@@ -38,7 +38,7 @@ const App = () => {
         />
         <Route
           path="home"
-          element={<PrivateRoute component={HomePage} redirectTo={'/'} />}
+          element={<PrivateRoute component={<HomePage/>} redirectTo={'/'} />}
         />
         <Route
           path="signin"

@@ -26,7 +26,7 @@ export * from '../components/SignIn/UserLogoModal/UserLogoModal';
 export * from '../components/SignIn/UserLogoutModal/UserLogoutModal';
 // SignUp
 export * from '../components/SignUp/SignUpForm/SignUpForm';
-// Welcome
+// WelcomePage
 export * from '../components/Welcome/Main/MainContent';
 export * from '../components/Welcome/WaterConsumptionTracker/WaterConsumptionTracker';
 export * from '../components/Welcome/WhyDrinkWater/WhyDrinkWater';

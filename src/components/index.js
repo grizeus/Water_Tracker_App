@@ -36,12 +36,6 @@ export * from './SignIn/UserLogoutModal/UserLogoutModal';
 
 export * from './SignUp/SignUpForm/SignUpForm';
 
-// Welcome
-
-export * from './Welcome/Main/MainContent';
-export * from './Welcome/WaterConsumptionTracker/WaterConsumptionTracker';
-export * from './Welcome/WhyDrinkWater/WhyDrinkWater';
-
 // Error
 
 export * from './NotFound/NotFound';

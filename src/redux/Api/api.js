@@ -14,14 +14,14 @@ const unsetToken = () => {
 // Auth
 
 export const signup = async body => {
-  const { data } = await axios.post('/auth/register', body);
-  setToken(data.token);
+  const { data } = await axios.post('/auth/signup', body);
+  setToken(data.accessToken);
   return data;
 };
 
 export const signin = async body => {
-  const { data } = await axios.post('/auth/login', body);
-  setToken(data.token);
+  const { data } = await axios.post('/auth/signin', body);
+  setToken(data.accessToken);
   return data;
 };
 
@@ -67,7 +67,7 @@ export const updateAvatar = async newPhotoFile => {
 };
 
 export const editUserInfo = async body => {
-  const { data } = await axios.patch('/user/edit', body);
+  const { data } = await axios.patch('/user', body);
   return data;
 };
 
@@ -78,7 +78,7 @@ export const deleteUser = async () => {
 // Water
 
 export const addWaters = async newWater => {
-  const { data } = await axios.post('/water', newWater, {
+  const { data } = await axios.post('/water/entry', newWater, {
     headers: {
       'Content-Type': 'application/json',
     },
@@ -87,7 +87,7 @@ export const addWaters = async newWater => {
 };
 
 export const editWater = async ({ newWaterUser, id }) => {
-  const { data } = await axios.patch(`/water/${id}`, newWaterUser, {
+  const { data } = await axios.patch(`/water/entry/${id}`, newWaterUser, {
     headers: {
       'Content-Type': 'application/json',
     },
@@ -96,7 +96,7 @@ export const editWater = async ({ newWaterUser, id }) => {
 };
 
 export const deleteWater = async id => {
-  await axios.delete(`/water/${id}`);
+  await axios.delete(`/water/entry/${id}`);
 };
 
 export const fetchTodayWater = async () => {
