@@ -28,11 +28,11 @@ import {
 
 export const initialState = {
   user: {
-    email: '',
-    avatarURL: '',
-    name: '',
-    gender: '',
-    waterRate: '',
+    email: null,
+    avatarURL: null,
+    name: null,
+    gender: null,
+    waterRate: null,
   },
   token: null,
   isLoggedIn: false,
