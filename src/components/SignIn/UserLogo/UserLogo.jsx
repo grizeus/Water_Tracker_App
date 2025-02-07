@@ -13,7 +13,7 @@ import {
   UserLogoTitle,
   UserModalIcon,
 } from './UserLogo.styled';
-import { el } from 'date-fns/locale';
+// import { el } from 'date-fns/locale';
 
 export const UserLogo = () => {
   const myRef = useRef();
