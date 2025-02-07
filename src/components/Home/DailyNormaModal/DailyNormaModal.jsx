@@ -2,7 +2,7 @@ import { toast } from 'react-toastify';
 import { Formik, Form, Field } from 'formik';
 import * as Yup from 'yup';
 import { useDispatch, useSelector } from 'react-redux';
-import { useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 
 import {
   CalculateWater,
@@ -13,32 +13,53 @@ import {
   Paragraph,
   Wrapper,
 } from './DailyNormaModal.styled';
+import { selectUser } from '../../../redux/auth/authSelectors';
+import { updateWaterRate } from '../../../redux/Api/api';
 
 const MyDailyNormSchema = Yup.object().shape({
-  gender: (Yup.string().required('Required').oneOf(['woman', 'man']).default =
-    'woman'),
-  weight: Yup.number().required('Required').positive(),
-  timeOfActive: (Yup.date().default = new Date()),
-  waterDrunk: (Yup.number().required('Required').default = 250),
+  gender: Yup.string().required('Required').oneOf(['woman', 'man']),
+  weight: Yup.string().required('Required'),
+  timeOfActive: Yup.string().required('Required').min(0),
+  intakeGoal: Yup.string().required('Required'),
 });
+
+const initialValues = {
+  gender: '',
+  weight: '',
+  timeOfActive: '',
+  intakeGoal: '',
+};
 
 export const DailyNormaModal = () => {
   const dispatch = useDispatch();
+  const { waterRate } = useSelector(selectUser);
 
   const [gender, setGender] = useState('woman');
   const [weight, setWeigth] = useState('');
   const [timeOfActive, setTimeOfActive] = useState();
-  const [waterDrunk, setWaterDrunk] = useState();
+  const [dailyIntake, setDailyIntake] = useState((waterRate / 1000).toFixed(1));
 
-  const initialValues = {
-    gender: '',
-    weight: '',
-    timeOfActive: '',
-    waterDrunk: '',
-  };
+  const calculateValueWater = useCallback(() => {
+    if (!gender || !weight || !timeOfActive) {
+      setDailyIntake('');
+      return;
+    }
 
-  const handleSubmit = (values, action) => {
-    console.log(values);
+    const factor = gender === 'woman' ? 0.03 : 0.04;
+    const activityFactor = gender === 'woman' ? 0.4 : 0.6;
+    const intake = (weight * factor + timeOfActive * activityFactor).toFixed(2);
+
+    setDailyIntake(intake);
+  });
+
+  useEffect(() => {
+    calculateValueWater();
+  }, [gender, weight, timeOfActive]);
+
+  const handleSubmit = (values, actions) => {
+    const { intakeGoal } = values;
+    const finalWaterRate = intakeGoal || dailyIntake;
+    dispatch(updateWaterRate(finalWaterRate));
   };
 
   return (
@@ -59,11 +80,10 @@ export const DailyNormaModal = () => {
           </Formula>
           <Description>
             <p>
-              V is the
-              volume of the water norm in liters per day, M is your body weight,
-              T is the time of active sports, or another type of activity
-              commensurate in terms of loads (in the absence of these, you must
-              set 0)
+              V is the volume of the water norm in liters per day, M is your
+              body weight, T is the time of active sports, or another type of
+              activity commensurate in terms of loads (in the absence of these,
+              you must set 0)
             </p>
           </Description>
         </Wrapper>
@@ -73,7 +93,7 @@ export const DailyNormaModal = () => {
             <div role="group" aria-labelledby="chose-gender">
               <label>
                 <Field type="radio" name="gender" value="woman" />
-                <span>For man</span>
+                <span>For woman</span>
               </label>
               <label>
                 <Field type="radio" name="gender" value="man" />
@@ -101,7 +121,7 @@ export const DailyNormaModal = () => {
               Write down how much water you will drink:
             </FormSubTitle>
 
-            <Field type="number" name="waterDrunk" />
+            <Field type="number" name="intakeGoal" />
           </div>
         </Wrapper>
         <button type="submit">Save</button>
