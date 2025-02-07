@@ -31,11 +31,13 @@
   line-height: 125%;
   text-align: center;
   border-radius: 10px;
+  margin-top: 24px;
   padding: 8px 30px;
   width: 280px;
   box-shadow: 0 4px 8px 0 rgba(64, 123, 255, 0.34);
   color: #fff;
   background-color: #407bff;
+  transition: box-shadow 350ms ease-in-out;
 
   @media screen and (min-width: 768px) {
     font-size: 18px;
@@ -47,6 +49,14 @@
   @media screen and (min-width: 1440px) {
     width: 384px;
   }
+}
+
+.btn:hover {
+  box-shadow: 0 4px 14px 0 rgba(64, 123, 255, 0.54);
+}
+
+.btn:active {
+  box-shadow: none;
 }
 
 .main-title {
