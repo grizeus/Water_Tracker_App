@@ -42,6 +42,7 @@ export const SignUpContainer = styled.div`
   flex-direction: column-reverse;
   gap: 66px;
   align-items: center;
+  position: relative;
 
   @media screen and (min-width: ${({ theme }) => theme.breakpoint.tablet}) {
     flex-direction: row-reverse;
@@ -191,13 +192,14 @@ export const FormContainer = styled.div`
   gap: 16px;
   min-width: 280px;
   min-height: 304px;
-
+ 
   @media screen and (min-width: ${({ theme }) => theme.breakpoint.tablet}) {
     position: absolute;
-    top: 104px;
-    left: 30px;
+    left: 0px;
     z-index: 1;
     min-width: 336px;
+
+
   }
 
   @media screen and (min-width: ${({ theme }) => theme.breakpoint.desktop}) {
