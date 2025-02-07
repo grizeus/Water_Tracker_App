@@ -25,7 +25,7 @@ export * from './Home/WaterRatioPanel/WaterRatioPanel';
 
 // SignIn
 
-export * from './SignIn/SettingModal/SettingModal';
+export * from './Header/SettingModal/SettingModal';
 export * from './SignIn/SignInForm/SignInForm';
 export * from './SignIn/UserAuth/UserAuth';
 export * from './SignIn/UserLogo/UserLogo';
@@ -45,4 +45,3 @@ export * from './Welcome/WhyDrinkWater/WhyDrinkWater';
 // Error
 
 export * from './NotFound/NotFound';
-
