@@ -24,20 +24,26 @@ export const UserLogo = () => {
   const showModal = () => {
     setModalIsOpen(!modalIsOpen);
   };
+  const firstLetter = name ? name.charAt(0).toUpperCase() : 'V';
+
   const getUserInfo = () => {
     if (name && avatarURL) {
       return {
         userName: name,
         avatar: avatarURL,
       };
+    } else if (name || avatarURL) {
+      return {
+        userName: name || firstLetter,
+        avatar: avatarURL || firstLetter,
+      };
     } else {
       return {
-        userName: 'Some Name',
-        avatar: 'Default',
+        userName: firstLetter,
+        avatar: firstLetter,
       };
     }
   };
-
   const { userName, avatar } = getUserInfo();
 
   return (
