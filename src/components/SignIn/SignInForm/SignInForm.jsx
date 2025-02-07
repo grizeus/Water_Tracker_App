@@ -1,10 +1,11 @@
 import { useDispatch, useSelector } from 'react-redux';
 import { useState } from 'react';
 import * as Yup from 'yup';
-import { Formik } from 'formik';
+import { Formik, ErrorMessage } from 'formik';
 
 import sprite from '../../../assets/images/sprite/sprite.svg';
 
+import { ContentLoader } from '../../common/Loader/Loader';
 import { selectIsLoading } from '../../../redux/root/rootSelectors';
 import { logInThunk } from '../../../redux/auth/authOperations';
 
@@ -48,7 +49,7 @@ export const SignInForm = () => {
         if (status === 401) {
           setStatus('Email or password is wrong');
         } else {
-          setStatus(`Login failed: ${message}`);
+          setStatus(`${message}` || 'Something went wrong. Please try again.');
         }
       })
       .finally(() => {
@@ -66,17 +67,39 @@ export const SignInForm = () => {
           validationSchema={validationSchema}
           onSubmit={handleLoginSubmit}
         >
-          <SignForm>
-            <SignStyledLabel>
-              Enter your email
-              <SignStyledInput type="email" name="email" placeholder="E-mail" />
-            </SignStyledLabel>
-            <SignStyledLabel>
-              Enter your password
-              <SignStyledInput name="password" placeholder="Password" />
-            </SignStyledLabel>
-            <SignButton type="submit">Sign In</SignButton>
-          </SignForm>
+          {({ errors, isValid, values, status }) => (
+            <SignForm>
+              <SignStyledLabel>
+                Enter your email
+                <SignStyledInput
+                  className={errors.email ? 'input-with-error' : null}
+                  type="email"
+                  name="email"
+                  placeholder="E-mail"
+                />
+                <ErrorMessage name="email" component={ErrorSpan} />
+                {errors.email && values.email && <ErrorSvg />}
+                {!errors.email && values.email && <SuccessSvg />}
+              </SignStyledLabel>
+              <SignStyledLabel>
+                Enter your password
+                <SignStyledInput
+                  className={errors.password ? 'input-with-error' : null}
+                  name="password"
+                  placeholder="Password"
+                />
+                <ErrorMessage name="password" component={ErrorSpan} />
+              </SignStyledLabel>
+              {status && <ErrorSpan>{status}</ErrorSpan>}
+              <SignButton
+                className={!isValid || isLoading ? 'button-disabled' : null}
+                type="submit"
+                disabled={!isValid || isLoading}
+              >
+                Sign In {isLoading && <ContentLoader />}
+              </SignButton>
+            </SignForm>
+          )}
         </Formik>
         <SignInLink to="/signup">Sign up</SignInLink>
       </FormContainer>
