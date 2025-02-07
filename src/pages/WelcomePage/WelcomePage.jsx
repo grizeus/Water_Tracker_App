@@ -4,7 +4,7 @@ import styles from './WelcomePage.module.css';
 
 const WelcomePage = () => {
   return (
-    <section>
+    <section className={styles.wrapper}>
       <WaterConsumptionTracker />
       <WhyDrinkWater />
     </section>
