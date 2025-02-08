@@ -10,7 +10,6 @@
   );
   background-repeat: no-repeat;
   background-position: center bottom;
-  margin: 0 auto;
   padding-inline: 20px;
   padding-top: 24px;
   padding-bottom: 40px;
@@ -59,5 +58,6 @@
         url('../../assets/images/background/WelcomePage/desktop/bg_img_2x_bubbles.png')
           2x
       );
+      background-size: contain;
   }
 }
