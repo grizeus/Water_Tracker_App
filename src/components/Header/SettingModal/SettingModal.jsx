@@ -1,17 +1,26 @@
 import { BaseModalWindow } from '../../common/BaseModalWindow/BaseModalWindow.jsx';
-
-import { Form, Formik } from 'formik';
+import { Loader } from '../../common/Loader/Loader.jsx';
+import { Field, Form, Formik } from 'formik';
 import { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import sprite from 'src/assets/images/sprite/sprite.svg';
 import * as Yup from 'yup';
-import { editUserInfoThunk } from '../../../redux/auth/authOperations';
+import {
+  editUserInfoThunk,
+  updateAvatarThunk,
+} from '../../../redux/auth/authOperations';
+import { selectUser } from '../../../redux/auth/authSelectors';
 import { selectIsLoading } from '../../../redux/root/rootSelectors';
+import defaultAvatar from '../../../assets/images/default_avatar.png';
 
 import {
+  Avatar,
   DesktopFormWrap,
   DesktopGenderWrap,
   DesktopPasswordWrap,
+  DownloadBtn,
+  DownloadBtnText,
+  DownloadWrap,
   FormField,
   FormText,
   IconBtn,
@@ -29,6 +38,12 @@ import {
   StyledErrorMessage,
   StyledErrorText,
   StyledLabel,
+  GenderFormField,
+  GenderText,
+  RadioBtn,
+  RadioBtnLabel,
+  RadioBtnText,
+  RadioBtnWrap,
 } from './SettingModal.styled';
 
 const settingFormValidationSchema = Yup.object().shape({
@@ -61,10 +76,15 @@ const settingFormValidationSchema = Yup.object().shape({
 
 export const SettingModal = ({ onClose, onShow }) => {
   const dispatch = useDispatch();
+  const { avatarURL, email, name, gender } = useSelector(selectUser);
   const { isLoading } = useSelector(selectIsLoading);
   const [isPasswordShown, setIsPasswordShown] = useState(false);
+  const [isAvatarLoading, setIsAvatarLoading] = useState(false);
 
   const initialValues = {
+    gender: gender || '',
+    name: name || '',
+    email: email || '',
     outdatedPassword: '',
     newPassword: '',
     repeatedPassword: '',
@@ -105,6 +125,18 @@ export const SettingModal = ({ onClose, onShow }) => {
     setIsPasswordShown(previsPasswordShown => !previsPasswordShown);
   };
 
+  const handleAvatarDownload = e => {
+    let formData = new FormData();
+    formData.append('avatar', e.target.files[0]);
+
+    dispatch(updateAvatarThunk(formData)).then(data => {
+      if (!data.error) {
+        setIsAvatarLoading(false);
+      }
+    });
+    setIsAvatarLoading(true);
+  };
+
   return (
     <>
       <BaseModalWindow onClose={onClose} onShow={onShow} title="Setting">
@@ -117,8 +149,63 @@ export const SettingModal = ({ onClose, onShow }) => {
             >
               {({ values, errors, touched }) => (
                 <Form>
+                  <FormField>
+                    <FormText>Your photo</FormText>
+                    <DownloadWrap>
+                      {isAvatarLoading ? (
+                        <Loader
+                          width={'80px'}
+                          height={'80px'}
+                          strokeColor={'#407bff'}
+                        />
+                      ) : (
+                        <Avatar
+                          src={avatarURL ? avatarURL : defaultAvatar}
+                          alt="user avatar"
+                          width="80px"
+                          height="80px"
+                        />
+                      )}
+                      <DownloadBtn>
+                        <Field
+                          type="file"
+                          name="avatar"
+                          hidden
+                          accept="image/png, image/jpeg"
+                          onChange={handleAvatarDownload}
+                        />
+                        <IconDownload>
+                          <use href={`${sprite}#icon-arrow-up`}></use>
+                        </IconDownload>
+                        <DownloadBtnText>Upload a photo</DownloadBtnText>
+                      </DownloadBtn>
+                    </DownloadWrap>
+                  </FormField>
                   <DesktopFormWrap>
                     <DesktopGenderWrap>
+                      <GenderFormField>
+                        <GenderText>Your gender identity</GenderText>
+                        <RadioBtnWrap>
+                          <RadioBtnLabel>
+                            <RadioBtn
+                              type="radio"
+                              name="gender"
+                              value="female"
+                              checked={values.gender === 'female'}
+                            />
+                            <RadioBtnText>Woman</RadioBtnText>
+                          </RadioBtnLabel>
+                          <RadioBtnLabel>
+                            <RadioBtn
+                              type="radio"
+                              name="gender"
+                              value="male"
+                              checked={values.gender === 'male'}
+                            />
+                            <RadioBtnText>Man</RadioBtnText>
+                          </RadioBtnLabel>
+                        </RadioBtnWrap>
+                      </GenderFormField>
                       <FormField>
                         <StyledLabel htmlFor="username">Your name</StyledLabel>
                         <Input
@@ -263,7 +350,11 @@ export const SettingModal = ({ onClose, onShow }) => {
                     </DesktopPasswordWrap>
                   </DesktopFormWrap>
                   <SaveBtnWrap>
-                    <SaveBtn type="submit">Save</SaveBtn>
+                    <li>
+                      <SaveBtn type="submit">
+                        Save {isLoading && !isAvatarLoading && <Loader />}
+                      </SaveBtn>
+                    </li>
                   </SaveBtnWrap>
                 </Form>
               )}

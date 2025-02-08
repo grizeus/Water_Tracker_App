@@ -16,6 +16,12 @@ export const StyledLabel = styled.label`
   font-weight: 500;
   line-height: 1.11; /* 111.111% */
 `;
+export const DownloadWrap = styled.div`
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-top: 8px;
+`;
 
 export const IconDownload = styled.svg`
   width: 16px;
@@ -43,6 +49,19 @@ export const PasswordIcon = styled(IconDownload)`
   top: 50%;
   transform: translateY(-50%);
 `;
+export const DownloadBtn = styled.label`
+  display: flex;
+  justify-content: center;
+  gap: 8px;
+  cursor: pointer;
+`;
+
+export const DownloadBtnText = styled.span`
+  color: ${({ theme }) => theme.color.accent};
+  font-size: 14px;
+  font-weight: 500;
+  line-height: 18px; /* 128.571% */
+`;
 
 export const FormField = styled.div`
   margin-bottom: 24px;
@@ -69,6 +88,71 @@ export const PasswordFormField = styled(FormField)`
   @media screen and (min-width: ${({ theme }) => theme.breakpoint.tablet}) {
     margin-bottom: 12px;
   }
+`;
+export const GenderText = styled(FormText)`
+  margin-bottom: 12px;
+`;
+export const RadioBtn = styled(Field)`
+  opacity: 0;
+  position: absolute;
+
+  + span {
+    display: inline-block;
+    padding-left: 25px;
+    position: relative;
+    cursor: pointer;
+
+    &:before {
+      content: '';
+      position: absolute;
+      left: 0;
+      top: 50%;
+      transform: translateY(-50%);
+      width: 14px;
+      height: 14px;
+      border-radius: 50%;
+      border: 1px solid ${props => props.theme.color.accent};
+      background-color: ${({ theme }) => theme.color.white};
+    }
+
+    &:after {
+      content: '';
+      position: absolute;
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: ${props => props.theme.color.accent};
+      top: 50%;
+      left: 4px;
+      transform: translate(0, -50%);
+      opacity: 0;
+    }
+  }
+
+  &:checked + span:after {
+    opacity: 1;
+  }
+`;
+
+export const RadioBtnWrap = styled.div`
+  display: flex;
+  align-items: center;
+  gap: 24px;
+`;
+
+export const RadioBtnText = styled.span`
+  color: ${({ theme }) => theme.color.black};
+  font-size: 16px;
+  line-height: 1.25; /* 125% */
+`;
+
+export const RadioBtnLabel = styled.label`
+  display: flex;
+  align-items: center;
+`;
+
+export const Avatar = styled.img`
+  border-radius: 60%;
 `;
 
 export const Input = styled(Field)`
