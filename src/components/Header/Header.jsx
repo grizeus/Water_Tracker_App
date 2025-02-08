@@ -4,6 +4,8 @@ import { useSelector } from 'react-redux';
 import { selectIsLoggedIn } from '../../redux/auth/authSelectors';
 import { ContainerHeader, WrapHeader } from './Header.styled';
 
+// import { SettingModal } from './SettingModal/SettingModal.jsx';
+
 export const Header = () => {
   const isLoggedIn = useSelector(selectIsLoggedIn);
 
