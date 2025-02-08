@@ -1,6 +1,6 @@
-import { Section } from '../../components/common/Section/Section';
 import { DailyNorma } from '../../components/Home/DailyNorma/DailyNorma';
 import { WaterRatioPanel } from '../../components/Home/WaterRatioPanel/WaterRatioPanel';
+import { Section } from './Home.styled';
 
 const Home = () => {
   return (
