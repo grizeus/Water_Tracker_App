@@ -1,9 +1,16 @@
-import { NavLink } from 'react-router-dom';
-import notFound from 'src/assets/images/notFound.png';
+import { NavLink, useNavigate } from 'react-router-dom';
+// import notFound from 'src/assets/images/notFoundError.png';
+import notFound from 'src/assets/images/notFoundError.png';
 import { ErrorBtn, ErrorImg } from './NotFound.styled';
+import { useEffect } from 'react';
 
 
 export const NotFound = () => {
+    const navigate = useNavigate();
+
+  useEffect(() => {
+    navigate("/404", { replace: true }); // Перенаправляем на /404
+  }, [navigate]);
   
   return (
     <>

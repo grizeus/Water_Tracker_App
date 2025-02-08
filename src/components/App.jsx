@@ -1,6 +1,6 @@
 import { Loader } from 'components';
-import { lazy, useEffect } from 'react';
-import { Route, Routes } from 'react-router-dom';
+import { lazy, Suspense, useEffect } from 'react';
+import { Navigate, Route, Routes, useLocation } from 'react-router-dom';
 import PrivateRoute from './PrivateRoute';
 import RestrictedRoute from './RestrictedRoute';
 
@@ -8,6 +8,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { refreshUserThunk } from '../redux/auth/authOperations';
 import { selectIsRefreshing } from '../redux/auth/authSelectors';
 import SharedLayout from './SharedLayout';
+import { use } from 'react';
 
 const WelcomePage = lazy(() => import('../pages/WelcomePage/WelcomePage'));
 const HomePage = lazy(() => import('../pages/Home/Home'));
@@ -21,13 +22,14 @@ const ResetPassPage = lazy(() =>
 
 const App = () => {
   const dispatch = useDispatch();
-  const isRefreshing = useSelector(selectIsRefreshing);
+  const isRefreshing = useSelector(selectIsRefreshing);  
 
   useEffect(() => {
     dispatch(refreshUserThunk());
   }, [dispatch]);
 
   return !isRefreshing ? (
+   
     <Routes>
       <Route path="/" element={<SharedLayout />}>
         <Route
@@ -53,9 +55,15 @@ const App = () => {
           }
         />
         <Route path="reset-pass" element={<ResetPassPage />} />
-        <Route path="*" element={<ErrorPage />} />
       </Route>
+
+        {/* Сторінка помилки 404 рендериться окремо, без SharedLayout, тому огортаємо її в Suspense */}
+        <Route path="/404" element={<Suspense fallback={<Loader />}>
+            <ErrorPage />
+          </Suspense>} />
+        <Route path="*" element={<Navigate to="/404" replace />} />
     </Routes>
+   
   ) : (
     <Loader />
   );
