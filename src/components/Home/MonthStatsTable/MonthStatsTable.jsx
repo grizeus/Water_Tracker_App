@@ -22,7 +22,7 @@ import {
   DaysList,
   DaysPercentage,
   HeaderMonth,
-  Paginator, // ❌ Було `Raginator`
+  Paginator, 
   Year,
 } from './MonthStatsTable.styled';
 
@@ -53,14 +53,14 @@ export const MonthStatsTable = () => {
 
   const handleNextMonth = () => {
     if (selectedMonth < new Date()) {
-      const newMonth = addMonths(selectedMonth, 1); // ❌ Було `addMonth`
+      const newMonth = addMonths(selectedMonth, 1); 
       setSelectedMonth(newMonth);
       setActiveButton(isSameMonth(newMonth, new Date()) ? null : 'next');
     }
   };
 
   const daysOfMonth = eachDayOfInterval({
-    start: startOfMonth(selectedMonth), // ❌ Було `starte`
+    start: startOfMonth(selectedMonth),
     end: endOfMonth(selectedMonth),
   });
 
@@ -127,7 +127,7 @@ export const MonthStatsTable = () => {
           {isHovering && <Year>{format(selectedMonth, 'yyyy')}</Year>}
           <ButtonPaginator
             onClick={handleNextMonth}
-            disabled={selectedMonth >= new Date()} // ❌ Було `disebled`
+            disabled={selectedMonth >= new Date()} 
             active={activeButton === 'prev'}
           >
             &gt;
@@ -137,7 +137,7 @@ export const MonthStatsTable = () => {
 
       <DaysList>
         {daysOfMonth.map((day) => {
-          const dayKey = format(day, 'yyyy-MM-dd'); // ❌ Було `dayKay`
+          const dayKey = format(day, 'yyyy-MM-dd');
           const dayData = monthDataMap[dayKey];
           const percentage = dayData ? dayData.waterVolumePercentage : 0;
           const isHighlighted = dayData && dayData.waterVolumePercentage < 100;
