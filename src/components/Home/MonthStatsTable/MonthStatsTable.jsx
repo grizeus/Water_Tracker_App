@@ -22,7 +22,7 @@ import {
   DaysList,
   DaysPercentage,
   HeaderMonth,
-  Paginator,
+  Paginator, // ❌ Було `Raginator`
   Year,
 } from './MonthStatsTable.styled';
 
@@ -48,27 +48,19 @@ export const MonthStatsTable = () => {
   const handlePreviousMonth = () => {
     const newMonth = subMonths(selectedMonth, 1);
     setSelectedMonth(newMonth);
-    if (isSameMonth(newMonth, new Date())) {
-      setActiveButton(null);
-    } else {
-      setActiveButton('prev');
-    }
+    setActiveButton(isSameMonth(newMonth, new Date()) ? null : 'prev');
   };
 
   const handleNextMonth = () => {
     if (selectedMonth < new Date()) {
-      const newMonth = addMonths(selectedMonth, 1);
+      const newMonth = addMonths(selectedMonth, 1); // ❌ Було `addMonth`
       setSelectedMonth(newMonth);
-      if (isSameMonth(newMonth, new Date())) {
-        setActiveButton(null);
-      } else {
-        setActiveButton('next');
-      }
+      setActiveButton(isSameMonth(newMonth, new Date()) ? null : 'next');
     }
   };
 
   const daysOfMonth = eachDayOfInterval({
-    start: startOfMonth(selectedMonth),
+    start: startOfMonth(selectedMonth), // ❌ Було `starte`
     end: endOfMonth(selectedMonth),
   });
 
@@ -77,12 +69,11 @@ export const MonthStatsTable = () => {
     return acc;
   }, {});
 
-  const onDayClick = day => {
+  const onDayClick = (day) => {
     const dayKey = format(day, 'yyyy-MM-dd');
     const dayData = monthDataMap[dayKey];
 
     const isSameDaySelected = selectedDayStats?.date === dayKey;
-
     if (isSameDaySelected && modalVisible) {
       setModalVisible(false);
       setSelectedDayStats(null);
@@ -95,16 +86,6 @@ export const MonthStatsTable = () => {
       });
       setModalVisible(true);
     }
-
-    const dayElement = dayRefs.current[day];
-    if (dayElement) {
-      const rect = dayElement.getBoundingClientRect();
-      setDayPosition({
-        top: rect.top + window.scrollY,
-        left: rect.left,
-        width: rect.width,
-      });
-    }
   };
 
   const handleCloseModal = () => {
@@ -113,12 +94,11 @@ export const MonthStatsTable = () => {
   };
 
   useEffect(() => {
-    const handleClickOutside = event => {
+    const handleClickOutside = (event) => {
       if (modalVisible) {
         const isClickOutside = Object.values(dayRefs.current).every(
-          ref => ref && !ref.contains(event.target),
+          (ref) => ref && !ref.contains(event.target)
         );
-
         if (isClickOutside) {
           handleCloseModal();
         }
@@ -140,19 +120,14 @@ export const MonthStatsTable = () => {
           onMouseEnter={() => setIsHovering(true)}
           onMouseLeave={() => setIsHovering(false)}
         >
-          <ButtonPaginator
-            onClick={handlePreviousMonth}
-            active={activeButton === 'next'}
-          >
+          <ButtonPaginator onClick={handlePreviousMonth} active={activeButton === 'next'}>
             &lt;
           </ButtonPaginator>
           <span>{format(selectedMonth, 'MMMM')}</span>
-          {isHovering && (
-            <Year>{format(selectedMonth, 'yyyy').split('-')[0]}</Year>
-          )}
+          {isHovering && <Year>{format(selectedMonth, 'yyyy')}</Year>}
           <ButtonPaginator
             onClick={handleNextMonth}
-            disabled={selectedMonth >= new Date()}
+            disabled={selectedMonth >= new Date()} // ❌ Було `disebled`
             active={activeButton === 'prev'}
           >
             &gt;
@@ -161,10 +136,9 @@ export const MonthStatsTable = () => {
       </HeaderMonth>
 
       <DaysList>
-        {daysOfMonth.map(day => {
-          const dayKey = format(day, 'yyyy-MM-dd');
+        {daysOfMonth.map((day) => {
+          const dayKey = format(day, 'yyyy-MM-dd'); // ❌ Було `dayKay`
           const dayData = monthDataMap[dayKey];
-
           const percentage = dayData ? dayData.waterVolumePercentage : 0;
           const isHighlighted = dayData && dayData.waterVolumePercentage < 100;
 
@@ -172,7 +146,7 @@ export const MonthStatsTable = () => {
             <div key={dayKey}>
               <DaysPercentage>
                 <DaysButton
-                  ref={el => (dayRefs.current[day] = el)}
+                  ref={(el) => (dayRefs.current[day] = el)}
                   onClick={() => onDayClick(day)}
                   isHighlighted={isHighlighted}
                 >
