@@ -8,7 +8,6 @@ import { useDispatch, useSelector } from 'react-redux';
 import { refreshUserThunk } from '../redux/auth/authOperations';
 import { selectIsRefreshing } from '../redux/auth/authSelectors';
 import SharedLayout from './SharedLayout';
-import { DailyNormaModal } from './Home/DailyNormaModal/DailyNormaModal';
 
 const WelcomePage = lazy(() => import('../pages/Welcome/Welcome'));
 const HomePage = lazy(() => import('../pages/Home/Home'));
