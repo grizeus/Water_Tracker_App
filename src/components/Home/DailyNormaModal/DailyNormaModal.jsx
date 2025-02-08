@@ -1,9 +1,6 @@
 import { toast } from 'react-toastify';
-import { Formik, Form, Field } from 'formik';
-import * as Yup from 'yup';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import { useCallback, useEffect, useState } from 'react';
-
 import {
   CalculateWater,
   Description,
@@ -13,119 +10,134 @@ import {
   Paragraph,
   Wrapper,
 } from './DailyNormaModal.styled';
-import { selectUser } from '../../../redux/auth/authSelectors';
 import { updateWaterRate } from '../../../redux/Api/api';
 
-const MyDailyNormSchema = Yup.object().shape({
-  gender: Yup.string().required('Required').oneOf(['woman', 'man']),
-  weight: Yup.string().required('Required'),
-  timeOfActive: Yup.string().required('Required').min(0),
-  intakeGoal: Yup.string().required('Required'),
-});
-
-const initialValues = {
-  gender: '',
-  weight: '',
-  timeOfActive: '',
-  intakeGoal: '',
-};
-
 export const DailyNormaModal = () => {
-  const dispatch = useDispatch();
-  const { waterRate } = useSelector(selectUser);
-
   const [gender, setGender] = useState('woman');
-  const [weight, setWeigth] = useState('');
-  const [timeOfActive, setTimeOfActive] = useState();
-  const [dailyIntake, setDailyIntake] = useState((waterRate / 1000).toFixed(1));
+  const [weight, setWeight] = useState('');
+  const [timeOfActive, setTimeOfActive] = useState('');
+  const [dailyWaterNorm, setDailyWaterNorm] = useState('');
+  const [intakeGoal, setIntakeGoal] = useState('');
 
-  const calculateValueWater = useCallback(() => {
-    if (!gender || !weight || !timeOfActive) {
-      setDailyIntake('');
-      return;
+  const dispatch = useDispatch();
+
+  const calculateWaterDailyNorm = useCallback(() => {
+    if (!weight || !timeOfActive) return setDailyWaterNorm('');
+
+    if (weight <= 0 || timeOfActive <= 0) {
+      return toast.error('Please enter a valid data');
     }
 
-    const factor = gender === 'woman' ? 0.03 : 0.04;
-    const activityFactor = gender === 'woman' ? 0.4 : 0.6;
-    const intake = (weight * factor + timeOfActive * activityFactor).toFixed(2);
+    const userGender = gender === 'woman' ? 0.03 : 0.04;
+    const activityTime = gender ? 0.4 : 0.6;
 
-    setDailyIntake(intake);
-  });
+    const intake = weight * userGender + (timeOfActive / 60) * activityTime;
 
-  useEffect(() => {
-    calculateValueWater();
+    setDailyWaterNorm(intake.toFixed(2));
   }, [gender, weight, timeOfActive]);
 
-  const handleSubmit = (values, actions) => {
-    const { intakeGoal } = values;
-    const finalWaterRate = intakeGoal || dailyIntake;
-    dispatch(updateWaterRate(finalWaterRate));
+  useEffect(() => {
+    calculateWaterDailyNorm();
+  }, [calculateWaterDailyNorm]);
+
+  const handleSubmit = e => {
+    e.preventDefault();
+
+    const userGoal = parseFloat(intakeGoal);
+    if (!userGoal) return toast.error('Please enter a valid data');
+
+    const finishGoal = userGoal ? userGoal : dailyWaterNorm;
+
+    dispatch(updateWaterRate(finishGoal));
   };
 
   return (
-    <Formik
-      initialValues={initialValues}
-      onSubmit={handleSubmit}
-      validationSchema={MyDailyNormSchema}
-    >
-      <Form>
-        <Wrapper>
-          <Formula>
-            <Paragraph>
-              For woman:<span>V=(M*0,03) + (T*0,4)</span>
-            </Paragraph>
-            <Paragraph>
-              For man: <span>V=(M*0,04) + (T*0,6)</span>
-            </Paragraph>
-          </Formula>
-          <Description>
-            <p>
-              V is the volume of the water norm in liters per day, M is your
-              body weight, T is the time of active sports, or another type of
-              activity commensurate in terms of loads (in the absence of these,
-              you must set 0)
-            </p>
-          </Description>
-        </Wrapper>
+    <form>
+      <Wrapper>
+        <Formula>
+          <Paragraph>
+            For woman:<span>V=(M*0,03) + (T*0,4)</span>
+          </Paragraph>
+          <Paragraph>
+            For man: <span>V=(M*0,04) + (T*0,6)</span>
+          </Paragraph>
+        </Formula>
+        <Description>
+          <p>
+            V is the volume of the water norm in liters per day, M is your body
+            weight, T is the time of active sports, or another type of activity
+            commensurate in terms of loads (in the absence of these, you must
+            set 0)
+          </p>
+        </Description>
+      </Wrapper>
 
-        <Wrapper>
-          <FormRadio>
-            <div role="group" aria-labelledby="chose-gender">
-              <label>
-                <Field type="radio" name="gender" value="woman" />
-                <span>For woman</span>
-              </label>
-              <label>
-                <Field type="radio" name="gender" value="man" />
-                <span>For man</span>
-              </label>
-            </div>
-          </FormRadio>
-          <div>
-            <Paragraph>Your weight in kilograms:</Paragraph>
-            <Field type="number" name="weight" />
+      <Wrapper>
+        <FormRadio>
+          <div role="group" aria-labelledby="chose-gender">
+            <label>
+              <input
+                type="radio"
+                name="gender"
+                value="woman"
+                checked={gender === 'woman'}
+                onChange={() => setGender('woman')}
+              />
+              <span>For woman</span>
+            </label>
+            <label>
+              <input
+                type="radio"
+                name="gender"
+                value="man"
+                checked={gender === 'man'}
+                onChange={() => setGender('man')}
+              />
+              <span>For man</span>
+            </label>
           </div>
-          <div>
-            <Paragraph>
-              The time of active participation in sports or other activities
-              with a high physical. load in hours:
-            </Paragraph>
-            <Field type="number" name="timeOfActive" />
-          </div>
-          <CalculateWater>
-            The required amount of water in liters per day:
-            <span>Calculate Norma</span>
-          </CalculateWater>
-          <div>
-            <FormSubTitle>
-              Write down how much water you will drink:
-            </FormSubTitle>
+        </FormRadio>
+        <div>
+          <Paragraph>Your weight in kilograms:</Paragraph>
+          <input
+            type="number"
+            name="weight"
+            value={weight}
+            onChange={e => setWeight(e.target.value)}
+          />
+        </div>
+        <div>
+          <Paragraph>
+            The time of active participation in sports or other activities with
+            a high physical. load in hours:
+          </Paragraph>
+          <input
+            type="number"
+            name="timeOfActive"
+            value={timeOfActive}
+            onChange={e => setTimeOfActive(e.target.value)}
+          />
+        </div>
+        <CalculateWater>
+          The required amount of water in liters per day:
+          <span>
+            {dailyWaterNorm ? parseFloat(dailyWaterNorm).toFixed(1) : 0} L
+          </span>
+        </CalculateWater>
+        <div>
+          <FormSubTitle>Write down how much water you will drink:</FormSubTitle>
 
-            <Field type="number" name="intakeGoal" />
-          </div>
-        </Wrapper>
-        <button type="submit">Save</button>
-      </Form>
-    </Formik>
+          <input
+            type="number"
+            name="intakeGoal"
+            value={intakeGoal}
+            onChange={e => setIntakeGoal(e.target.value)}
+          />
+        </div>
+      </Wrapper>
+      <button type="submit" onClick={handleSubmit}>
+        Save
+      </button>
+    </form>
   );
 };

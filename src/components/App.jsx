@@ -24,44 +24,42 @@ const App = () => {
   const dispatch = useDispatch();
   const isRefreshing = useSelector(selectIsRefreshing);
 
-  // useEffect(() => {
-  //   dispatch(refreshUserThunk());
-  // }, [dispatch]);
+  useEffect(() => {
+    dispatch(refreshUserThunk());
+  }, [dispatch]);
 
-  return <DailyNormaModal />;
-
-  // return !isRefreshing ? (
-  //   <Routes>
-  //     <Route path="/" element={<SharedLayout />}>
-  //       <Route
-  //         path="/"
-  //         element={
-  //           <RestrictedRoute component={<WelcomePage />} redirectTo="/home" />
-  //         }
-  //       />
-  //       <Route
-  //         path="home"
-  //         element={<PrivateRoute component={HomePage} redirectTo={'/'} />}
-  //       />
-  //       <Route
-  //         path="signin"
-  //         element={
-  //           <RestrictedRoute component={<SigninPage />} redirectTo="/home" />
-  //         }
-  //       />
-  //       <Route
-  //         path="signup"
-  //         element={
-  //           <RestrictedRoute component={<SignUpPage />} redirectTo="/home" />
-  //         }
-  //       />
-  //       <Route path="reset-pass" element={<ResetPassPage />} />
-  //       <Route path="*" element={<ErrorPage />} />
-  //     </Route>
-  //   </Routes>
-  // ) : (
-  //   <Loader />
-  // );
+  return !isRefreshing ? (
+    <Routes>
+      <Route path="/" element={<SharedLayout />}>
+        <Route
+          path="/"
+          element={
+            <RestrictedRoute component={<WelcomePage />} redirectTo="/home" />
+          }
+        />
+        <Route
+          path="home"
+          element={<PrivateRoute component={HomePage} redirectTo={'/'} />}
+        />
+        <Route
+          path="signin"
+          element={
+            <RestrictedRoute component={<SigninPage />} redirectTo="/home" />
+          }
+        />
+        <Route
+          path="signup"
+          element={
+            <RestrictedRoute component={<SignUpPage />} redirectTo="/home" />
+          }
+        />
+        <Route path="reset-pass" element={<ResetPassPage />} />
+        <Route path="*" element={<ErrorPage />} />
+      </Route>
+    </Routes>
+  ) : (
+    <Loader />
+  );
 };
 
 export default App;
