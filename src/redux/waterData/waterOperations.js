@@ -15,16 +15,17 @@ export const addWatersThunk = createAsyncThunk(
       const data = await addWaters(newWater);
       return data;
     } catch (error) {
-      switch (error.response?.status) {
-        case 409:
-          toast.error(`You can't add water at the same time twice`);
-          return rejectWithValue(error.message);
-        case 400:
-          toast.warning(`You must write at least 1 ml.`);
-          return rejectWithValue(error.message);
-        default:
-          return rejectWithValue(error.message);
-      }
+      console.log(error.message);
+      // switch (error.response.status) {
+      //   case 409:
+      //     toast.error(`You can't add water at the same time twice`);
+      //     return rejectWithValue(error.message);
+      //   case 400:
+      //     toast.warning(`You must write at least 1 ml.`);
+      //     return rejectWithValue(error.message);
+      //   default:
+      //     return rejectWithValue(error.message);
+      // }
     }
   },
 );
