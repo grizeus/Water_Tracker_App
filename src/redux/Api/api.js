@@ -19,9 +19,9 @@ export const signup = async body => {
 };
 
 export const signin = async body => {
-  const { data: wrap } = await axios.post('/auth/signin', body);
-  setToken(wrap.data.accessToken);
-  return wrap.data;
+  const { data } = await axios.post('/auth/signin', body);
+  setToken(data.accessToken);
+  return data;
 };
 
 export const logout = async () => {
