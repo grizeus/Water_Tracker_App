@@ -70,8 +70,8 @@ export const TodayWaterList = () => {
               <IconGlass>
                 <use href={icons.glass}></use>
               </IconGlass>
-              <TodayVolume>{record.waterVolume} ml</TodayVolume>
-              <TodayTime>{formatCustomTime(record.date)}</TodayTime>
+              <TodayVolume>{record.amount} ml</TodayVolume>
+              <TodayTime>{formatCustomTime(record.time)}</TodayTime>
             </TodayInfo>
             <TodayTools>
               <ButtonChange onClick={() => openModalToEdit(record)}>

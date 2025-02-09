@@ -6,6 +6,6 @@ export function formatDate(dateString, formatString = 'yyyy-MM-dd ') {
 }
 
 export function formatCustomTime(dateString, formatString = 'h:mm a') {
-  const date = addHours(parseISO(dateString), -2);
+  const date = addHours(parseISO(dateString), 0);
   return format(date, formatString);
 }
