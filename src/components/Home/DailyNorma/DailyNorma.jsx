@@ -2,6 +2,13 @@ import { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { BaseModalWindow } from '../../common/BaseModalWindow/BaseModalWindow';
 import { selectUser } from '../../../redux/auth/authSelectors';
+import {
+  DailyWrapper,
+  FlexContainer,
+  TitleForm,
+  ButtonEdit,
+  Description,
+} from './DailyNorma.styled';
 
 export const DailyNorma = () => {
   const { waterRate } = useSelector(selectUser);
@@ -13,12 +20,13 @@ export const DailyNorma = () => {
   const convertInL = (waterRate / 1000).toFixed(1);
 
   return (
-    <div>
-      <h3>My Daily Norma</h3>
-      <p>{waterRate ? convertInL + 'L' : '2 L'} </p>
-      <button onClick={openModal}>Edit</button>
-
+    <DailyWrapper>
+      <TitleForm>My Daily Norma</TitleForm>
+      <FlexContainer>
+        <Description>{waterRate ? convertInL : 2} L </Description>
+        <ButtonEdit onClick={openModal}>Edit</ButtonEdit>
+      </FlexContainer>
       {isModalOpen && <BaseModalWindow onClose={closeModal} />}
-    </div>
+    </DailyWrapper>
   );
 };

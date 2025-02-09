@@ -1,6 +1,6 @@
 import { Loader } from 'components';
 import { lazy, Suspense, useEffect } from 'react';
-import { Navigate, Route, Routes} from 'react-router-dom';
+import { Navigate, Route, Routes } from 'react-router-dom';
 import PrivateRoute from './PrivateRoute';
 import RestrictedRoute from './RestrictedRoute';
 
