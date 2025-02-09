@@ -104,9 +104,23 @@ export const deleteWater = async id => {
 };
 
 export const fetchTodayWater = async () => {
-  return await axios.get('/water/today');
+  const token = useSelector(selectUserToken);
+  const data = await axios.get('/water/today', {
+    headers: {
+      'Content-Type': 'application/json',
+      Authorization: token,
+    },
+  });
+  return data;
 };
 
 export const fetchMonthWater = async (month) => {
-  return await axios.get(`/water/month/${month}`);
+  const token = useSelector(selectUserToken);
+  const data = await axios.get(`/water/month/${month}`, {
+    headers: {
+      'Content-Type': 'application/json',
+      Authorization: token,
+    },
+  });
+  return data;
 };
