@@ -104,9 +104,9 @@ export const deleteWater = async id => {
 };
 
 export const fetchTodayWater = async () => {
-  return await axios.get('water/today');
+  return await axios.get('/water/today');
 };
 
 export const fetchMonthWater = async (month) => {
-  return await axios.get(`water/month/${month}`);
+  return await axios.get(`/water/month/${month}`);
 };
