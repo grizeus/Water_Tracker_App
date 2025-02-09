@@ -1,4 +1,6 @@
 import axios from 'axios';
+import { useSelector } from 'react-redux';
+import { selectUserToken } from '../auth/authSelectors';
 
 axios.defaults.baseURL = 'https://watertrackerbackend-5ymk.onrender.com';
 
@@ -19,9 +21,9 @@ export const signup = async body => {
 };
 
 export const signin = async body => {
-  const { data: wrap } = await axios.post('/auth/signin', body);
-  setToken(wrap.data.accessToken);
-  return wrap.data;
+  const { data } = await axios.post('/auth/signin', body);
+  setToken(data.accessToken);
+  return data;
 };
 
 export const logout = async () => {
@@ -77,9 +79,12 @@ export const deleteUser = async () => {
 
 // Water
 export const addWaters = async newWater => {
-  const { data } = await axios.post('/water/entry', newWater, {
+  const token = useSelector(selectUserToken);
+  const data  = await axios.post('/water/entry', newWater, {
     headers: {
       'Content-Type': 'application/json',
+      'Authorization': token,
+
     },
   });
   return data;
@@ -99,9 +104,23 @@ export const deleteWater = async id => {
 };
 
 export const fetchTodayWater = async () => {
-  return await axios.get('water/today');
+  const token = useSelector(selectUserToken);
+  const data = await axios.get('/water/today', {
+    headers: {
+      'Content-Type': 'application/json',
+      Authorization: token,
+    },
+  });
+  return data;
 };
 
 export const fetchMonthWater = async (month) => {
-  return await axios.get(`water/month/${month}`);
+  const token = useSelector(selectUserToken);
+  const data = await axios.get(`/water/month/${month}`, {
+    headers: {
+      'Content-Type': 'application/json',
+      Authorization: token,
+    },
+  });
+  return data;
 };
