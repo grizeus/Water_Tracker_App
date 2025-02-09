@@ -87,7 +87,7 @@ export const addWaters = async newWater => {
 
     },
   });
-  return {data};
+  return data;
 };
 
 export const editWater = async ({ newWaterUser, id }) => {
