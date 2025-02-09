@@ -15,7 +15,7 @@ export const addWatersThunk = createAsyncThunk(
       const data = await addWaters(newWater);
       return data;
     } catch (error) {
-      switch (error.response.status) {
+      switch (error.response?.status) {
         case 409:
           toast.error(`You can't add water at the same time twice`);
           return rejectWithValue(error.message);
