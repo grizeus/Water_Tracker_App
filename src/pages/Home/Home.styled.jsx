@@ -6,7 +6,13 @@ import imgHomeTablet1x from '../../assets/images/background/homePage/tablet/bubb
 import imgHomeTablet2x from '../../assets/images/background/homePage/tablet/bubbleTablet@2x.png';
 import imgHomeDesktop1x from '../../assets/images/background/homePage/desktop/bubbleDesk.png';
 import imgHomeDesktop2x from '../../assets/images/background/homePage/desktop/bubbleDesk@2x.png';
-import botle from '../../assets/images/background/homePage/mobile/bottleMob.png';
+
+import imgBottleMobile1x from '../../assets/images/background/homePage/mobile/bottleMob.png';
+import imgBottleMobile2x from '../../assets/images/background/homePage/mobile/bottleMob@2x.png';
+import imgBottleTablet1x from '../../assets/images/background/homePage/tablet/bottleTabl.png';
+import imgBottleTablet2x from '../../assets/images/background/homePage/tablet/bottleTabl@2x.png';
+import imgBottleDesktop1x from '../../assets/images/background/homePage/desktop/bottleDesc.png';
+import imgBottleDesktop2x from '../../assets/images/background/homePage/desktop/bottleDesc@2x.png';
 
 export const Section = styled.section`
   background-size: cover;
