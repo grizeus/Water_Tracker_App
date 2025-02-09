@@ -115,7 +115,7 @@ export const TodayListModal = ({
     }
 
     const waterData = {
-      date: isoDate,
+      time: isoDate,
       amount,
     };
     // console.log(waterData);
