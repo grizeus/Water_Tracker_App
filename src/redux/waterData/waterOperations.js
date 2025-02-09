@@ -12,7 +12,7 @@ export const addWatersThunk = createAsyncThunk(
   'water/addWater',
   async (newWater, { rejectWithValue }) => {
     try {
-      const data = await addWaters(newWater);
+      const {data} = await addWaters(newWater);
       return data;
     } catch (error) {
       console.log(error.message);
