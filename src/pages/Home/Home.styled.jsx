@@ -6,6 +6,7 @@ import imgHomeTablet1x from '../../assets/images/background/homePage/tablet/bubb
 import imgHomeTablet2x from '../../assets/images/background/homePage/tablet/bubbleTablet@2x.png';
 import imgHomeDesktop1x from '../../assets/images/background/homePage/desktop/bubbleDesk.png';
 import imgHomeDesktop2x from '../../assets/images/background/homePage/desktop/bubbleDesk@2x.png';
+import botle from '../../assets/images/background/homePage/mobile/bottleMob.png';
 
 export const Section = styled.section`
   background-size: cover;
@@ -16,7 +17,8 @@ export const Section = styled.section`
 
   background-image: -webkit-image-set(
     url(${imgHomeMobile1x}) 1x,
-    url(${imgHomeMobile2x}) 2x
+    url(${imgHomeMobile2x}) 2x,
+    
   );
   background-image: image-set(
     url(${imgHomeMobile1x}) 1x,
@@ -66,7 +68,7 @@ export const WaterDescription = styled.div`
   background-color: #ecf2ff;
   box-shadow: 0px 4px 14px 0px rgba(64, 123, 255, 0.3);
   max-width: 280px;
-  height: 836px;
+  // height: 836px;
   margin: 40px 20px;
   padding: 24px 8px;
 
@@ -74,12 +76,12 @@ export const WaterDescription = styled.div`
     margin: 61px 32px 43px 32px;
     max-width: 688px;
     padding: 32px 24px;
-    height: 704px;
+    // height: 704px;
   }
 
   @media screen and (min-width: 1440px) {
     margin: 20px 110px 40px 32px;
     max-width: 680px;
-    height: 592px;
+    // height: 592px;
   }
 `;
