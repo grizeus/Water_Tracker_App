@@ -74,7 +74,6 @@ export const WaterDescription = styled.div`
   background-color: #ecf2ff;
   box-shadow: 0px 4px 14px 0px rgba(64, 123, 255, 0.3);
   max-width: 280px;
-  // height: 836px;
   margin: 40px 20px;
   padding: 24px 8px;
 
@@ -82,12 +81,10 @@ export const WaterDescription = styled.div`
     margin: 61px 32px 43px 32px;
     max-width: 688px;
     padding: 32px 24px;
-    // height: 704px;
   }
 
   @media screen and (min-width: 1440px) {
     margin: 20px 110px 40px 32px;
     max-width: 680px;
-    // height: 592px;
   }
 `;
