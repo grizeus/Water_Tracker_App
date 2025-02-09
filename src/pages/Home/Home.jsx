@@ -7,6 +7,9 @@ import imgBottleTablet1x from '../../assets/images/background/homePage/tablet/bo
 import imgBottleTablet2x from '../../assets/images/background/homePage/tablet/bottleTabl@2x.png';
 import imgBottleDesktop1x from '../../assets/images/background/homePage/desktop/bottleDesc.png';
 import imgBottleDesktop2x from '../../assets/images/background/homePage/desktop/bottleDesc@2x.png';
+// import {TodayWaterList} from "../../components/Home/TodayWaterList/TodayWaterList"
+import { TodayWaterList } from '../../components/Home/TodayWaterList/TodayWaterList';
+import { MonthStatsTable } from '../../components/Home/MonthStatsTable/MonthStatsTable';
 
 const Home = () => {
   return (
@@ -37,12 +40,8 @@ const Home = () => {
           </picture>
         </div>
         <WaterDescription>
-          <div>
-            <h3>Today Water list</h3>
-          </div>
-          <div>
-            <h3>Monthly water list</h3>
-          </div>
+          <TodayWaterList />
+          <MonthStatsTable />
         </WaterDescription>
       </Container>
     </Section>
