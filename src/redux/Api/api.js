@@ -1,5 +1,4 @@
 import axios from 'axios';
-import { formatDate } from '../../helpers/utils/dateUtils';
 
 axios.defaults.baseURL = 'https://watertrackerbackend-5ymk.onrender.com';
 
@@ -20,9 +19,9 @@ export const signup = async body => {
 };
 
 export const signin = async body => {
-  const { data } = await axios.post('/auth/signin', body);
-  setToken(data.accessToken);
-  return data;
+  const { data: wrap } = await axios.post('/auth/signin', body);
+  setToken(wrap.data.accessToken);
+  return wrap.data;
 };
 
 export const logout = async () => {
@@ -75,8 +74,8 @@ export const deleteUser = async () => {
   await axios.delete('/user/delete-account');
   unsetToken();
 };
-// Water
 
+// Water
 export const addWaters = async newWater => {
   const { data } = await axios.post('/water/entry', newWater, {
     headers: {
@@ -100,10 +99,9 @@ export const deleteWater = async id => {
 };
 
 export const fetchTodayWater = async () => {
-  const date = formatDate(new Date());
-  return await axios.get(`/today?date=${date}`);
+  return await axios.get('water/today');
 };
 
-export const fetchMonthWater = async ({ startDate, endDate }) => {
-  return await axios.get(`/month?startDate=${startDate}&endDate=${endDate}`);
+export const fetchMonthWater = async (month) => {
+  return await axios.get(`water/month/${month}`);
 };

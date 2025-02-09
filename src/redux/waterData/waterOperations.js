@@ -61,8 +61,9 @@ export const getTodayWater = createAsyncThunk(
   'water/getDayWater',
   async (_, { rejectWithValue }) => {
     try {
-      const { data } = await fetchTodayWater();
-      return data[0];
+      const { data: wrap } = await fetchTodayWater();
+      
+      return wrap.data;
     } catch (error) {
       return rejectWithValue(error.message);
     }
@@ -71,10 +72,10 @@ export const getTodayWater = createAsyncThunk(
 
 export const getMonthWater = createAsyncThunk(
   'water/getMonthWater',
-  async (rangeDate, { rejectWithValue }) => {
+  async (month, { rejectWithValue }) => {
     try {
-      const { data } = await fetchMonthWater(rangeDate);
-      return data;
+      const { data: wrap } = await fetchMonthWater(month);
+      return wrap.data;
     } catch (error) {
       return rejectWithValue(error.message);
     }
