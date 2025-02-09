@@ -1,6 +1,6 @@
 import { Loader } from 'components';
-import { lazy, useEffect } from 'react';
-import { Route, Routes } from 'react-router-dom';
+import { lazy, Suspense, useEffect } from 'react';
+import { Navigate, Route, Routes, useLocation } from 'react-router-dom';
 import PrivateRoute from './PrivateRoute';
 import RestrictedRoute from './RestrictedRoute';
 
@@ -53,8 +53,13 @@ const App = () => {
           }
         />
         <Route path="reset-pass" element={<ResetPassPage />} />
-        <Route path="*" element={<ErrorPage />} />
       </Route>
+
+        {/* Сторінка помилки 404 рендериться окремо, без SharedLayout, тому огортаємо її в Suspense */}
+      <Route path="/404" element={<Suspense fallback={<Loader />}>
+          <ErrorPage />
+        </Suspense>} />
+      <Route path="*" element={<Navigate to="/404" replace />} />
     </Routes>
   ) : (
     <Loader />
