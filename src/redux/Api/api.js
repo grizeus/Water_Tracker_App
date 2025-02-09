@@ -49,9 +49,9 @@ export const updateWaterRate = async newWaterRate => {
   return data;
 };
 
-export const refreshUser = async token => {
+export const getUser = async token => {
   setToken(token);
-  const { data } = await axios.get('/user/current');
+  const { data } = await axios.get('/user');
   return data;
 };
 

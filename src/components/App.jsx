@@ -1,11 +1,10 @@
 import { Loader } from 'components';
 import { lazy, Suspense, useEffect } from 'react';
-import { Navigate, Route, Routes, useLocation } from 'react-router-dom';
+import { Navigate, Route, Routes} from 'react-router-dom';
 import PrivateRoute from './PrivateRoute';
 import RestrictedRoute from './RestrictedRoute';
 
-import { useDispatch, useSelector } from 'react-redux';
-import { refreshUserThunk } from '../redux/auth/authOperations';
+import { useSelector } from 'react-redux';
 import { selectIsRefreshing } from '../redux/auth/authSelectors';
 import SharedLayout from './SharedLayout';
 
@@ -20,12 +19,7 @@ const ResetPassPage = lazy(() =>
 );
 
 const App = () => {
-  const dispatch = useDispatch();
   const isRefreshing = useSelector(selectIsRefreshing);
-
-  useEffect(() => {
-    dispatch(refreshUserThunk());
-  }, [dispatch]);
 
   return !isRefreshing ? (
     <Routes>
@@ -38,7 +32,7 @@ const App = () => {
         />
         <Route
           path="home"
-          element={<PrivateRoute component={<HomePage/>} redirectTo={'/'} />}
+          element={<PrivateRoute component={HomePage} redirectTo={'/'} />}
         />
         <Route
           path="signin"

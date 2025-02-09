@@ -4,7 +4,7 @@ import {
   deleteUser,
   editUserInfo,
   logout,
-  refreshUser,
+  getUser,
   requestPassword,
   resetPassword,
   signin,
@@ -87,12 +87,12 @@ export const resPassThunk = createAsyncThunk(
 
 // User
 
-export const refreshUserThunk = createAsyncThunk(
-  'auth/refresh',
+export const getUserThunk = createAsyncThunk(
+  '/user',
   async (_, { rejectWithValue, getState }) => {
     try {
       const { auth } = getState();
-      const data = await refreshUser(auth.token);
+      const data = await getUser(auth.token);
 
       return data;
     } catch (error) {
