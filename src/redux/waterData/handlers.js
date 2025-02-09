@@ -1,8 +1,8 @@
 export const handlerAddWater = (
   state,
-  { payload: { _id, waterVolume, date, owner } },
+  { payload: { waterVolume, date, owner } },
 ) => {
-  state.today.dailyWaterList.push({ _id, waterVolume, date, owner });
+  state.today.dailyWaterList.push({ waterVolume, date, owner });
   state.today.dailyGoal += waterVolume;
 };
 
