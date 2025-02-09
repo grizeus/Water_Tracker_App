@@ -1,4 +1,6 @@
 import axios from 'axios';
+import { useSelector } from 'react-redux';
+import { selectUserToken } from '../auth/authSelectors';
 
 axios.defaults.baseURL = 'https://watertrackerbackend-5ymk.onrender.com';
 
@@ -77,9 +79,12 @@ export const deleteUser = async () => {
 
 // Water
 export const addWaters = async newWater => {
+  const token = useSelector(selectUserToken);
   const { data } = await axios.post('/water/entry', newWater, {
     headers: {
       'Content-Type': 'application/json',
+      'Authorization': token,
+
     },
   });
   return data;
