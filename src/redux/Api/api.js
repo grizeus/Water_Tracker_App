@@ -80,14 +80,14 @@ export const deleteUser = async () => {
 // Water
 export const addWaters = async newWater => {
   const token = useSelector(selectUserToken);
-  const { data } = await axios.post('/water/entry', newWater, {
+  const data  = await axios.post('/water/entry', newWater, {
     headers: {
       'Content-Type': 'application/json',
       'Authorization': token,
 
     },
   });
-  return data;
+  return {data};
 };
 
 export const editWater = async ({ newWaterUser, id }) => {
