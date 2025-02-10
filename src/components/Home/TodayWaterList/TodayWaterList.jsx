@@ -100,14 +100,15 @@ export const TodayWaterList = () => {
         recordId={selectedRecord?._id}
       />
       <TodayListModal
-        initialAmount={selectedRecord?.waterVolume}
-        initialTime={selectedRecord?.date}
+        initialAmount={selectedRecord?.amount}
+        initialTime={selectedRecord?.time}
         isEditing={selectedRecord !== null}
         existingRecordId={selectedRecord?._id}
         onClose={() => setModalOpen(false)}
         onShow={isModalOpen}
         onUpdate={handleUpdate}
       />
+      
     </TodayWrapper>
   );
 };
