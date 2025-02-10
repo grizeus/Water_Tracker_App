@@ -66,8 +66,6 @@ export const TodayListModal = ({
 
   useEffect(() => {
     if (isEditing) {
-      // console.log('here');
-      // console.log(initialTime);
       setAmount(initialAmount || 0);
       setTime(formatCustomTime(initialTime, 'HH:mm'));
     } else {
