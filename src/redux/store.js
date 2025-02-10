@@ -1,11 +1,5 @@
-import { configureStore } from '@reduxjs/toolkit';
+import { combineReducers, configureStore } from '@reduxjs/toolkit';
 import {
-  FLUSH,
-  PAUSE,
-  PERSIST,
-  PURGE,
-  REGISTER,
-  REHYDRATE,
   persistReducer,
   persistStore,
 } from 'redux-persist';
@@ -15,10 +9,10 @@ import { rootReducer }  from '/src/redux/root/rootSlice.js';
 import { waterReducer } from './waterData/waterSlice';
 import { optionsReducer } from './options/optionsSlice';
 
-const PersistConfig = {
-  key: 'root',
+const authPersistConfig = {
+  key: 'auth',
   storage,
-  whitelist: ['token'],
+  whitelist: ['token', 'user'],
 };
 
 const OptionsPersistConfig = {
@@ -26,17 +20,21 @@ const OptionsPersistConfig = {
   storage,
 };
 
+const persistedAuthReducer = persistReducer(authPersistConfig, authReducer);
+
+const reducers = combineReducers({
+  root: rootReducer,
+  auth: persistedAuthReducer,
+  waterData: waterReducer,
+  options: persistReducer(OptionsPersistConfig, optionsReducer),
+});
+
 export const store = configureStore({
-  reducer: {
-    root: rootReducer,
-    auth: persistReducer(PersistConfig, authReducer),
-    waterData: waterReducer,
-    options: persistReducer(OptionsPersistConfig, optionsReducer),
-  },
+  reducer: reducers,
   middleware: getDefaultMiddleware =>
     getDefaultMiddleware({
       serializableCheck: {
-        ignoredActions: [FLUSH, REHYDRATE, PAUSE, PERSIST, PURGE, REGISTER],
+        ignoredActions: ['persist/PERSIST', 'persist/REHYDRATE'],
       },
     }),
 });

@@ -10,13 +10,13 @@ import {
   reqPassThunk,
   resPassThunk,
   deleteUserThunk,
+  refreshUser,
 } from './authOperations';
 import {
   handleLogin,
   handleLogout,
-  handleRefreshFulfield,
-  handleRefreshPending,
-  handleRefreshReject,
+  handleGetUserPending,
+  handleGetUSerReject,
   handleRegister,
   handlerEditUserInfo,
   handlerUpdateAvatar,
@@ -55,12 +55,26 @@ const authSlice = createSlice({
       .addCase(updateWaterRateThunk.fulfilled, handlerUpdateWaterRate)
       .addCase(updateAvatarThunk.fulfilled, handlerUpdateAvatar)
       .addCase(editUserInfoThunk.fulfilled, handlerEditUserInfo)
-      .addCase(getUserThunk.fulfilled, handleRefreshFulfield)
-      .addCase(getUserThunk.pending, handleRefreshPending)
-      .addCase(getUserThunk.rejected, handleRefreshReject)
+      .addCase(getUserThunk.fulfilled, (state, action) => {
+        state.user = action.payload;
+        state.isLoggedIn = true;
+      })
+      .addCase(getUserThunk.pending, handleGetUserPending)
+      .addCase(getUserThunk.rejected, handleGetUSerReject)
       .addCase(reqPassThunk.fulfilled, handleReqPass)
       .addCase(resPassThunk.fulfilled, handleResPass)
-      .addCase(deleteUserThunk.fulfilled, handleDeleteUser);
+      .addCase(deleteUserThunk.fulfilled, handleDeleteUser)
+      .addCase(refreshUser.pending, state => {
+        state.isRefreshing = true;
+      })
+      .addCase(refreshUser.fulfilled, (state, action) => {
+        state.user = action.payload;
+        state.isLoggedIn = true;
+        state.isRefreshing = false;
+      })
+      .addCase(refreshUser.rejected, state => {
+        state.isRefreshing = false;
+      });
   },
 });
 
