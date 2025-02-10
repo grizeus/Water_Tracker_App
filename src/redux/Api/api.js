@@ -1,6 +1,5 @@
 import axios from 'axios';
 
-
 export const instanceWater = axios.create({
   withCredentials: true,
   baseURL: 'https://watertrackerbackend-5ymk.onrender.com',
@@ -77,11 +76,11 @@ export const updateAvatar = async newPhotoFile => {
 };
 
 export const editUserInfo = async body => {
+  // console.log(body);
+
   const { data } = await instanceWater.patch('/user', body);
   return data;
 };
-
-
 
 export const deleteUser = async () => {
   await instanceWater.delete('/user/delete-account');
@@ -90,12 +89,15 @@ export const deleteUser = async () => {
 
 // Water
 export const addWaters = async newWater => {
-  const data  = await instanceWater.post('/water/entry', newWater);
+  const data = await instanceWater.post('/water/entry', newWater);
   return data;
 };
 
 export const editWater = async ({ newWaterUser, id }) => {
-  const { data } = await instanceWater.patch(`/water/entry/${id}`, newWaterUser);
+  const { data } = await instanceWater.patch(
+    `/water/entry/${id}`,
+    newWaterUser,
+  );
   return data;
 };
 
@@ -108,7 +110,7 @@ export const fetchTodayWater = async () => {
   return wrap.data;
 };
 
-export const fetchMonthWater = async (month) => {
+export const fetchMonthWater = async month => {
   const { data: wrap } = await instanceWater.get(`/water/month/${month}`);
   return wrap.data;
 };

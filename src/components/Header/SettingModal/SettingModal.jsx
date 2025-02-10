@@ -59,9 +59,10 @@ const settingFormValidationSchema = Yup.object().shape({
     .test(
       'isNewPasswordDifferent',
       'New password should be different from the old one',
-      (value, { parent }) => !value || value !== parent.outdatedPassword,
+      // (value, { parent }) => !value || value !== parent.outdatedPassword,
+      (value, { parent }) => !value || value !== parent.oldPassword,
     ),
-  outdatedPassword: Yup.string()
+  oldPassword: Yup.string()
     .min(8, 'Old password must be at least 8 characters long')
     .max(64, 'Old password must be less then 64 characters long')
     .when('newPassword', (newPassword, field) =>
@@ -80,12 +81,15 @@ export const SettingModal = ({ onClose, onShow }) => {
   const { isLoading } = useSelector(selectIsLoading);
   const [isPasswordShown, setIsPasswordShown] = useState(false);
   const [isAvatarLoading, setIsAvatarLoading] = useState(false);
+  // const [isAvatarLoading, setIsAvatarLoading] = useState(false || '');
 
   const initialValues = {
     gender: gender || '',
     name: name || '',
     email: email || '',
-    outdatedPassword: '',
+    // outdatedPassword: '',
+    oldPassword: '',
+
     newPassword: '',
     repeatedPassword: '',
   };
@@ -94,13 +98,18 @@ export const SettingModal = ({ onClose, onShow }) => {
     if (values.outdatedPassword && !values.newPassword) {
       return;
     }
-    const { gender, name, email, outdatedPassword, newPassword } = values;
+    // const { gender, name, email, outdatedPassword, newPassword } = values;
+
+    const { gender, name, email, oldPassword, newPassword } = values;
 
     const formData = {
       gender,
       name,
       email,
-      outdatedPassword,
+
+      // outdatedPassword,
+      oldPassword,
+
       newPassword,
     };
 
@@ -111,6 +120,8 @@ export const SettingModal = ({ onClose, onShow }) => {
         dataSend[key] = value;
       }
     });
+
+    // console.log(dataSend);
 
     dispatch(editUserInfoThunk(dataSend)).then(data => {
       if (!data.error) {
@@ -129,6 +140,8 @@ export const SettingModal = ({ onClose, onShow }) => {
     formData.append('avatar', e.target.files[0]);
 
     dispatch(updateAvatarThunk(formData)).then(data => {
+      // console.log(data);
+
       if (!data.error) {
         setIsAvatarLoading(false);
       }
@@ -148,7 +161,6 @@ export const SettingModal = ({ onClose, onShow }) => {
             >
               {({ values, errors, touched }) => (
                 <Form>
-                  {console.log(values)}
                   <FormField>
                     <FormText>Your photo</FormText>
                     <DownloadWrap>
@@ -190,8 +202,8 @@ export const SettingModal = ({ onClose, onShow }) => {
                             <RadioBtn
                               type="radio"
                               name="gender"
-                              value="female"
-                              checked={values.gender === 'female'}
+                              value="woman"
+                              checked={values.gender === 'woman'}
                             />
                             <RadioBtnText>Woman</RadioBtnText>
                           </RadioBtnLabel>
@@ -199,8 +211,8 @@ export const SettingModal = ({ onClose, onShow }) => {
                             <RadioBtn
                               type="radio"
                               name="gender"
-                              value="male"
-                              checked={values.gender === 'male'}
+                              value="man"
+                              checked={values.gender === 'man'}
                             />
                             <RadioBtnText>Man</RadioBtnText>
                           </RadioBtnLabel>
@@ -243,10 +255,9 @@ export const SettingModal = ({ onClose, onShow }) => {
                           <Input
                             type={isPasswordShown ? 'text' : 'password'}
                             id="oldPassword"
-                            name="outdatedPassword"
+                            name="oldPassword"
                             className={
-                              errors.outdatedPassword &&
-                              touched.outdatedPassword
+                              errors.oldPassword && touched.oldPassword
                                 ? 'error-input'
                                 : null
                             }
@@ -267,10 +278,7 @@ export const SettingModal = ({ onClose, onShow }) => {
                             )}
                           </IconBtn>
                         </PasswordInputWrap>
-                        <StyledErrorMessage
-                          component="p"
-                          name="outdatedPassword"
-                        />
+                        <StyledErrorMessage component="p" name="oldPassword" />
                       </PasswordFormField>
                       <PasswordFormField>
                         <PasswordLabel htmlFor="password">
@@ -283,7 +291,7 @@ export const SettingModal = ({ onClose, onShow }) => {
                             name="newPassword"
                             className={
                               (errors.newPassword && touched.newPassword) ||
-                              (values.outdatedPassword && !values.newPassword)
+                              (values.oldPassword && !values.newPassword)
                                 ? 'error-input'
                                 : null
                             }
@@ -304,7 +312,7 @@ export const SettingModal = ({ onClose, onShow }) => {
                             )}
                           </IconBtn>
                         </PasswordInputWrap>
-                        {values.outdatedPassword && !values.newPassword && (
+                        {values.oldPassword && !values.newPassword && (
                           <StyledErrorText>
                             Please, enter new password
                           </StyledErrorText>

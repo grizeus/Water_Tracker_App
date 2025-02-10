@@ -37,7 +37,6 @@ export const logInThunk = createAsyncThunk(
   async (credentials, { rejectWithValue }) => {
     try {
       const data = await signin(credentials);
-      console.log(data);
       return data;
     } catch (error) {
       if (error.response.status === 401) {
@@ -143,6 +142,7 @@ export const updateWaterRateThunk = createAsyncThunk(
 export const updateAvatarThunk = createAsyncThunk(
   'user/avatar',
   async (newPhotoFile, { rejectWithValue }) => {
+    // console.log(newPhotoFile);
     try {
       const avatarURL = await updateAvatar(newPhotoFile);
       return avatarURL;
@@ -158,6 +158,7 @@ export const updateAvatarThunk = createAsyncThunk(
 export const editUserInfoThunk = createAsyncThunk(
   'user',
   async (body, { rejectWithValue }) => {
+    // console.log(body);
     try {
       const data = await editUserInfo(body);
       return data;
