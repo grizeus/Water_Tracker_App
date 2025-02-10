@@ -90,7 +90,8 @@ export const deleteUser = async () => {
 
 // Water
 export const addWaters = async newWater => {
-  const data  = await instanceWater.post('/water/entry', newWater);
+  const data = await instanceWater.post('/water/entry', newWater);
+  console.log(data);
   return data;
 };
 
