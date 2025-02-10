@@ -34,9 +34,9 @@ export const TodayListModal = ({
   initialAmount,
   initialTime,
   isEditing,
+  existingRecordId,
   onClose,
   onShow,
-  existingRecordId,
 }) => {
   const [amount, setAmount] = useState(initialAmount || 0);
   const [time, setTime] = useState(
