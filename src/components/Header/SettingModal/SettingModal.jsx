@@ -94,7 +94,6 @@ export const SettingModal = ({ onClose, onShow }) => {
     if (values.outdatedPassword && !values.newPassword) {
       return;
     }
-
     const { gender, name, email, outdatedPassword, newPassword } = values;
 
     const formData = {
@@ -149,6 +148,7 @@ export const SettingModal = ({ onClose, onShow }) => {
             >
               {({ values, errors, touched }) => (
                 <Form>
+                  {console.log(values)}
                   <FormField>
                     <FormText>Your photo</FormText>
                     <DownloadWrap>

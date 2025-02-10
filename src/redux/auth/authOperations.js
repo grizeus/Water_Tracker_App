@@ -12,6 +12,7 @@ import {
   updateAvatar,
   updateWaterRate,
 } from '../Api/api';
+import { da } from 'date-fns/locale';
 
 export const registerThunk = createAsyncThunk(
   'auth/signup',
