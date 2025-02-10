@@ -115,8 +115,8 @@ export const TodayListModal = ({
     }
 
     const waterData = {
-      waterVolume: amount,
-      date: isoDate,
+      time: isoDate,
+      amount,
     };
     // console.log(waterData);
     if (isEditing) {

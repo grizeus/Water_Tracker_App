@@ -15,6 +15,7 @@ export const addWatersThunk = createAsyncThunk(
       const data = await addWaters(newWater);
       return data;
     } catch (error) {
+      console.log(error.message);
       switch (error.response.status) {
         case 409:
           toast.error(`You can't add water at the same time twice`);
@@ -61,8 +62,8 @@ export const getTodayWater = createAsyncThunk(
   'water/getDayWater',
   async (_, { rejectWithValue }) => {
     try {
-      const { data } = await fetchTodayWater();
-      return data[0];
+      const data = await fetchTodayWater();
+      return data;
     } catch (error) {
       return rejectWithValue(error.message);
     }
@@ -71,9 +72,9 @@ export const getTodayWater = createAsyncThunk(
 
 export const getMonthWater = createAsyncThunk(
   'water/getMonthWater',
-  async (rangeDate, { rejectWithValue }) => {
+  async (month, { rejectWithValue }) => {
     try {
-      const { data } = await fetchMonthWater(rangeDate);
+      const data = await fetchMonthWater(month);
       return data;
     } catch (error) {
       return rejectWithValue(error.message);

@@ -1,9 +1,9 @@
 export const handlerAddWater = (
   state,
-  { payload: { _id, waterVolume, date, owner } },
+  { payload: { _id, time, amount } },
 ) => {
-  state.today.dailyWaterList.push({ _id, waterVolume, date, owner });
-  state.today.dailyNormFulfillment += waterVolume;
+  state.today.dailyWaterList.push({ _id, time, amount });
+  state.today.dailyGoal += amount;
 };
 
 export const handleEditWater = (state, { payload }) => {
@@ -14,7 +14,7 @@ export const handleEditWater = (state, { payload }) => {
     array[idx] = payload;
   }
 
-  state.today.dailyNormFulfillment = array.reduce(
+  state.today.dailyGoal = array.reduce(
     (acc, item) => acc + item.waterVolume,
     0,
   );
@@ -27,16 +27,16 @@ export const handlerDeleteWater = (state, { payload }) => {
 
   const array = state.today.dailyWaterList;
 
-  state.today.dailyNormFulfillment = array.reduce(
+  state.today.dailyGoal = array.reduce(
     (acc, item) => acc + item.waterVolume,
     0,
   );
 };
 
 export const handleGetTodayWater = (state, { payload }) => {
-  state.today.dailyWaterList = payload.waterVolumes;
-  state.today.dailyNormFulfillment = payload.waterVolumeSum;
-  state.today.waterVolumePercentage = payload.waterVolumePercentage;
+  state.today.dailyWaterList = payload.entries;
+  state.today.dailyGoal = payload.dailyGoal;
+  state.today.progress = payload.progress;
 };
 
 export const handleGetMonthWater = (state, { payload }) => {

@@ -1,64 +1,74 @@
 import axios from 'axios';
-import { formatDate } from '../../helpers/utils/dateUtils';
 
-axios.defaults.baseURL = 'https://watertrackerbackend-5ymk.onrender.com';
 
-const setToken = token => {
-  axios.defaults.headers.common.Authorization = `Bearer ${token}`;
+export const instanceWater = axios.create({
+  withCredentials: true,
+  baseURL: 'https://watertrackerbackend-5ymk.onrender.com',
+  headers: {
+    'Content-Type': 'application/json',
+  },
+});
+
+export const setToken = token => {
+  instanceWater.defaults.headers.common['Authorization'] = `Bearer ${token}`;
 };
 
 const unsetToken = () => {
-  axios.defaults.headers.common.Authorization = '';
+  instanceWater.defaults.headers.common.Authorization = '';
 };
 
 // Auth
 
 export const signup = async body => {
-  const { data } = await axios.post('/auth/signup', body);
+  const { data } = await instanceWater.post('/auth/signup', body);
   setToken(data.accessToken);
   return data;
 };
 
 export const signin = async body => {
-  const { data } = await axios.post('/auth/signin', body);
-  setToken(data.accessToken);
-  return data;
+  const { data: wrap } = await instanceWater.post('/auth/signin', body);
+  setToken(wrap.data.accessToken);
+  return wrap.data;
 };
 
 export const logout = async () => {
-  await axios.post('/auth/logout');
+  await instanceWater.post('/auth/logout');
   unsetToken();
 };
 
 export const requestPassword = async body => {
-  const { data } = await axios.post('/auth/request-pass', body);
+  const { data } = await instanceWater.post('/auth/request-pass', body);
   return data;
 };
 
 export const resetPassword = async body => {
-  const { data } = await axios.post('/auth/reset-pass', body);
+  const { data } = await instanceWater().post('/auth/reset-pass', body);
   return data;
+};
+
+export const refresh = async () => {
+  const { data: wrap } = await instanceWater.post('/auth/refresh');
+  setToken(wrap.data.accessToken);
 };
 
 // User
 
 export const updateWaterRate = async newWaterRate => {
-  const { data } = await axios.patch('/waterrate', {
+  const { data } = await instanceWater.patch('water/daily-norma', {
     waterRate: newWaterRate,
   });
   return data;
 };
 
-export const getUser = async token => {
-  setToken(token);
-  const { data } = await axios.get('/user');
-  return data;
+export const getUser = async () => {
+  const { data: wrap } = await instanceWater.get('/user');
+  return wrap.data;
 };
 
 export const updateAvatar = async newPhotoFile => {
   const {
     data: { avatarURL },
-  } = await axios.patch('/user/avatar', newPhotoFile, {
+  } = await instanceWater.patch('/user/avatar', newPhotoFile, {
     headers: {
       'Content-Type': 'multipart/form-data',
     },
@@ -67,43 +77,38 @@ export const updateAvatar = async newPhotoFile => {
 };
 
 export const editUserInfo = async body => {
-  const { data } = await axios.patch('/user', body);
+  const { data } = await instanceWater.patch('/user', body);
   return data;
 };
 
+
+
 export const deleteUser = async () => {
-  await axios.delete('/user/delete-account');
+  await instanceWater.delete('/user/delete-account');
   unsetToken();
 };
-// Water
 
+// Water
 export const addWaters = async newWater => {
-  const { data } = await axios.post('/water/entry', newWater, {
-    headers: {
-      'Content-Type': 'application/json',
-    },
-  });
+  const data  = await instanceWater.post('/water/entry', newWater);
   return data;
 };
 
 export const editWater = async ({ newWaterUser, id }) => {
-  const { data } = await axios.patch(`/water/entry/${id}`, newWaterUser, {
-    headers: {
-      'Content-Type': 'application/json',
-    },
-  });
+  const { data } = await instanceWater.patch(`/water/entry/${id}`, newWaterUser);
   return data;
 };
 
 export const deleteWater = async id => {
-  await axios.delete(`/water/entry/${id}`);
+  await instanceWater.delete(`/water/entry/${id}`);
 };
 
 export const fetchTodayWater = async () => {
-  const date = formatDate(new Date());
-  return await axios.get(`/today?date=${date}`);
+  const { data: wrap } = await instanceWater.get('/water/today');
+  return wrap.data;
 };
 
-export const fetchMonthWater = async ({ startDate, endDate }) => {
-  return await axios.get(`/month?startDate=${startDate}&endDate=${endDate}`);
+export const fetchMonthWater = async (month) => {
+  const { data: wrap } = await instanceWater.get(`/water/month/${month}`);
+  return wrap.data;
 };
