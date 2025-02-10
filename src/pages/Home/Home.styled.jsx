@@ -7,13 +7,6 @@ import imgHomeTablet2x from '../../assets/images/background/homePage/tablet/bubb
 import imgHomeDesktop1x from '../../assets/images/background/homePage/desktop/bubbleDesk.png';
 import imgHomeDesktop2x from '../../assets/images/background/homePage/desktop/bubbleDesk@2x.png';
 
-import imgBottleMobile1x from '../../assets/images/background/homePage/mobile/bottleMob.png';
-import imgBottleMobile2x from '../../assets/images/background/homePage/mobile/bottleMob@2x.png';
-import imgBottleTablet1x from '../../assets/images/background/homePage/tablet/bottleTabl.png';
-import imgBottleTablet2x from '../../assets/images/background/homePage/tablet/bottleTabl@2x.png';
-import imgBottleDesktop1x from '../../assets/images/background/homePage/desktop/bottleDesc.png';
-import imgBottleDesktop2x from '../../assets/images/background/homePage/desktop/bottleDesc@2x.png';
-
 export const Section = styled.section`
   background-size: cover;
   background-position: center;
@@ -54,12 +47,25 @@ export const Section = styled.section`
 `;
 
 export const Container = styled.div`
-  padding: 0
-  width: 100%;
-  align-items: center;
+  // padding: 0
+  // width: 100%;
+  // align-items: center;
+`;
+
+export const Hero = styled.div`
+  margin: 133px 0 26px 0;
+
+  @media screen and (min-width: 768px) and (max-width: 1439px) {
+    margin: 50px 0 34px 0;
+  }
+
+  @media screen and (min-width: 1440px) {
+    margin: 70px 0 50px 0;
+  }
 `;
 
 export const FlexContainer = styled.div`
+  position: relative;
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -84,7 +90,7 @@ export const WaterDescription = styled.div`
   }
 
   @media screen and (min-width: 1440px) {
-    margin: 20px 110px 40px 32px;
+    // margin: 20px 110px 40px 32px;
     max-width: 680px;
   }
 `;

@@ -1,11 +1,8 @@
 import { DailyNorma } from '../../components/Home/DailyNorma/DailyNorma';
 import { WaterRatioPanel } from '../../components/Home/WaterRatioPanel/WaterRatioPanel';
-import {
-  Container,
-  FlexContainer,
-  Section,
-  WaterDescription,
-} from './Home.styled';
+import { Container } from 'components';
+import { FlexContainer, Section, WaterDescription, Hero } from './Home.styled';
+
 import imgBottleMobile1x from '../../assets/images/background/homePage/mobile/bottleMob.png';
 import imgBottleMobile2x from '../../assets/images/background/homePage/mobile/bottleMob@2x.png';
 import imgBottleTablet1x from '../../assets/images/background/homePage/tablet/bottleTabl.png';
@@ -21,11 +18,8 @@ const Home = () => {
     <Section>
       <Container>
         <FlexContainer>
-          <div>
-            <DailyNorma />
-            <WaterRatioPanel />
-          </div>
-          <div>
+          <DailyNorma />
+          <Hero>
             <picture>
               <source
                 srcSet={`${imgBottleDesktop1x} 1x, ${imgBottleDesktop2x} 2x`}
@@ -38,13 +32,13 @@ const Home = () => {
               <img
                 src={imgBottleMobile1x}
                 srcSet={`${imgBottleMobile1x} 1x, ${imgBottleMobile2x} 2x`}
-                alt="Background"
               />
               <source
                 srcSet={`${imgBottleMobile1x}} 1x, ${imgBottleMobile2x} 2x`}
               />
             </picture>
-          </div>
+          </Hero>
+          <WaterRatioPanel />
           <WaterDescription>
             <TodayWaterList />
             <MonthStatsTable />

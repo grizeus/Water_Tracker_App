@@ -1,14 +1,27 @@
 import styled from '@emotion/styled';
 
+export const Section = styled.section`
+  display: none;
+`;
+
 export const DailyWrapper = styled.div`
+  position: absolute;
+  top: 24px;
+  left: 0;
   border: 1px solid #ecf2ff;
   border-radius: 10px;
   padding: 8px 0;
   padding-left: 20px;
+  margin-top: 24px;
+  margin-bottom: 8px;
   width: 164px;
 
   box-shadow: 0 4px 8px 0 rgba(158, 187, 255, 0.12);
   background: #fff;
+
+  @media screen and (min-width: 768px) and (max-width: 1439px) {
+    top: 16px;
+  }
 `;
 
 export const FlexContainer = styled.div`

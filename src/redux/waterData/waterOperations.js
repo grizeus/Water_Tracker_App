@@ -12,8 +12,8 @@ export const addWatersThunk = createAsyncThunk(
   'water/addWater',
   async (newWater, { rejectWithValue }) => {
     try {
-      const data = await addWaters(newWater);
-      return data;
+      const {data} = await addWaters(newWater);
+      return data.data;
     } catch (error) {
       console.log(error.message);
       switch (error.response.status) {
@@ -32,11 +32,13 @@ export const addWatersThunk = createAsyncThunk(
 
 export const editWaterThunk = createAsyncThunk(
   'water/editWater',
-  async ({ _id, waterVolume, date }, { rejectWithValue }) => {
+  async ({ _id, amount, time }, { rejectWithValue }) => {
     try {
-      const newWaterUser = { waterVolume, date };
+      console.log(_id, amount, time);
+      const newWaterUser = { amount, time };
       const response = await editWater({ newWaterUser, id: _id });
-      return response;
+      console.log(response);
+      return response.data;
     } catch (error) {
       if (error.response.status === 400) {
         toast.warning(`You must write at least 1 ml.`);
