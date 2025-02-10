@@ -36,8 +36,8 @@ export const editWaterThunk = createAsyncThunk(
     try {
       console.log(_id, amount, time);
       const newWaterUser = { amount, time };
-      console.log(newWaterUser);
       const response = await editWater({ newWaterUser, id: _id });
+      console.log(response);
       return response;
     } catch (error) {
       if (error.response.status === 400) {
