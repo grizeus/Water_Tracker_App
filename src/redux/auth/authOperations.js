@@ -11,6 +11,9 @@ import {
   signup,
   updateAvatar,
   updateWaterRate,
+  // refresh,
+  instanceWater,
+  setToken,
 } from '../Api/api';
 
 export const registerThunk = createAsyncThunk(
@@ -33,6 +36,7 @@ export const logInThunk = createAsyncThunk(
   async (credentials, { rejectWithValue }) => {
     try {
       const data = await signin(credentials);
+      console.log(data);
       return data;
     } catch (error) {
       if (error.response.status === 401) {
@@ -85,28 +89,37 @@ export const resPassThunk = createAsyncThunk(
   },
 );
 
+export const refreshUser = createAsyncThunk(
+  'auth/refresh',
+  async (_, thunkAPI) => {
+    const state = thunkAPI.getState();
+    const persistedUser = state.auth.user;
+    const persistedToken = state.auth.token;
+    if (persistedToken === null) {
+      return thunkAPI.rejectWithValue('Unable to fetch user');
+    }
+    try {
+      const { data: wrap } = await instanceWater.post('/auth/refresh');
+      setToken(wrap.data.accessToken);
+      return persistedUser;
+    } catch (e) {
+      return thunkAPI.rejectWithValue(e.message);
+    }
+  },
+);
+
 // User
 
 export const getUserThunk = createAsyncThunk(
   '/user',
   async (_, { rejectWithValue, getState }) => {
     try {
-      const { auth } = getState();
-      const data = await getUser(auth.token);
+      const data = await getUser();
 
       return data;
     } catch (error) {
       return rejectWithValue(error.message);
     }
-  },
-  {
-    condition: (_, { getState }) => {
-      const { auth } = getState();
-
-      if (!auth.token) {
-        return false;
-      }
-    },
   },
 );
 

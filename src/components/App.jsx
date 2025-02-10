@@ -4,9 +4,10 @@ import { Navigate, Route, Routes } from 'react-router-dom';
 import PrivateRoute from './PrivateRoute';
 import RestrictedRoute from './RestrictedRoute';
 
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { selectIsRefreshing } from '../redux/auth/authSelectors';
 import SharedLayout from './SharedLayout';
+import { refreshUser } from '../redux/auth/authOperations';
 
 const WelcomePage = lazy(() => import('../pages/WelcomePage/WelcomePage'));
 const HomePage = lazy(() => import('../pages/Home/Home'));
@@ -19,7 +20,12 @@ const ResetPassPage = lazy(() =>
 );
 
 const App = () => {
+  const dispatch = useDispatch();
   const isRefreshing = useSelector(selectIsRefreshing);
+
+  useEffect(() => {
+    dispatch(refreshUser());
+  }, [dispatch]);
 
   return !isRefreshing ? (
     <Routes>
