@@ -15,6 +15,7 @@ import {
   instanceWater,
   setToken,
 } from '../Api/api';
+import { da } from 'date-fns/locale';
 
 export const registerThunk = createAsyncThunk(
   'auth/signup',
@@ -36,7 +37,6 @@ export const logInThunk = createAsyncThunk(
   async (credentials, { rejectWithValue }) => {
     try {
       const data = await signin(credentials);
-      console.log(data);
       return data;
     } catch (error) {
       if (error.response.status === 401) {

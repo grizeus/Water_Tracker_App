@@ -1,7 +1,6 @@
 import { initialState } from './authSlice';
 
 export const handleRegister = (state, { payload }) => {
-  
   state.token = payload.data.accessToken;
 
   state.isLoggedIn = true;
