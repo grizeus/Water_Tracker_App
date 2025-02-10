@@ -38,7 +38,7 @@ export const editWaterThunk = createAsyncThunk(
       const newWaterUser = { amount, time };
       const response = await editWater({ newWaterUser, id: _id });
       console.log(response);
-      return response;
+      return response.data;
     } catch (error) {
       if (error.response.status === 400) {
         toast.warning(`You must write at least 1 ml.`);
