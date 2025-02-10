@@ -38,7 +38,7 @@ export const TodayListModal = ({
   onClose,
   onShow,
 }) => {
-  const [amount, setAmount] = useState(initialAmount || 0);
+  const [amount, setAmount] = useState(initialAmount !== undefined || 0);
   const [time, setTime] = useState(
     isEditing && initialTime
       ? format(new Date(initialTime), 'HH:mm')
