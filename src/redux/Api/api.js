@@ -76,8 +76,6 @@ export const updateAvatar = async newPhotoFile => {
 };
 
 export const editUserInfo = async body => {
-  // console.log(body);
-
   const { data } = await instanceWater.patch('/user', body);
   return data;
 };

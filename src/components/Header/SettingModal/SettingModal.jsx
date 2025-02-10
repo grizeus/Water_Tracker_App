@@ -81,7 +81,6 @@ export const SettingModal = ({ onClose, onShow }) => {
   const { isLoading } = useSelector(selectIsLoading);
   const [isPasswordShown, setIsPasswordShown] = useState(false);
   const [isAvatarLoading, setIsAvatarLoading] = useState(false);
-  // const [isAvatarLoading, setIsAvatarLoading] = useState(false || '');
 
   const initialValues = {
     gender: gender || '',
@@ -89,7 +88,6 @@ export const SettingModal = ({ onClose, onShow }) => {
     email: email || '',
     // outdatedPassword: '',
     oldPassword: '',
-
     newPassword: '',
     repeatedPassword: '',
   };
@@ -99,17 +97,14 @@ export const SettingModal = ({ onClose, onShow }) => {
       return;
     }
     // const { gender, name, email, outdatedPassword, newPassword } = values;
-
     const { gender, name, email, oldPassword, newPassword } = values;
 
     const formData = {
       gender,
       name,
       email,
-
       // outdatedPassword,
       oldPassword,
-
       newPassword,
     };
 
@@ -120,9 +115,6 @@ export const SettingModal = ({ onClose, onShow }) => {
         dataSend[key] = value;
       }
     });
-
-    // console.log(dataSend);
-
     dispatch(editUserInfoThunk(dataSend)).then(data => {
       if (!data.error) {
         onClose();
@@ -136,12 +128,12 @@ export const SettingModal = ({ onClose, onShow }) => {
   };
 
   const handleAvatarDownload = e => {
+    console.log(e.target.files[0]);
+
     let formData = new FormData();
-    formData.append('avatar', e.target.files[0]);
+    formData.append('avatarURL', e.target.files[0]);
 
     dispatch(updateAvatarThunk(formData)).then(data => {
-      // console.log(data);
-
       if (!data.error) {
         setIsAvatarLoading(false);
       }

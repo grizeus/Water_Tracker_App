@@ -13,13 +13,15 @@ import {
   UserLogoTitle,
   UserModalIcon,
 } from './UserLogo.styled';
+
+// import defaultAvatar from '../../../assets/images/default_avatar.png';
 // import { el } from 'date-fns/locale';
 
 export const UserLogo = () => {
   const myRef = useRef();
 
   const [modalIsOpen, setModalIsOpen] = useState(false);
-  const { name , avatarURL} = useSelector(selectUser);
+  const { name, avatarURL } = useSelector(selectUser);
 
   const showModal = () => {
     setModalIsOpen(!modalIsOpen);
@@ -55,6 +57,7 @@ export const UserLogo = () => {
         ) : (
           <UserDefaultAvatar>{avatar}</UserDefaultAvatar>
         )}
+
         <UserModalIcon
           style={{ transform: modalIsOpen ? 'rotate(180deg)' : 'rotate(0deg)' }}
         >
