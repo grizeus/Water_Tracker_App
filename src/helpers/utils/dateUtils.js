@@ -12,7 +12,7 @@ export function formatCustomTime(dateString, formatString = 'h:mm a') {
     const date = addHours(parseISO(dateString), 0);
     return format(date, formatString);
   } catch (error) {
-    console.error('Invalid dateString:', dateString);
+    console.log('Invalid dateString:', dateString);
     return 'Invalid time';
   }
 }
