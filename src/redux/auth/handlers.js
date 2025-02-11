@@ -36,5 +36,5 @@ export const handlerUpdateAvatar = (state, { payload }) => {
 };
 
 export const handlerEditUserInfo = (state, { payload }) => {
-  state.user = { ...state.user, ...payload };
+  state.user = { ...state.user, ...payload.data };
 };
