@@ -22,9 +22,10 @@ import {
   DaysList,
   DaysPercentage,
   HeaderMonth,
-  Paginator,
+  Paginator, 
   Year,
 } from './MonthStatsTable.styled';
+import { getUserThunk } from '../../../redux/auth/authOperations.js';
 
 export const MonthStatsTable = () => {
   const dispatch = useDispatch();
@@ -42,6 +43,11 @@ export const MonthStatsTable = () => {
   useEffect(() => {
     dispatch(getMonthWater(month));
   }, [dispatch, month, roundedWaterVolumePercentage]);
+
+  // TODO: maybe move it somewhere else
+  useEffect(() => {
+    dispatch(getUserThunk());
+  });
 
   const handlePreviousMonth = () => {
     const newMonth = subMonths(selectedMonth, 1);
