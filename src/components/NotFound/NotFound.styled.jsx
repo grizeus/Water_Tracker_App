@@ -1,5 +1,17 @@
 import styled from '@emotion/styled';
 
+export const ErrorPageWrapper = styled.div`
+  display: block;
+  height: 100vh;
+  text-align: center;
+`;
+
+export const StyledPicture = styled.picture`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+`;
+
 export const ErrorBtn = styled.button`
   background-color: ${({ theme }) => theme.color.accent};
   color: ${props => props.theme.color.white};
@@ -7,8 +19,6 @@ export const ErrorBtn = styled.button`
   border-radius: 10px;
   font-size: 18px;
   height: 44px;
-  display: block;
-  margin: 0 auto;
   box-shadow: 0px 4px 8px 0px rgba(64, 123, 255, 0.34);
   transition: background-color ${({ theme }) => theme.transition.main};
 
@@ -19,20 +29,10 @@ export const ErrorBtn = styled.button`
   @media screen and (min-width: ${({ theme }) => theme.breakpoint.mobile}) {
     font-size: 16px;
   }
-`;
-
-export const ErrorImg = styled.img`
-  width: 280px;
-  height: 280px;
-  margin: auto;
-
   @media screen and (min-width: ${({ theme }) => theme.breakpoint.tablet}) {
-    width: 600px;
-    height: 500px;
+    font-size: 20px;
   }
-
   @media screen and (min-width: ${({ theme }) => theme.breakpoint.desktop}) {
-    width: 900px;
-    height: 700px;
+    font-size: 24px;
   }
 `;
