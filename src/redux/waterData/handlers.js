@@ -39,5 +39,9 @@ export const handleGetTodayWater = (state, { payload }) => {
 };
 
 export const handleGetMonthWater = (state, { payload }) => {
-  state.month = payload;
+  const formattedMonth = payload.data.map(item => ({
+    ...item,
+    date: format(`${payload.year},${item.date}`, 'yyyy-MM-dd'),
+  }));
+  state.month = formattedMonth;
 };
