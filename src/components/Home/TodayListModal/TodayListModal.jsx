@@ -34,11 +34,11 @@ export const TodayListModal = ({
   initialAmount,
   initialTime,
   isEditing,
+  existingRecordId,
   onClose,
   onShow,
-  existingRecordId,
 }) => {
-  const [amount, setAmount] = useState(initialAmount || 0);
+  const [amount, setAmount] = useState(initialAmount !== undefined || 0);
   const [time, setTime] = useState(
     isEditing && initialTime
       ? format(new Date(initialTime), 'HH:mm')
@@ -66,8 +66,6 @@ export const TodayListModal = ({
 
   useEffect(() => {
     if (isEditing) {
-      // console.log('here');
-      // console.log(initialTime);
       setAmount(initialAmount || 0);
       setTime(formatCustomTime(initialTime, 'HH:mm'));
     } else {
@@ -115,8 +113,8 @@ export const TodayListModal = ({
     }
 
     const waterData = {
-      waterVolume: amount,
-      date: isoDate,
+      time: isoDate,
+      amount,
     };
     // console.log(waterData);
     if (isEditing) {

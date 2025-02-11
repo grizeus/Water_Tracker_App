@@ -25,6 +25,7 @@ import {
   Paginator, 
   Year,
 } from './MonthStatsTable.styled';
+import { getUserThunk } from '../../../redux/auth/authOperations.js';
 
 export const MonthStatsTable = () => {
   const dispatch = useDispatch();
@@ -37,13 +38,16 @@ export const MonthStatsTable = () => {
   const [isHovering, setIsHovering] = useState(false);
   const dayRefs = useRef({});
   const roundedWaterVolumePercentage = useSelector(selectWaterVolumePercentage);
-
-  const startDate = format(startOfMonth(selectedMonth), 'yyyy-MM-dd');
-  const endDate = format(endOfMonth(selectedMonth), 'yyyy-MM-dd');
+  const month = selectedMonth.toISOString().slice(0, 7);
 
   useEffect(() => {
-    dispatch(getMonthWater({ startDate, endDate }));
-  }, [dispatch, endDate, roundedWaterVolumePercentage, startDate]);
+    dispatch(getMonthWater(month));
+  }, [dispatch, month, roundedWaterVolumePercentage]);
+
+  // TODO: maybe move it somewhere else
+  useEffect(() => {
+    dispatch(getUserThunk());
+  });
 
   const handlePreviousMonth = () => {
     const newMonth = subMonths(selectedMonth, 1);
@@ -53,7 +57,7 @@ export const MonthStatsTable = () => {
 
   const handleNextMonth = () => {
     if (selectedMonth < new Date()) {
-      const newMonth = addMonths(selectedMonth, 1); 
+      const newMonth = addMonths(selectedMonth, 1);
       setSelectedMonth(newMonth);
       setActiveButton(isSameMonth(newMonth, new Date()) ? null : 'next');
     }
@@ -69,7 +73,7 @@ export const MonthStatsTable = () => {
     return acc;
   }, {});
 
-  const onDayClick = (day) => {
+  const onDayClick = day => {
     const dayKey = format(day, 'yyyy-MM-dd');
     const dayData = monthDataMap[dayKey];
 
@@ -94,10 +98,10 @@ export const MonthStatsTable = () => {
   };
 
   useEffect(() => {
-    const handleClickOutside = (event) => {
+    const handleClickOutside = event => {
       if (modalVisible) {
         const isClickOutside = Object.values(dayRefs.current).every(
-          (ref) => ref && !ref.contains(event.target)
+          ref => ref && !ref.contains(event.target),
         );
         if (isClickOutside) {
           handleCloseModal();
@@ -120,14 +124,17 @@ export const MonthStatsTable = () => {
           onMouseEnter={() => setIsHovering(true)}
           onMouseLeave={() => setIsHovering(false)}
         >
-          <ButtonPaginator onClick={handlePreviousMonth} active={activeButton === 'next'}>
+          <ButtonPaginator
+            onClick={handlePreviousMonth}
+            active={activeButton === 'next'}
+          >
             &lt;
           </ButtonPaginator>
           <span>{format(selectedMonth, 'MMMM')}</span>
           {isHovering && <Year>{format(selectedMonth, 'yyyy')}</Year>}
           <ButtonPaginator
             onClick={handleNextMonth}
-            disabled={selectedMonth >= new Date()} 
+            disabled={selectedMonth >= new Date()}
             active={activeButton === 'prev'}
           >
             &gt;
@@ -136,23 +143,23 @@ export const MonthStatsTable = () => {
       </HeaderMonth>
 
       <DaysList>
-        {daysOfMonth.map((day) => {
+        {daysOfMonth.map(day => {
           const dayKey = format(day, 'yyyy-MM-dd');
           const dayData = monthDataMap[dayKey];
-          const percentage = dayData ? dayData.waterVolumePercentage : 0;
-          const isHighlighted = dayData && dayData.waterVolumePercentage < 100;
+          const percentage = dayData ? dayData.percentage : 0;
+          const isHighlighted = dayData && dayData.percentage < 100;
 
           return (
             <div key={dayKey}>
               <DaysPercentage>
                 <DaysButton
-                  ref={(el) => (dayRefs.current[day] = el)}
+                  ref={el => (dayRefs.current[day] = el)}
                   onClick={() => onDayClick(day)}
                   isHighlighted={isHighlighted}
                 >
                   {format(day, 'd')}
                 </DaysButton>
-                <span>{Math.round(percentage)}%</span>
+                <span>{percentage}</span>
               </DaysPercentage>
             </div>
           );

@@ -1,14 +1,13 @@
 import { initialState } from './authSlice';
 
 export const handleRegister = (state, { payload }) => {
-  
   state.token = payload.data.accessToken;
 
   state.isLoggedIn = true;
 };
 
 export const handleLogin = (state, { payload }) => {
-  state.token = payload.data.accessToken;
+  state.token = payload.accessToken;
   state.isLoggedIn = true;
 };
 
@@ -16,18 +15,12 @@ export const handleLogout = () => initialState;
 
 export const handleDeleteUser = () => initialState;
 
-export const handleRefreshFulfield = (state, { payload }) => {
-  state.user = payload;
-  state.isRefreshing = false;
-  state.isLoggedIn = true;
+export const handleGetUserPending = state => {
+  state.loggedIn = false;
 };
 
-export const handleRefreshPending = state => {
-  state.isRefreshing = true;
-};
-
-export const handleRefreshReject = state => {
-  state.isRefreshing = false;
+export const handleGetUSerReject = state => {
+  state.loggedIn = false;
 };
 
 export const handleReqPass = () => initialState;

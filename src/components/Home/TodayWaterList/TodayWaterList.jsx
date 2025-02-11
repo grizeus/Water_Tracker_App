@@ -70,8 +70,8 @@ export const TodayWaterList = () => {
               <IconGlass>
                 <use href={icons.glass}></use>
               </IconGlass>
-              <TodayVolume>{record.waterVolume} ml</TodayVolume>
-              <TodayTime>{formatCustomTime(record.date)}</TodayTime>
+              <TodayVolume>{record.amount} ml</TodayVolume>
+              <TodayTime>{formatCustomTime(record.time)}</TodayTime>
             </TodayInfo>
             <TodayTools>
               <ButtonChange onClick={() => openModalToEdit(record)}>
@@ -100,14 +100,15 @@ export const TodayWaterList = () => {
         recordId={selectedRecord?._id}
       />
       <TodayListModal
-        initialAmount={selectedRecord?.waterVolume}
-        initialTime={selectedRecord?.date}
+        initialAmount={selectedRecord?.amount}
+        initialTime={selectedRecord?.time}
         isEditing={selectedRecord !== null}
         existingRecordId={selectedRecord?._id}
         onClose={() => setModalOpen(false)}
         onShow={isModalOpen}
         onUpdate={handleUpdate}
       />
+      
     </TodayWrapper>
   );
 };
