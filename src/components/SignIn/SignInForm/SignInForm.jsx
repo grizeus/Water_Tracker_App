@@ -50,11 +50,9 @@ export const SignInForm = () => {
   const handleLoginSubmit = (values, { setSubmitting, setStatus }) => {
     dispatch(logInThunk(values))
       .unwrap()
-      .catch(({ status, message }) => {
+      .catch(({ status }) => {
         if (status === 401) {
           setStatus('Email or password is wrong');
-        } else {
-          setStatus('Something went wrong. Please try again.');
         }
       })
       .finally(() => {
