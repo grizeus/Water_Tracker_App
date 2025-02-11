@@ -108,7 +108,6 @@ export const TodayWaterList = () => {
         onShow={isModalOpen}
         onUpdate={handleUpdate}
       />
-      
     </TodayWrapper>
   );
 };
