@@ -1,7 +1,9 @@
 import styled from '@emotion/styled';
 
 export const ErrorPageWrapper = styled.div`
-  display: block;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
   height: 100vh;
   text-align: center;
 `;
@@ -10,6 +12,7 @@ export const StyledPicture = styled.picture`
   display: flex;
   justify-content: center;
   align-items: center;
+  min-width: 150px;
 `;
 
 export const ErrorBtn = styled.button`
@@ -21,6 +24,11 @@ export const ErrorBtn = styled.button`
   height: 44px;
   box-shadow: 0px 4px 8px 0px rgba(64, 123, 255, 0.34);
   transition: background-color ${({ theme }) => theme.transition.main};
+
+  height: auto;
+  width: auto; 
+  min-width: 130px; 
+  max-width: 100%; 
 
   &:hover {
     box-shadow: 0px 4px 14px 0px rgba(64, 123, 255, 0.54);
