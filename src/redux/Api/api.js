@@ -26,6 +26,7 @@ export const signup = async body => {
 };
 
 export const signin = async body => {
+  console.log(body);
   const { data: wrap } = await instanceWater.post('/auth/signin', body);
   setToken(wrap.data.accessToken);
   return wrap.data;
