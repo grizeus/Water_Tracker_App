@@ -128,7 +128,6 @@ export const SettingModal = ({ onClose, onShow }) => {
   };
 
   const handleAvatarDownload = e => {
-    console.log(e.target.files[0]);
 
     let formData = new FormData();
     formData.append('avatarURL', e.target.files[0]);

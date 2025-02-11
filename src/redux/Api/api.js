@@ -19,12 +19,13 @@ const unsetToken = () => {
 // Auth
 
 export const signup = async body => {
-  const { data } = await instanceWater.post('/auth/signup', body);
-  setToken(data.accessToken);
-  return data;
+  const { data: wrap } = await instanceWater.post('/auth/signup', body);
+  setToken(wrap.data.accessToken);
+  return wrap.data;
 };
 
 export const signin = async body => {
+  console.log(body);
   const { data: wrap } = await instanceWater.post('/auth/signin', body);
   setToken(wrap.data.accessToken);
   return wrap.data;
@@ -79,7 +80,6 @@ export const editUserInfo = async body => {
   const { data } = await instanceWater.patch('/user', body);
   return data;
 };
-
 
 export const deleteUser = async () => {
   await instanceWater.delete('/user/delete-account');

@@ -15,6 +15,8 @@ export const Container = styled.div`
   }
 
   @media screen and (min-width: 1440px) {
+    padding-left: 24px;
+    padding-right: 24px;
     width: 592px;
   }
 `;
@@ -176,18 +178,23 @@ export const Input = styled.input`
 
 export const CalculateWater = styled.div`
   display: flex;
-  justify-content: space-between;
-  align-items: center;
-  gap: 20px;
 
   span {
     font-size: 18px;
     font-weight: 700;
     color: #407bff;
   }
+`;
 
-  @media screen and (min-width: 767px) {
-    display: block;
+export const Result = styled.p`
+  width: 190px;
+
+  @media screen and (min-width: 768px) {
+    width: 342px;
+  }
+
+  @media screen and (min-width: 1440px) {
+    width: 342px;
   }
 `;
 

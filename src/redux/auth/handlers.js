@@ -1,7 +1,9 @@
 import { initialState } from './authSlice';
 
 export const handleRegister = (state, { payload }) => {
-  state.token = payload.data.accessToken;
+
+  state.token = payload.accessToken;
+
 
   state.isLoggedIn = true;
 };
@@ -36,5 +38,5 @@ export const handlerUpdateAvatar = (state, { payload }) => {
 };
 
 export const handlerEditUserInfo = (state, { payload }) => {
-  state.user = { ...state.user, ...payload };
+  state.user = { ...state.user, ...payload.data };
 };

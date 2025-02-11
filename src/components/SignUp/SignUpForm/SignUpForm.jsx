@@ -46,12 +46,6 @@ export const SignUpForm = () => {
     setIconStatus(!iconStatus);
   };
 
-  const onClickGoogleBtn = () => {
-    window.location.assign(
-      'https://watertracker-backend.onrender.com/api/auth/google',
-    );
-  };
-
   return (
     <SignUpContainer>
       <BootleImg />
@@ -62,7 +56,7 @@ export const SignUpForm = () => {
           initialValues={{ email: '', password: '', confirmPassword: '' }}
           validationSchema={validationSchema}
           onSubmit={({ email, password }) => {
-            dispatch(registerThunk({ email, password }));
+            dispatch(registerThunk({ email, password }))
           }}
         >
           {({ errors, isValid, touched, values }) => (
