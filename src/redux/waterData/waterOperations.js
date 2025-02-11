@@ -77,7 +77,7 @@ export const getMonthWater = createAsyncThunk(
   async (month, { rejectWithValue }) => {
     try {
       const data = await fetchMonthWater(month);
-      return data;
+      return { data, year: month.slice(0, 4) };
     } catch (error) {
       return rejectWithValue(error.message);
     }
