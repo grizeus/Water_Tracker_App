@@ -84,9 +84,9 @@ export const MonthStatsTable = () => {
     } else {
       setSelectedDayStats({
         date: dayKey,
-        waterVolumeSum: dayData ? dayData.waterVolumeSum : 0,
-        drinkCount: dayData ? dayData.drinkCount : 0,
-        waterVolumePercentage: dayData ? dayData.waterVolumePercentage : 0,
+        dailyGoal: dayData ? dayData.dailyGoal : 0,
+        drinkCount: dayData ? dayData.entriesCount : 0,
+        waterVolumePercentage: dayData ? dayData.percentage : 0,
       });
       setModalVisible(true);
     }
@@ -146,8 +146,9 @@ export const MonthStatsTable = () => {
         {daysOfMonth.map(day => {
           const dayKey = format(day, 'yyyy-MM-dd');
           const dayData = monthDataMap[dayKey];
-          const percentage = dayData ? dayData.percentage : 0;
-          const isHighlighted = dayData && dayData.percentage < 100;
+          const percentage = dayData ? parseInt(dayData.percentage) : 0;
+          const isHighlighted = dayData && percentage < 100;
+          const isFullfiled = dayData && percentage === 100;
 
           return (
             <div key={dayKey}>
@@ -156,10 +157,11 @@ export const MonthStatsTable = () => {
                   ref={el => (dayRefs.current[day] = el)}
                   onClick={() => onDayClick(day)}
                   isHighlighted={isHighlighted}
+                  isFullfiled={isFullfiled}
                 >
                   {format(day, 'd')}
                 </DaysButton>
-                <span>{percentage}</span>
+                <span>{`${percentage}%`}</span>
               </DaysPercentage>
             </div>
           );
