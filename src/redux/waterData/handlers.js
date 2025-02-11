@@ -1,3 +1,5 @@
+import { format } from "date-fns";
+
 const handleProgress = state => {
   const currentAmount = state.today.dailyWaterList.reduce(
     (acc, entry) => acc + entry.amount,
