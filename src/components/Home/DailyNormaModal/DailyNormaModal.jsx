@@ -50,7 +50,6 @@ export const DailyNormaModal = ({ onClose, onShow }) => {
     e.preventDefault();
 
     const userGoal = parseFloat(intakeGoal);
-    if (!userGoal) return toast.error('Please enter a valid data');
 
     const finishGoal = userGoal ? userGoal : dailyWaterNorm;
 
