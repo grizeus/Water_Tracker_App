@@ -16,7 +16,6 @@ import {
   setToken,
 } from '../Api/api';
 import { da } from 'date-fns/locale';
-
 export const registerThunk = createAsyncThunk(
   'auth/signup',
   async (credentials, { rejectWithValue }) => {
@@ -31,7 +30,6 @@ export const registerThunk = createAsyncThunk(
     }
   },
 );
-
 export const logInThunk = createAsyncThunk(
   'auth/signin',
   async (credentials, { rejectWithValue }) => {
@@ -46,7 +44,6 @@ export const logInThunk = createAsyncThunk(
     }
   },
 );
-
 export const logOutThunk = createAsyncThunk(
   'auth/logout',
   async (_, { rejectWithValue }) => {
@@ -58,7 +55,6 @@ export const logOutThunk = createAsyncThunk(
     }
   },
 );
-
 export const reqPassThunk = createAsyncThunk(
   'auth/request-pass',
   async (credentials, { rejectWithValue }) => {
@@ -76,7 +72,6 @@ export const reqPassThunk = createAsyncThunk(
     }
   },
 );
-
 export const resPassThunk = createAsyncThunk(
   '/auth/reset-pass',
   async (credentials, { rejectWithValue }) => {
@@ -88,41 +83,34 @@ export const resPassThunk = createAsyncThunk(
     }
   },
 );
-
 export const refreshUser = createAsyncThunk(
-  'auth/refresh',
+  "auth/refresh",
   async (_, thunkAPI) => {
     const state = thunkAPI.getState();
-    const persistedUser = state.auth.user;
-    const persistedToken = state.auth.token;
-    if (persistedToken === null) {
-      return thunkAPI.rejectWithValue('Unable to fetch user');
+    const token = state.auth.token;
+    if (!token) {
+      return thunkAPI.rejectWithValue("No token found");
     }
     try {
-      const { data: wrap } = await instanceWater.post('/auth/refresh');
-      setToken(wrap.data.accessToken);
-      return persistedUser;
-    } catch (e) {
-      return thunkAPI.rejectWithValue(e.message);
+      setToken(token); // Встановлюємо токен перед запитом
+      const data = await getUser(); // Отримуємо користувача
+      return data;
+    } catch (error) {
+      return thunkAPI.rejectWithValue(error.message);
     }
-  },
-);
-
+  });
 // User
-
 export const getUserThunk = createAsyncThunk(
   '/user',
   async (_, { rejectWithValue, getState }) => {
     try {
       const data = await getUser();
-
       return data;
     } catch (error) {
       return rejectWithValue(error.message);
     }
   },
 );
-
 export const updateWaterRateThunk = createAsyncThunk(
   'auth/updateWaterRate',
   async (newWaterRate, { rejectWithValue }) => {
@@ -138,7 +126,6 @@ export const updateWaterRateThunk = createAsyncThunk(
     }
   },
 );
-
 export const updateAvatarThunk = createAsyncThunk(
   'user/avatar',
   async (newPhotoFile, { rejectWithValue }) => {
@@ -153,7 +140,6 @@ export const updateAvatarThunk = createAsyncThunk(
     }
   },
 );
-
 export const editUserInfoThunk = createAsyncThunk(
   'user',
   async (body, { rejectWithValue }) => {
@@ -168,7 +154,6 @@ export const editUserInfoThunk = createAsyncThunk(
     }
   },
 );
-
 export const deleteUserThunk = createAsyncThunk(
   'user/delete',
   async (_, { rejectWithValue }) => {
@@ -179,4 +164,4 @@ export const deleteUserThunk = createAsyncThunk(
       return rejectWithValue(error.message);
     }
   },
-);
+);   
