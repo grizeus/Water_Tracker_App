@@ -19,9 +19,9 @@ const unsetToken = () => {
 // Auth
 
 export const signup = async body => {
-  const { data } = await instanceWater.post('/auth/signup', body);
-  setToken(data.accessToken);
-  return data;
+  const { data: wrap } = await instanceWater.post('/auth/signup', body);
+  setToken(wrap.data.accessToken);
+  return wrap.data;
 };
 
 export const signin = async body => {
