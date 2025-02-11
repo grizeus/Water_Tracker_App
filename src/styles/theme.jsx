@@ -66,6 +66,7 @@ export const theme = {
       secondaryWhite: '#ecf2ff',
       secondaryRed: '#ef5050',
       secondaryLightBlue: '#9ebbff',
+      primaryBlue: '#407bff',
       secondaryYellow: '#ff9d43',
       secondaryPowderBlue: '#d7e3ff',
       themeColor: '#9EBBFF',
