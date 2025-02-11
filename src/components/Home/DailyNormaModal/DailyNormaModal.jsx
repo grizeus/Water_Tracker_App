@@ -14,6 +14,7 @@ import {
   InputRadio,
   Paragraph,
   Wrapper,
+  Result,
 } from './DailyNormaModal.styled';
 import { updateWaterRate } from '../../../redux/Api/api';
 import { BaseModalWindow } from '../../common/BaseModalWindow/BaseModalWindow';
@@ -53,7 +54,8 @@ export const DailyNormaModal = ({ onClose, onShow }) => {
 
     const finishGoal = userGoal ? userGoal : dailyWaterNorm;
 
-    dispatch(updateWaterRate(finishGoal));
+    dispatch(updateWaterRate({ waterRate: finishGoal }));
+    onClose();
   };
 
   return (
@@ -111,7 +113,9 @@ export const DailyNormaModal = ({ onClose, onShow }) => {
                 type="number"
                 name="weight"
                 value={weight}
-                onChange={e => setWeight(e.target.value)}
+                onChange={e =>
+                  setWeight(e.target.value.replace(/[^0-9.]/g, ''))
+                }
               />
             </div>
             <div>
@@ -123,15 +127,15 @@ export const DailyNormaModal = ({ onClose, onShow }) => {
                 type="number"
                 name="timeOfActive"
                 value={timeOfActive}
-                onChange={e => setTimeOfActive(e.target.value)}
+                onChange={e =>
+                  setTimeOfActive(e.target.value.replace(/[^0-9.]/g, ''))
+                }
               />
             </div>
             <CalculateWater>
-              The required amount of water in liters per day:
+              <Result>The required amount of water in liters per day:</Result>
               <span>
-                {dailyWaterNorm
-                  ? parseFloat(dailyWaterNorm).toFixed(1) + 'L'
-                  : 0 + 'L'}
+                {dailyWaterNorm ? parseFloat(dailyWaterNorm).toFixed(1) : 0} L
               </span>
             </CalculateWater>
             <div>
