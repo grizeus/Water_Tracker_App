@@ -80,7 +80,6 @@ export const editUserInfo = async body => {
   return data;
 };
 
-
 export const deleteUser = async () => {
   await instanceWater.delete('/user/delete-account');
   unsetToken();
