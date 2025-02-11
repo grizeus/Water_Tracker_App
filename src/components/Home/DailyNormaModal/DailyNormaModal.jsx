@@ -2,13 +2,19 @@ import { toast } from 'react-toastify';
 import { useDispatch } from 'react-redux';
 import { useCallback, useEffect, useState } from 'react';
 import {
+  ButtonSave,
   CalculateWater,
+  Container,
   Description,
+  Form,
   FormRadio,
   FormSubTitle,
   Formula,
+  Input,
+  InputRadio,
   Paragraph,
   Wrapper,
+  Result,
 } from './DailyNormaModal.styled';
 import { updateWaterRate } from '../../../redux/Api/api';
 import { BaseModalWindow } from '../../common/BaseModalWindow/BaseModalWindow';
@@ -45,40 +51,43 @@ export const DailyNormaModal = ({ onClose, onShow }) => {
     e.preventDefault();
 
     const userGoal = parseFloat(intakeGoal);
-    if (!userGoal) return toast.error('Please enter a valid data');
 
     const finishGoal = userGoal ? userGoal : dailyWaterNorm;
 
-    dispatch(updateWaterRate(finishGoal));
+    dispatch(updateWaterRate({ waterRate: finishGoal }));
+    onClose();
   };
 
   return (
     <BaseModalWindow onClose={onClose} onShow={onShow} title="My daily norma">
-      <form>
-        <Wrapper>
-          <Formula>
-            <Paragraph>
-              For woman:<span>V=(M*0,03) + (T*0,4)</span>
-            </Paragraph>
-            <Paragraph>
-              For man: <span>V=(M*0,04) + (T*0,6)</span>
-            </Paragraph>
-          </Formula>
-          <Description>
-            <p>
-              V is the volume of the water norm in liters per day, M is your
-              body weight, T is the time of active sports, or another type of
-              activity commensurate in terms of loads (in the absence of these,
-              you must set 0)
-            </p>
-          </Description>
-        </Wrapper>
+      <Container>
+        {
+          <Wrapper>
+            <Formula>
+              <Paragraph>
+                For woman:<span> V=(M*0,03) + (T*0,4)</span>
+              </Paragraph>
+              <Paragraph>
+                For man:<span> V=(M*0,04) + (T*0,6)</span>
+              </Paragraph>
+            </Formula>
+            <Description>
+              <p>
+                <span>*</span>V is the volume of the water norm in liters per
+                day, M is your body weight, T is the time of active sports, or
+                another type of activity commensurate in terms of loads (in the
+                absence of these, you must set 0)
+              </p>
+            </Description>
+          </Wrapper>
+        }
 
-        <Wrapper>
-          <FormRadio>
-            <div role="group" aria-labelledby="chose-gender">
+        {
+          <Form>
+            <FormRadio>
+              <FormSubTitle>Calculate your rate:</FormSubTitle>
               <label>
-                <input
+                <InputRadio
                   type="radio"
                   name="gender"
                   value="woman"
@@ -88,7 +97,7 @@ export const DailyNormaModal = ({ onClose, onShow }) => {
                 <span>For woman</span>
               </label>
               <label>
-                <input
+                <InputRadio
                   type="radio"
                   name="gender"
                   value="man"
@@ -97,52 +106,56 @@ export const DailyNormaModal = ({ onClose, onShow }) => {
                 />
                 <span>For man</span>
               </label>
+            </FormRadio>
+            <div>
+              <Paragraph>Your weight in kilograms:</Paragraph>
+              <Input
+                type="number"
+                name="weight"
+                value={weight}
+                onChange={e =>
+                  setWeight(e.target.value.replace(/[^0-9.]/g, ''))
+                }
+              />
             </div>
-          </FormRadio>
-          <div>
-            <Paragraph>Your weight in kilograms:</Paragraph>
-            <input
-              type="number"
-              name="weight"
-              value={weight}
-              onChange={e => setWeight(e.target.value)}
-            />
-          </div>
-          <div>
-            <Paragraph>
-              The time of active participation in sports or other activities
-              with a high physical. load in hours:
-            </Paragraph>
-            <input
-              type="number"
-              name="timeOfActive"
-              value={timeOfActive}
-              onChange={e => setTimeOfActive(e.target.value)}
-            />
-          </div>
-          <CalculateWater>
-            The required amount of water in liters per day:
-            <span>
-              {dailyWaterNorm ? parseFloat(dailyWaterNorm).toFixed(1) : 0} L
-            </span>
-          </CalculateWater>
-          <div>
-            <FormSubTitle>
-              Write down how much water you will drink:
-            </FormSubTitle>
+            <div>
+              <Paragraph>
+                The time of active participation in sports or other activities
+                with a high physical. load in hours:
+              </Paragraph>
+              <Input
+                type="number"
+                name="timeOfActive"
+                value={timeOfActive}
+                onChange={e =>
+                  setTimeOfActive(e.target.value.replace(/[^0-9.]/g, ''))
+                }
+              />
+            </div>
+            <CalculateWater>
+              <Result>The required amount of water in liters per day:</Result>
+              <span>
+                {dailyWaterNorm ? parseFloat(dailyWaterNorm).toFixed(1) : 0} L
+              </span>
+            </CalculateWater>
+            <div>
+              <FormSubTitle>
+                Write down how much water you will drink:
+              </FormSubTitle>
 
-            <input
-              type="number"
-              name="intakeGoal"
-              value={intakeGoal}
-              onChange={e => setIntakeGoal(e.target.value)}
-            />
-          </div>
-        </Wrapper>
-        <button type="submit" onClick={handleSubmit}>
-          Save
-        </button>
-      </form>
+              <Input
+                type="number"
+                name="intakeGoal"
+                value={intakeGoal}
+                onChange={e => setIntakeGoal(e.target.value)}
+              />
+            </div>
+            <ButtonSave type="submit" onClick={handleSubmit}>
+              Save
+            </ButtonSave>
+          </Form>
+        }
+      </Container>
     </BaseModalWindow>
   );
 };

@@ -13,20 +13,23 @@ import {
   UserLogoTitle,
   UserModalIcon,
 } from './UserLogo.styled';
+
+// import defaultAvatar from '../../../assets/images/default_avatar.png';
 // import { el } from 'date-fns/locale';
 
 export const UserLogo = () => {
   const myRef = useRef();
 
   const [modalIsOpen, setModalIsOpen] = useState(false);
-  const { name , avatarURL} = useSelector(selectUser);
+  const { name, avatarURL } = useSelector(selectUser);
 
   const showModal = () => {
     setModalIsOpen(!modalIsOpen);
   };
-  const firstLetter = name ? name.charAt(0).toUpperCase() : 'V';
+  // const firstLetter = name ? name.charAt(0).toUpperCase() : 'V';
 
   const getUserInfo = () => {
+    const firstLetter = name.charAt(0).toUpperCase();
     if (name && avatarURL) {
       return {
         userName: name,
@@ -55,6 +58,7 @@ export const UserLogo = () => {
         ) : (
           <UserDefaultAvatar>{avatar}</UserDefaultAvatar>
         )}
+
         <UserModalIcon
           style={{ transform: modalIsOpen ? 'rotate(180deg)' : 'rotate(0deg)' }}
         >
