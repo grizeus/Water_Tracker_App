@@ -1,3 +1,5 @@
+import { format } from 'date-fns';
+
 const handleProgress = state => {
   const currentAmount = state.today.dailyWaterList.reduce(
     (acc, entry) => acc + entry.amount,
@@ -28,8 +30,24 @@ export const handlerDeleteWater = (state, { payload }) => {
   state.today.dailyWaterList = state.today.dailyWaterList.filter(
     data => data._id !== payload,
   );
-
   handleProgress(state);
+  
+  const today = new Date().toISOString().slice(0, 10);
+  if (state.today.dailyWaterList.length === 0) {
+    state.month = state.month.filter(item => item.date !== today);
+    return;
+  }
+
+  const dayToUpd = state.month.find(item => item.date === today);
+
+  if (dayToUpd) {
+    dayToUpd.entriesCount -= 1;
+    dayToUpd.percrentage = state.today.progress;
+  }
+
+  state.month = state.month.map(day =>
+    day.date === dayToUpd.date ? dayToUpd : day,
+  );
 };
 
 export const handleGetTodayWater = (state, { payload }) => {
@@ -39,5 +57,9 @@ export const handleGetTodayWater = (state, { payload }) => {
 };
 
 export const handleGetMonthWater = (state, { payload }) => {
-  state.month = payload;
+  const formattedMonth = payload.data.map(item => ({
+    ...item,
+    date: format(`${payload.year},${item.date}`, 'yyyy-MM-dd'),
+  }));
+  state.month = formattedMonth;
 };
