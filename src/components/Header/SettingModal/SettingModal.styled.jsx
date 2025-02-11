@@ -152,6 +152,8 @@ export const RadioBtnLabel = styled.label`
 `;
 
 export const Avatar = styled.img`
+  width: 80px;
+  height: 80px;
   border-radius: 60%;
 `;
 

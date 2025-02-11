@@ -26,9 +26,10 @@ export const UserLogo = () => {
   const showModal = () => {
     setModalIsOpen(!modalIsOpen);
   };
-  const firstLetter = name ? name.charAt(0).toUpperCase() : 'V';
+  // const firstLetter = name ? name.charAt(0).toUpperCase() : 'V';
 
   const getUserInfo = () => {
+    const firstLetter = name.charAt(0).toUpperCase();
     if (name && avatarURL) {
       return {
         userName: name,
