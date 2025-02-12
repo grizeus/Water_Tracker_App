@@ -1,3 +1,6 @@
+import { useEffect } from 'react';
+import { useDispatch } from 'react-redux';
+
 import { DailyNorma } from '../../components/Home/DailyNorma/DailyNorma';
 import { WaterRatioPanel } from '../../components/Home/WaterRatioPanel/WaterRatioPanel';
 import { Container } from 'components';
@@ -12,8 +15,16 @@ import imgBottleDesktop2x from '../../assets/images/background/homePage/desktop/
 
 import { TodayWaterList } from '../../components/Home/TodayWaterList/TodayWaterList';
 import { MonthStatsTable } from '../../components/Home/MonthStatsTable/MonthStatsTable';
+import { getUserThunk } from '../../redux/auth/authOperations';
 
 const Home = () => {
+
+  const dispatch = useDispatch();
+  
+  useEffect(() => {
+    dispatch(getUserThunk())
+  });
+
   return (
     <Section>
       <Container>
