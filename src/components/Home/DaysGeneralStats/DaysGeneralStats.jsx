@@ -1,6 +1,4 @@
 import { useRef, useEffect } from 'react';
-import { useSelector } from 'react-redux';
-import { selectUser } from '../../../redux/auth/authSelectors';
 import { formatDate } from '../../../helpers/utils/dateUtils';
 import {
   DaysGeneralStatsModal,
@@ -11,9 +9,8 @@ import {
 } from './DaysGeneralStats.styled';
 
 export const DaysGeneralStats = ({ stats, position, onShow }) => {
-  const { date, drinkCount, waterVolumePercentage } = stats;
+  const { date, drinkCount, dailyGoal, waterVolumePercentage } = stats;
   const modalRef = useRef(null);
-  const { waterRate } = useSelector(selectUser);
 
   useEffect(() => {
     if (!modalRef.current) return;
@@ -47,7 +44,6 @@ export const DaysGeneralStats = ({ stats, position, onShow }) => {
     }
   }, [position]);
 
-  const waterRateL = (waterRate / 1000).toFixed(1) + ' L';
 
   const formattedDate = date ? formatDate(date, 'd, MMMM') : '';
   return (
@@ -60,12 +56,12 @@ export const DaysGeneralStats = ({ stats, position, onShow }) => {
           <DaysGeneralStatsData>{formattedDate}</DaysGeneralStatsData>
         </DaysGeneralStatsItem>
         <DaysGeneralStatsItem>
-          Daily norma:<DaysGeneralStatsInfo>{waterRateL}</DaysGeneralStatsInfo>
+          Daily norma:<DaysGeneralStatsInfo>{dailyGoal !== 0 ? dailyGoal : '2.0 L'}</DaysGeneralStatsInfo>
         </DaysGeneralStatsItem>
         <DaysGeneralStatsItem>
           Fulfillment of the daily norm:
           <DaysGeneralStatsInfo>
-            {Math.round(waterVolumePercentage)}%
+            {waterVolumePercentage}
           </DaysGeneralStatsInfo>
         </DaysGeneralStatsItem>
         <DaysGeneralStatsItem>

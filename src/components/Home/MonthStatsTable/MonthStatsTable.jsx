@@ -33,14 +33,7 @@ export const MonthStatsTable = () => {
   const dayRefs = useRef({});
   const month = format(selectedMonth, 'yyyy-MM');
   useEffect(() => {
-    if (!selectedMonth || !(selectedMonth instanceof Date)) {
-      return;
-    }
     dispatch(getMonthWater(month))
-      .unwrap()
-      .catch(error => {
-        console.error('Error fetching month water data:', error);
-      });
   }, [dispatch, month]);
   const handlePreviousMonth = () => {
     const newMonth = subMonths(selectedMonth, 1);
@@ -72,9 +65,9 @@ export const MonthStatsTable = () => {
     } else {
       setSelectedDayStats({
         date: dayKey,
-        waterVolumeSum: dayData ? dayData.waterVolumeSum : 0,
-        drinkCount: dayData ? dayData.drinkCount : 0,
-        waterVolumePercentage: dayData ? dayData.waterVolumePercentage : 0,
+        dailyGoal: dayData ? dayData.dailyGoal : 0,
+        drinkCount: dayData ? dayData.entriesCount : 0,
+        waterVolumePercentage: dayData ? dayData.percentage : 0,
       });
       setModalVisible(true);
       const dayElement = dayRefs.current[dayKey];
@@ -139,8 +132,9 @@ export const MonthStatsTable = () => {
         {daysOfMonth.map(day => {
           const dayKey = format(day, 'yyyy-MM-dd');
           const dayData = monthDataMap[dayKey];
-          const percentage = dayData ? dayData.waterVolumePercentage : 0;
-          const isHighlighted = dayData && dayData.waterVolumePercentage < 100;
+          const percentage = dayData ? parseInt(dayData.percentage) : 0;
+          const isHighlighted = dayData && percentage < 100;
+          const isFullfiled = dayData && percentage === 100;
           return (
             <div key={dayKey}>
               <DaysPercentage>
@@ -148,10 +142,11 @@ export const MonthStatsTable = () => {
                   ref={el => (dayRefs.current[dayKey] = el)}
                   onClick={() => onDayClick(day)}
                   isHighlighted={isHighlighted}
+                  isFullfiled={isFullfiled}
                 >
                   {format(day, 'd')}
                 </DaysButton>
-                <span>{Math.round(percentage)}%</span>
+                <span>{percentage}%</span>
               </DaysPercentage>
             </div>
           );
