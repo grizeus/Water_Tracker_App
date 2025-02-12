@@ -2,8 +2,7 @@ import axios from 'axios';
 
 export const instanceWater = axios.create({
   withCredentials: true,
-  // baseURL: 'https://watertrackerbackend-5ymk.onrender.com',
-  baseURL: 'http://localhost:3001',
+  baseURL: 'https://watertrackerbackend-5ymk.onrender.com',
   headers: {
     'Content-Type': 'application/json',
   },
