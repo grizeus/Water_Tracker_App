@@ -1,4 +1,4 @@
-import { format } from "date-fns";
+import { format } from 'date-fns';
 
 const handleProgress = state => {
   const currentAmount = state.today.dailyWaterList.reduce(
@@ -13,6 +13,26 @@ const handleProgress = state => {
 export const handlerAddWater = (state, { payload: { _id, time, amount } }) => {
   state.today.dailyWaterList.push({ _id, time, amount });
   handleProgress(state);
+
+  const today = new Date().toISOString().slice(0, 10);
+  const dayToUpd = state.month.find(item => item.date === today);
+
+  if (dayToUpd) {
+    dayToUpd.entriesCount += 1;
+    dayToUpd.percrentage = state.today.progress;
+  } else {
+    state.month.push({
+      date: today,
+      dailyGoal: (state.today.dailyGoal / 1000).toFixed(1) + ' L',
+      percentage: state.today.progress,
+      entriesCount: 1,
+    });
+    return;
+  }
+
+  state.month = state.month.map(day =>
+    day.date === dayToUpd.date ? dayToUpd : day,
+  );
 };
 
 export const handleEditWater = (state, { payload }) => {
@@ -24,6 +44,17 @@ export const handleEditWater = (state, { payload }) => {
   }
 
   handleProgress(state);
+
+  const today = new Date().toISOString().slice(0, 10);
+  const dayToUpd = state.month.find(item => item.date === today);
+
+  if (dayToUpd) {
+    dayToUpd.percentage = state.today.progress;
+  }
+
+  state.month = state.month.map(day =>
+    day.date === dayToUpd.date ? dayToUpd : day,
+  );
 };
 
 export const handlerDeleteWater = (state, { payload }) => {
@@ -32,6 +63,23 @@ export const handlerDeleteWater = (state, { payload }) => {
   );
 
   handleProgress(state);
+
+  const today = new Date().toISOString().slice(0, 10);
+  if (state.today.dailyWaterList.length === 0) {
+    state.month = state.month.filter(item => item.date !== today);
+    return;
+  }
+
+  const dayToUpd = state.month.find(item => item.date === today);
+
+  if (dayToUpd) {
+    dayToUpd.entriesCount -= 1;
+    dayToUpd.percentage = state.today.progress;
+  }
+
+  state.month = state.month.map(day =>
+    day.date === dayToUpd.date ? dayToUpd : day,
+  );
 };
 
 export const handleGetTodayWater = (state, { payload }) => {
