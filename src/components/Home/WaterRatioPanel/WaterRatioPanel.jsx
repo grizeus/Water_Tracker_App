@@ -19,16 +19,31 @@ import {
 
 export const WaterRatioPanel = () => {
   const [isModalOpen, setModalOpen] = useState(false);
-  const roundedWaterVolumePercentage = useSelector(selectWaterVolumePercentage);
+  const percentage = useSelector(selectWaterVolumePercentage);
+  const roundedWaterVolumePercentage = parseInt(percentage);
 
   const getMarkPosition = () => {
     const limitedPercentage = Math.min(
       100,
       Math.max(0, roundedWaterVolumePercentage),
     );
-    return {
-      left: `calc(${limitedPercentage}% + 4px)`,
-    };
+    if (limitedPercentage < 50) {
+      return {
+        left: `calc(${limitedPercentage}%)`,
+      };
+    } else if (limitedPercentage > 50 && limitedPercentage <= 75) {
+      return {
+        left: `calc(${limitedPercentage}% - 2px)`,
+      };
+    } else if (limitedPercentage > 75 && limitedPercentage < 85) {
+      return {
+        left: `calc(${limitedPercentage}% - 4px)`,
+      };
+    } else {
+      return {
+        left: `calc(${limitedPercentage}% - 5px)`,
+      };
+    }
   };
 
   const getBackgroundSize = () => {
