@@ -11,8 +11,7 @@ import { DailyNormaModal } from '../DailyNormaModal/DailyNormaModal';
 import { selectDailyGoal } from '../../../redux/waterData/waterSelectors';
 
 export const DailyNorma = () => {
-  const dailyGoal  = useSelector(selectDailyGoal);
-  console.log(dailyGoal)
+  const dailyGoal = useSelector(selectDailyGoal);
   const [isModalOpen, setIsModalOpen] = useState(false);
 
   const openModal = () => setIsModalOpen(true);

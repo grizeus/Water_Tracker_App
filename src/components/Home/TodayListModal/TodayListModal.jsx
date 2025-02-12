@@ -85,9 +85,7 @@ export const TodayListModal = ({
       // Коли створюємо новий запис і час вибрано користувачем
       const currentDate = new Date();
       const [hours, minutes] = time.split(':');
-      // console.log('time: 1-й if', time); //14:40
       currentDate.setHours(hours, minutes);
-      // console.log(currentDate);
       isoDate = currentDate.toISOString().slice(0, 16); // 2024-01-10T12:41
 
       const currentDate2 = new Date(isoDate);
@@ -105,8 +103,6 @@ export const TodayListModal = ({
         ('0' + newDate.getHours()).slice(-2) +
         ':' +
         ('0' + newDate.getMinutes()).slice(-2);
-      // console.log('Вихідна дата: фінальний', isoDate);
-      // console.log('Нова дата: фінальний', formattedNewDate);
       isoDate = formattedNewDate;
     }
 
@@ -114,7 +110,6 @@ export const TodayListModal = ({
       time: isoDate,
       amount,
     };
-    // console.log(waterData);
     if (isEditing) {
       dispatch(editWaterThunk({ _id: existingRecordId, ...waterData })).then(
         data => {
@@ -144,7 +139,6 @@ export const TodayListModal = ({
 
   const displayTime =
     isEditing && initialTime ? formatCustomTime(initialTime) : '';
-  // console.log('time', time);
 
   return (
     <BaseModalWindow onClose={handleOnClose} onShow={onShow} title={title}>
