@@ -11,15 +11,15 @@ import {
   signup,
   updateAvatar,
   updateWaterRate,
-  instanceWater,
   setToken,
 } from '../Api/api';
-import { da } from 'date-fns/locale';
+
 export const registerThunk = createAsyncThunk(
   'auth/signup',
   async (credentials, { rejectWithValue }) => {
     try {
-      const data = await signup(credentials);
+      await signup(credentials);
+      const data = await signin(credentials);
       return data;
     } catch (error) {
       if (error.response.status === 409) {
@@ -83,12 +83,12 @@ export const resPassThunk = createAsyncThunk(
   },
 );
 export const refreshUser = createAsyncThunk(
-  "auth/refresh",
+  'auth/refresh',
   async (_, thunkAPI) => {
     const state = thunkAPI.getState();
     const token = state.auth.token;
     if (!token) {
-      return thunkAPI.rejectWithValue("No token found");
+      return thunkAPI.rejectWithValue('No token found');
     }
     try {
       setToken(token); // Встановлюємо токен перед запитом
@@ -97,7 +97,8 @@ export const refreshUser = createAsyncThunk(
     } catch (error) {
       return thunkAPI.rejectWithValue(error.message);
     }
-  });
+  },
+);
 // User
 export const getUserThunk = createAsyncThunk(
   '/user',
@@ -163,4 +164,4 @@ export const deleteUserThunk = createAsyncThunk(
       return rejectWithValue(error.message);
     }
   },
-);   
+);

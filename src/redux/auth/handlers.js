@@ -1,10 +1,7 @@
 import { initialState } from './authSlice';
 
-export const handleRegister = (state, { payload }) => {
-
-  state.token = payload.accessToken;
-
-
+export const handleGetUser = (state, { payload }) => {
+  state.user = payload;
   state.isLoggedIn = true;
 };
 
@@ -17,12 +14,8 @@ export const handleLogout = () => initialState;
 
 export const handleDeleteUser = () => initialState;
 
-export const handleGetUserPending = state => {
-  state.loggedIn = false;
-};
-
 export const handleGetUSerReject = state => {
-  state.loggedIn = false;
+  state.isLoggedIn = false;
 };
 
 export const handleReqPass = () => initialState;
