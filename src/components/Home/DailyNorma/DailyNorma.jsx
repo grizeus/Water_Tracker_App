@@ -1,6 +1,5 @@
 import { useState } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-import { selectUser } from '../../../redux/auth/authSelectors';
+import { useSelector } from 'react-redux';
 import {
   DailyWrapper,
   FlexContainer,
@@ -9,23 +8,23 @@ import {
   Description,
 } from './DailyNorma.styled';
 import { DailyNormaModal } from '../DailyNormaModal/DailyNormaModal';
+import { selectDailyGoal } from '../../../redux/waterData/waterSelectors';
 
 export const DailyNorma = () => {
-  const { waterRate } = useSelector(selectUser);
+  const dailyGoal  = useSelector(selectDailyGoal);
+  console.log(dailyGoal)
   const [isModalOpen, setIsModalOpen] = useState(false);
-
-  const dispatch = useDispatch();
 
   const openModal = () => setIsModalOpen(true);
   const closeModal = () => setIsModalOpen(false);
 
-  const convertInL = (waterRate / 1000).toFixed(1);
+  const convertInL = (dailyGoal / 1000).toFixed(1);
 
   return (
     <DailyWrapper>
       <TitleForm>My Daily Norma</TitleForm>
       <FlexContainer>
-        <Description>{waterRate ? convertInL : 2} L </Description>
+        <Description>{dailyGoal ? convertInL : 2} L </Description>
         <ButtonEdit onClick={openModal}>Edit</ButtonEdit>
       </FlexContainer>
       {isModalOpen && <DailyNormaModal onClose={closeModal} />}

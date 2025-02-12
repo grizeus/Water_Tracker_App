@@ -19,7 +19,7 @@ export const handlerAddWater = (state, { payload: { _id, time, amount } }) => {
 
   if (dayToUpd) {
     dayToUpd.entriesCount += 1;
-    dayToUpd.percrentage = state.today.progress;
+    dayToUpd.percentage = state.today.progress;
   } else {
     state.month.push({
       date: today,
@@ -86,6 +86,22 @@ export const handleGetTodayWater = (state, { payload }) => {
   state.today.dailyWaterList = payload.entries;
   state.today.dailyGoal = payload.dailyGoal;
   state.today.progress = payload.progress;
+};
+
+export const handlerUpdateNorma = (state, { payload }) => {
+  state.today.dailyGoal = payload;
+  handleProgress(state);
+
+  const today = new Date().toISOString().slice(0, 10);
+  const dayToUpd = state.month.find(item => item.date === today);
+
+  if (dayToUpd) {
+     dayToUpd.percentage = state.today.progress;
+  } 
+
+  state.month = state.month.map(day =>
+    day.date === dayToUpd.date ? dayToUpd : day,
+  );
 };
 
 export const handleGetMonthWater = (state, { payload }) => {
