@@ -9,11 +9,14 @@
     url('../../assets/images/background/WelcomePage/mob/bg_mob_2x.png') 2x
   );
   background-repeat: no-repeat;
+  background-size: cover;
   background-position: center bottom;
   padding-inline: 20px;
   padding-top: 24px;
   padding-bottom: 40px;
-
+  display: flex;
+  flex-direction: column;
+  align-items: center;
   @media screen and (min-width: 768px) {
     background-image: -webkit-image-set(
       url('../../assets/images/background/WelcomePage/tab/bg_tab_1x.png') 1x,
@@ -25,10 +28,13 @@
     );
     padding-top: 40px;
     padding-bottom: 50px;
+    background-size: 70%;
+    display: block;
   }
 
   @media screen and (min-width: 1440px) {
     display: flex;
+    flex-direction: row;
     gap: 80px;
     align-items: flex-end;
     justify-content: center;
@@ -40,12 +46,9 @@
         url('../../assets/images/background/WelcomePage/desktop/bg_img_2x.png')
           2x
       ),
-      -webkit-image-set(
-        url('../../assets/images/background/WelcomePage/desktop/bg_img_1x_bubbles.png')
-            1x,
-        url('../../assets/images/background/WelcomePage/desktop/bg_img_2x_bubbles.png')
-            2x
-      );
+      -webkit-image-set(url('../../assets/images/background/WelcomePage/desktop/bg_img_1x_bubbles.png')
+            1x, url('../../assets/images/background/WelcomePage/desktop/bg_img_2x_bubbles.png')
+            2x);
     background-image: image-set(
         url('../../assets/images/background/WelcomePage/desktop/bg_img_1x.png')
           1x,
@@ -58,6 +61,6 @@
         url('../../assets/images/background/WelcomePage/desktop/bg_img_2x_bubbles.png')
           2x
       );
-      background-size: contain;
+    background-size: contain;
   }
 }

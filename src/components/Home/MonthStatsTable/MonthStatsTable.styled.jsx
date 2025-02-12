@@ -46,18 +46,6 @@ export const Paginator = styled.div`
   line-height: 1.25;
 `;
 
-export const Year = styled.p`
-  position: absolute;
-  top: 0;
-  right: 0;
-  transform: translateY(-100%);
-  font-size: 10px;
-
-  @media screen and (min-width: ${({ theme }) => theme.breakpoint.tablet}) {
-    font-size: 12px;
-  }
-`;
-
 export const DaysList = styled.div`
   display: grid;
   grid-template-columns: repeat(5, 1fr);
