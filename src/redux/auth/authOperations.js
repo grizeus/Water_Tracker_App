@@ -11,7 +11,6 @@ import {
   signup,
   updateAvatar,
   updateWaterRate,
-  // refresh,
   instanceWater,
   setToken,
 } from '../Api/api';
