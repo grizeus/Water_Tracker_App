@@ -6,13 +6,14 @@ import {
   editWater,
   fetchMonthWater,
   fetchTodayWater,
+  updateWaterRate,
 } from '../Api/api';
 
 export const addWatersThunk = createAsyncThunk(
   'water/addWater',
   async (newWater, { rejectWithValue }) => {
     try {
-      const {data} = await addWaters(newWater);
+      const { data } = await addWaters(newWater);
       return data.data;
     } catch (error) {
       console.log(error.message);
@@ -34,11 +35,24 @@ export const editWaterThunk = createAsyncThunk(
   'water/editWater',
   async ({ _id, amount, time }, { rejectWithValue }) => {
     try {
-      console.log(_id, amount, time);
       const newWaterUser = { amount, time };
       const response = await editWater({ newWaterUser, id: _id });
       console.log(response);
       return response.data;
+    } catch (error) {
+      if (error.response.status === 400) {
+        toast.warning(`You must write at least 1 ml.`);
+      }
+      return rejectWithValue(error.message);
+    }
+  },
+);
+export const updateWaterNormaThunk = createAsyncThunk(
+  'water/daily-norma',
+  async (dailyGoal , { rejectWithValue }) => {
+    try {
+      const res = await updateWaterRate(dailyGoal);
+      return res;
     } catch (error) {
       if (error.response.status === 400) {
         toast.warning(`You must write at least 1 ml.`);

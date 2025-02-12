@@ -2,7 +2,8 @@ import axios from 'axios';
 
 export const instanceWater = axios.create({
   withCredentials: true,
-  baseURL: 'https://watertrackerbackend-5ymk.onrender.com',
+  // baseURL: 'https://watertrackerbackend-5ymk.onrender.com',
+  baseURL: 'http://localhost:3001',
   headers: {
     'Content-Type': 'application/json',
   },
@@ -53,11 +54,12 @@ export const refresh = async () => {
 
 // User
 
-export const updateWaterRate = async newWaterRate => {
-  const { data } = await instanceWater.patch('water/daily-norma', {
-    waterRate: newWaterRate,
-  });
-  return data;
+export const updateWaterRate = async dailyGoaL => {
+  const {data} = await instanceWater.patch(
+    'water/daily-norma',
+    dailyGoaL,
+  );
+  return data.data;
 };
 
 export const getUser = async () => {

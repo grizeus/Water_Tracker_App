@@ -16,32 +16,33 @@ import {
   Wrapper,
   Result,
 } from './DailyNormaModal.styled';
-import { updateWaterRate } from '../../../redux/Api/api';
 import { BaseModalWindow } from '../../common/BaseModalWindow/BaseModalWindow';
+import { updateWaterNormaThunk } from '../../../redux/waterData/waterOperations';
 
 export const DailyNormaModal = ({ onClose, onShow }) => {
   const [gender, setGender] = useState('woman');
   const [weight, setWeight] = useState('');
-  const [timeOfActive, setTimeOfActive] = useState('');
+  const [timeOfActive, setTimeOfActive] = useState(0);
   const [dailyWaterNorm, setDailyWaterNorm] = useState('');
-  const [intakeGoal, setIntakeGoal] = useState('');
+  const [intakeGoal, setIntakeGoal] = useState(0);
 
   const dispatch = useDispatch();
 
   const calculateWaterDailyNorm = useCallback(() => {
     if (!weight || !timeOfActive) return setDailyWaterNorm('');
 
-    if (weight <= 0 || timeOfActive <= 0) {
+    if (weight <= 0 || timeOfActive < 0) {
       return toast.error('Please enter a valid data');
     }
 
     const userGender = gender === 'woman' ? 0.03 : 0.04;
     const activityTime = gender ? 0.4 : 0.6;
 
-    const intake = weight * userGender + (timeOfActive / 60) * activityTime;
+    const intake = weight * userGender + timeOfActive * activityTime;
+    setIntakeGoal(dailyWaterNorm);
 
     setDailyWaterNorm(intake.toFixed(2));
-  }, [gender, weight, timeOfActive]);
+  }, [gender, weight, timeOfActive, dailyWaterNorm]);
 
   useEffect(() => {
     calculateWaterDailyNorm();
@@ -53,8 +54,9 @@ export const DailyNormaModal = ({ onClose, onShow }) => {
     const userGoal = parseFloat(intakeGoal);
 
     const finishGoal = userGoal ? userGoal : dailyWaterNorm;
+    const dailyGoal = finishGoal * 1000; // in ml
 
-    dispatch(updateWaterRate({ waterRate: finishGoal }));
+    dispatch(updateWaterNormaThunk({ dailyGoal }));
     onClose();
   };
 
