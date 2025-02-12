@@ -15,15 +15,14 @@ import {
 import {
   handleLogin,
   handleLogout,
-  handleGetUserPending,
   handleGetUSerReject,
-  handleRegister,
   handlerEditUserInfo,
   handlerUpdateAvatar,
   handlerUpdateWaterRate,
   handleReqPass,
   handleResPass,
   handleDeleteUser,
+  handleGetUser,
 } from './handlers';
 
 export const initialState = {
@@ -49,17 +48,13 @@ const authSlice = createSlice({
   },
   extraReducers: builder => {
     builder
-      .addCase(registerThunk.fulfilled, handleRegister)
+      .addCase(registerThunk.fulfilled, handleLogin)
       .addCase(logInThunk.fulfilled, handleLogin)
       .addCase(logOutThunk.fulfilled, handleLogout)
       .addCase(updateWaterRateThunk.fulfilled, handlerUpdateWaterRate)
       .addCase(updateAvatarThunk.fulfilled, handlerUpdateAvatar)
       .addCase(editUserInfoThunk.fulfilled, handlerEditUserInfo)
-      .addCase(getUserThunk.fulfilled, (state, action) => {
-        state.user = action.payload;
-        state.isLoggedIn = true;
-      })
-      .addCase(getUserThunk.pending, handleGetUserPending)
+      .addCase(getUserThunk.fulfilled, handleGetUser)
       .addCase(getUserThunk.rejected, handleGetUSerReject)
       .addCase(reqPassThunk.fulfilled, handleReqPass)
       .addCase(resPassThunk.fulfilled, handleResPass)
