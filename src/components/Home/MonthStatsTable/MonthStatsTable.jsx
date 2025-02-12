@@ -19,7 +19,6 @@ import {
   DaysPercentage,
   HeaderMonth,
   Paginator,
-  Year,
 } from './MonthStatsTable.styled';
 export const MonthStatsTable = () => {
   const dispatch = useDispatch();
@@ -29,11 +28,10 @@ export const MonthStatsTable = () => {
   const [modalVisible, setModalVisible] = useState(false);
   const [dayPosition, setDayPosition] = useState({ top: 0, left: 0, width: 0 });
   const [selectedDayStats, setSelectedDayStats] = useState(null);
-  const [isHovering, setIsHovering] = useState(false);
   const dayRefs = useRef({});
   const month = format(selectedMonth, 'yyyy-MM');
   useEffect(() => {
-    dispatch(getMonthWater(month))
+    dispatch(getMonthWater(month));
   }, [dispatch, month]);
   const handlePreviousMonth = () => {
     const newMonth = subMonths(selectedMonth, 1);
@@ -105,20 +103,14 @@ export const MonthStatsTable = () => {
     <div>
       <HeaderMonth>
         <h2>Month</h2>
-        <Paginator
-          onMouseEnter={() => setIsHovering(true)}
-          onMouseLeave={() => setIsHovering(false)}
-        >
+        <Paginator>
           <ButtonPaginator
             onClick={handlePreviousMonth}
             active={activeButton === 'next'}
           >
             &lt;
           </ButtonPaginator>
-          <span>{format(selectedMonth, 'MMMM')}</span>
-          {isHovering && (
-            <Year>{format(selectedMonth, 'yyyy').split('-')[0]}</Year>
-          )}
+          <span>{format(selectedMonth, 'MMMM, yyyy')}</span>
           <ButtonPaginator
             onClick={handleNextMonth}
             disabled={selectedMonth >= new Date()}
