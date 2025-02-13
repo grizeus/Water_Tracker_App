@@ -1,6 +1,7 @@
+import { useEffect, useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import { toast } from 'react-toastify';
-import { useDispatch,useSelector } from 'react-redux';
-import { useCallback, useEffect, useState } from 'react';
+
 import {
   ButtonSave,
   CalculateWater,
@@ -16,21 +17,33 @@ import {
   Wrapper,
   Result,
 } from './DailyNormaModal.styled';
+
 import { BaseModalWindow } from '../../common/BaseModalWindow/BaseModalWindow';
 import { updateWaterNormaThunk } from '../../../redux/waterData/waterOperations';
-import {selectDailyGoal} from "../../../redux/waterData/waterSelectors.js";
+import { selectDailyGoal } from '../../../redux/waterData/waterSelectors';
+import { getUserThunk } from '../../../redux/auth/authOperations';
+import { selectDaily } from '../../../redux/auth/authSelectors.js';
 
 export const DailyNormaModal = ({ onClose, onShow }) => {
-  const selectDailyNorm = useSelector(selectDailyGoal);
+  const selectDailyNorm = useSelector(selectDailyGoal); // Отримуємо щоденну норму води
   const dispatch = useDispatch();
+  const dailyGoal = useSelector(selectDaily);
 
   const [gender, setGender] = useState('woman');
   const [weight, setWeight] = useState(0);
   const [timeOfActive, setTimeOfActive] = useState(0);
   const [dailyWaterNorm, setDailyWaterNorm] = useState('');
-  const [intakeGoal, setIntakeGoal] = useState(selectDailyNorm || '');
-
+  const [intakeGoal, setIntakeGoal] = useState(''); // Початково порожнє значення
   
+
+  // Використовуємо useEffect для встановлення поточного значення денної норми при відкритті модалки
+  useEffect(() => {
+    if (dailyGoal) {
+      setIntakeGoal((dailyGoal / 1000).toFixed(1)); // Перетворюємо з мілілітрів у літри
+    }
+  }, [dailyGoal]);
+
+  // Використовуємо useEffect для автоматичного розрахунку добової норми води
   useEffect(() => {
     if (timeOfActive < 0) {
       toast.error('Please enter a valid data');
@@ -45,18 +58,24 @@ export const DailyNormaModal = ({ onClose, onShow }) => {
     setDailyWaterNorm(intake.toFixed(2));
   }, [timeOfActive, gender, weight]);
 
-  const handleSubmit = e => {
+  // Функція відправки запиту
+  const handleSubmit = async (e) => {
     e.preventDefault();
-  
+
     const userGoal = parseFloat(intakeGoal);
-    const dailyGoal = userGoal ? userGoal : dailyWaterNorm ;
-  
-    console.log("Sending to server:", { dailyGoal });
-  
-    dispatch(updateWaterNormaThunk(dailyGoal ));
-    onClose();
+    const dailyGoal = !isNaN(userGoal) ? userGoal * 1000 : dailyWaterNorm * 1000; // Конвертація в мілілітри
+
+    console.log('Sending to server:', { dailyGoal });
+
+    try {
+      await dispatch(updateWaterNormaThunk({ dailyGoal }));
+      await dispatch(getUserThunk()); // Оновлення даних юзера після збереження
+      onClose();
+    } catch (error) {
+      console.error('Error updating water norm:', error);
+      toast.error('Failed to update water norm');
+    }
   };
-  
 
   return (
     <BaseModalWindow onClose={onClose} onShow={onShow} title="My daily norma">
@@ -70,6 +89,7 @@ export const DailyNormaModal = ({ onClose, onShow }) => {
               For man:<span> V=(M*0,04) + (T*0,6)</span>
             </Paragraph>
           </Formula>
+
           <Description>
             <p>
               <span>*</span>V is the volume of the water norm in liters per day, M is your body weight, T is the time of active sports, or another type of activity commensurate in terms of loads (in the absence of these, you must set 0)
@@ -125,19 +145,13 @@ export const DailyNormaModal = ({ onClose, onShow }) => {
             />
           </div>
 
-          {/* Рекомендована норма */}
           <CalculateWater>
             <Result>Recommended amount of water in liters per day:</Result>
-            <span>
-              {dailyWaterNorm ? parseFloat(dailyWaterNorm).toFixed(1) : selectDailyNorm} L
-            </span>
+            <span>{dailyWaterNorm ? parseFloat(dailyWaterNorm).toFixed(1) : (selectDailyNorm / 1000).toFixed(1)} L</span>
           </CalculateWater>
 
           <div>
-            <FormSubTitle>
-              Write down how much water you will drink:
-            </FormSubTitle>
-
+            <FormSubTitle>Write down how much water you will drink:</FormSubTitle>
             <Input
               type="number"
               name="intakeGoal"
@@ -154,5 +168,3 @@ export const DailyNormaModal = ({ onClose, onShow }) => {
     </BaseModalWindow>
   );
 };
-
-

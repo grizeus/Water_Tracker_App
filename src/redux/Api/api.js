@@ -51,10 +51,10 @@ export const refresh = async () => {
 
 // User
 
-export const updateWaterRate = async dailyGoaL => {
+export const updateWaterRate = async dailyGoal => {
   const {data} = await instanceWater.patch(
     '/water/daily-norma',
-    dailyGoaL,
+    (dailyGoal),
   );
   return data;
 };
