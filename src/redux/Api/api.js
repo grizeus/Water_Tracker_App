@@ -53,10 +53,10 @@ export const refresh = async () => {
 
 export const updateWaterRate = async dailyGoaL => {
   const {data} = await instanceWater.patch(
-    'water/daily-norma',
+    '/water/daily-norma',
     dailyGoaL,
   );
-  return data.data;
+  return data;
 };
 
 export const getUser = async () => {
