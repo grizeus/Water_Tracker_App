@@ -72,7 +72,7 @@ export const MonthStatsTable = () => {
       if (dayElement) {
         const rect = dayElement.getBoundingClientRect();
         setDayPosition({
-          top: rect.top + window.scrollY,
+          top: rect.top,
           left: rect.left,
           width: rect.width,
         });
