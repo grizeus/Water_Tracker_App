@@ -40,11 +40,9 @@ const validationSchema = Yup.object({
 export const SignUpForm = () => {
   const dispatch = useDispatch();
   const { isLoading } = useSelector(selectIsLoading);
-  const [iconStatus, setIconStatus] = useState(false);
 
-  const iconClick = () => {
-    setIconStatus(!iconStatus);
-  };
+  const [passwordVisible, setPasswordVisible] = useState(false);
+  const [confirmPasswordVisible, setConfirmPasswordVisible] = useState(false);
 
   return (
     <SignUpContainer>
@@ -56,7 +54,7 @@ export const SignUpForm = () => {
           initialValues={{ email: '', password: '', confirmPassword: '' }}
           validationSchema={validationSchema}
           onSubmit={({ email, password }) => {
-            dispatch(registerThunk({ email, password }))
+            dispatch(registerThunk({ email, password }));
           }}
         >
           {({ errors, isValid, touched, values }) => (
@@ -75,24 +73,20 @@ export const SignUpForm = () => {
                 {errors.email && values.email && <ErrorSvg />}
                 {!errors.email && values.email && <SuccessSvg />}
               </SignStyledLabel>
+
+              {/* Поле пароля */}
               <SignStyledLabel>
                 Enter your password
                 <SignStyledInput
                   className={errors.password ? 'input-with-error' : null}
-                  type={iconStatus ? 'text' : 'password'}
+                  type={passwordVisible ? 'text' : 'password'}
                   name="password"
                   placeholder="Password"
                 />
                 <ErrorMessage name="password" component={ErrorSpan} />
-                {!iconStatus ? (
-                  <EyeSlashIcon onClick={iconClick}>
-                    <use href={`${sprite}#icon-to-hide`}></use>
-                  </EyeSlashIcon>
-                ) : (
-                  <EyeSlashIcon onClick={iconClick}>
-                    <use href={`${sprite}#icon-to-open`}></use>
-                  </EyeSlashIcon>
-                )}
+                <EyeSlashIcon onClick={() => setPasswordVisible(!passwordVisible)}>
+                  <use href={`${sprite}#${passwordVisible ? 'icon-to-open' : 'icon-to-hide'}`}></use>
+                </EyeSlashIcon>
                 <PasswordStrengthBar
                   style={{ height: '5px' }}
                   scoreWordStyle={{ margin: '0' }}
@@ -100,29 +94,26 @@ export const SignUpForm = () => {
                   minLength={8}
                 />
               </SignStyledLabel>
+
+              {/* Поле повторного введення пароля */}
               <SignStyledLabel>
                 Repeat Password
                 <SignStyledInput
                   className={errors.confirmPassword ? 'input-with-error' : null}
-                  type={iconStatus ? 'text' : 'password'}
+                  type={confirmPasswordVisible ? 'text' : 'password'}
                   name="confirmPassword"
                   placeholder="Repeat password"
                 />
                 <ErrorMessage name="confirmPassword" component={ErrorSpan} />
-                {iconStatus === false ? (
-                  <EyeSlashIcon onClick={iconClick}>
-                    <use href={`${sprite}#icon-to-hide`}></use>
-                  </EyeSlashIcon>
-                ) : (
-                  <EyeSlashIcon onClick={iconClick}>
-                    <use href={`${sprite}#icon-to-open`}></use>
-                  </EyeSlashIcon>
-                )}
+                <EyeSlashIcon onClick={() => setConfirmPasswordVisible(!confirmPasswordVisible)}>
+                  <use href={`${sprite}#${confirmPasswordVisible ? 'icon-to-open' : 'icon-to-hide'}`}></use>
+                </EyeSlashIcon>
                 <PasswordStrengthBar
                   password={values.confirmPassword}
                   scoreWordStyle={{ margin: '0' }}
                 />
               </SignStyledLabel>
+
               <SignButton
                 className={!isValid ? 'button-disabled' : null}
                 type="submit"
