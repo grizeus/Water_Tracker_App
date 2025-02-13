@@ -47,6 +47,7 @@ export const Paginator = styled.div`
 `;
 
 export const DaysList = styled.div`
+  position: relative;
   display: grid;
   grid-template-columns: repeat(5, 1fr);
   grid-template-rows: repeat(6, 50px);

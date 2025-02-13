@@ -10,6 +10,13 @@ export const DaysGeneralStatsModal = styled.div`
   max-width: 280px;
   box-shadow: 0 4px 4px 0 rgba(64, 123, 255, 0.3);
   background-color: ${({ theme }) => theme.color.white};
+
+  @media screen and (min-width: ${({ theme }) => theme.breakpoint.tablet}) {
+    max-width: 292px;
+  }
+  @media screen and (min-width: ${({ theme }) => theme.breakpoint.desktop}) {
+    position: fixed;
+  }
 `;
 
 export const DaysGeneralStatsList = styled.ul`
@@ -37,4 +44,3 @@ export const DaysGeneralStatsInfo = styled.span`
 export const DaysGeneralStatsData = styled.p`
   color: ${({ theme }) => theme.color.accent};
 `;
-
