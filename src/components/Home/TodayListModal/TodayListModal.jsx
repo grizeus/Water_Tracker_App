@@ -29,6 +29,7 @@ import {
   PreviousInfo,
 } from './TodayListModal.styled';
 import { formatCustomTime } from '../../../helpers/utils/dateUtils';
+import { toast } from 'react-toastify';
 
 export const TodayListModal = ({
   initialAmount,
@@ -47,7 +48,6 @@ export const TodayListModal = ({
   const dispatch = useDispatch();
   const { isLoading } = useSelector(selectIsLoading);
 
-  // змінити кількість води за допомогою кнопок
   const increaseAmount = () => {
     setAmount(prevAmount => prevAmount + 50);
   };
@@ -74,11 +74,10 @@ export const TodayListModal = ({
     }
   }, [isEditing, initialAmount, initialTime]);
 
-  // Додано useEffect для запуску таймера
+  
   useEffect(() => {
     let interval;
 
-    // survey every 2 second
     if (onShow && !isEditing) {
       interval = setInterval(() => {
         setTime(format(new Date(), 'HH:mm')); 
@@ -94,23 +93,31 @@ export const TodayListModal = ({
 
   const handleSubmit = () => {
     let isoDate;
+  
+    if (amount < 50) {
+      toast.error('The amount of water must be at least 50 ml');
+      return; 
+    }
+  
+    if (!time || !/^([0-9]{2}):([0-9]{2})$/.test(time)) {
+      toast.error('Please enter a valid time in the format HH:mm');
+      return;
+    }
+  
     if (isEditing) {
-      
       isoDate = initialTime
         ? new Date(initialTime).toISOString().slice(0, 16)
         : new Date().toISOString();
     } else if (time) {
-      
       const currentDate = new Date();
       const [hours, minutes] = time.split(':');
       currentDate.setHours(hours, minutes);
       isoDate = currentDate.toISOString().slice(0, 16);
-
+  
       const currentDate2 = new Date(isoDate);
-
       const newDate = new Date(currentDate2);
       newDate.setHours(currentDate2.getHours() + 2);
-
+  
       const formattedNewDate =
         newDate.getFullYear() +
         '-' +
@@ -123,11 +130,13 @@ export const TodayListModal = ({
         ('0' + newDate.getMinutes()).slice(-2);
       isoDate = formattedNewDate;
     }
-
+  
     const waterData = {
       time: isoDate,
       amount,
     };
+  
+
     if (isEditing) {
       dispatch(editWaterThunk({ _id: existingRecordId, ...waterData })).then(
         data => {
@@ -143,7 +152,7 @@ export const TodayListModal = ({
       });
     }
   };
-
+  
   const handleOnClose = () => {
     if (isEditing) {
       onClose();
