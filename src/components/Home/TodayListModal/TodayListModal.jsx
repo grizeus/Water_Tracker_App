@@ -2,7 +2,7 @@ import { BaseModalWindow, ContentLoader } from 'components';
 import { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import sprite from 'src/assets/images/sprite/sprite.svg';
-import { format, parseISO } from 'date-fns';
+import { format } from 'date-fns';
 import { selectIsLoading } from '../../../redux/root/rootSelectors';
 import {
   addWatersThunk,
@@ -74,6 +74,25 @@ export const TodayListModal = ({
     }
   }, [isEditing, initialAmount, initialTime]);
 
+  // Додано useEffect для запуску таймера
+  useEffect(() => {
+    let interval;
+
+    if (onShow) {
+      console.log('Modal opened - Starting time update interval');
+      interval = setInterval(() => {
+        setTime(format(new Date(), 'HH:mm')); 
+        console.log('Time updated:', format(new Date(), 'HH:mm'));
+      }, 60000);
+    }
+
+    return () => {
+      if (interval) {
+        clearInterval(interval);
+      }
+    };
+  }, [onShow]); // Запуск таймера, коли модалка відкрита
+
   const handleSubmit = () => {
     let isoDate;
     if (isEditing) {
@@ -127,6 +146,7 @@ export const TodayListModal = ({
   };
 
   const handleOnClose = () => {
+    console.log('Closing modal');
     if (isEditing) {
       onClose();
       return
@@ -203,4 +223,3 @@ export const TodayListModal = ({
     </BaseModalWindow>
   );
 };
-
