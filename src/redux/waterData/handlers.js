@@ -89,7 +89,7 @@ export const handleGetTodayWater = (state, { payload }) => {
 };
 
 export const handlerUpdateNorma = (state, { payload }) => {
-  state.today.dailyGoal = payload.dailyGoal;
+  state.today.dailyGoal = payload;
   handleProgress(state);
 
   const today = new Date().toISOString().slice(0, 10);
