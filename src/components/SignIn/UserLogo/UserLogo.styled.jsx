@@ -40,13 +40,16 @@ export const UserDefaultAvatar = styled.span`
   width: 28px;
   height: 28px;
   border-radius: 50%;
-  font-size: 16px;
+
+  border: 1px solid ${({ theme }) => theme.color.secondaryLightBlue};
+  background-color: ${({ theme }) => theme.color.secondaryPowderBlue};
+  color: ${({ theme }) => theme.color.accent};
   display: flex;
   align-items: center;
   justify-content: center;
 
   @media (min-width: ${({ theme }) => theme.breakpoint.mobile}) {
-    font-size: 14px;
+    font-size: 22px;
     line-height: 1.25em;
   }
 `;
