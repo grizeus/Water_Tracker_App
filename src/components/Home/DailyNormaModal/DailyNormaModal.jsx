@@ -17,7 +17,7 @@ import {
   Result,
 } from './DailyNormaModal.styled';
 import { BaseModalWindow } from '../../common/BaseModalWindow/BaseModalWindow';
-import { getMonthWater, updateWaterNormaThunk } from '../../../redux/waterData/waterOperations';
+import { updateWaterNormaThunk } from '../../../redux/waterData/waterOperations';
 import { selectDailyGoal } from '../../../redux/waterData/waterSelectors.js';
 
 export const DailyNormaModal = ({ onClose, onShow }) => {
