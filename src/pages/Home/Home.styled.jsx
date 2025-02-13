@@ -8,6 +8,7 @@ import imgHomeDesktop1x from '../../assets/images/background/homePage/desktop/bu
 import imgHomeDesktop2x from '../../assets/images/background/homePage/desktop/bubbleDesk@2x.png';
 
 export const Section = styled.section`
+
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;

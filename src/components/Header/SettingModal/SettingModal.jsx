@@ -44,6 +44,8 @@ import {
   RadioBtnLabel,
   RadioBtnText,
   RadioBtnWrap,
+  UserAvatar,
+  UserDefaultAvatar,
 } from './SettingModal.styled';
 
 const settingFormValidationSchema = Yup.object().shape({
@@ -122,13 +124,32 @@ export const SettingModal = ({ onClose, onShow }) => {
       }
     });
   };
+  // ==========================
+  const getUserInfo = () => {
+    const firstLetter = name.charAt(0).toUpperCase();
+    if (name && avatarURL) {
+      return {
+        avatar: avatarURL,
+      };
+    } else if (name || avatarURL) {
+      return {
+        avatar: avatarURL || firstLetter,
+      };
+    } else {
+      return {
+        avatar: firstLetter,
+      };
+    }
+  };
+  const { avatar } = getUserInfo();
+
+  // ==========================
 
   const handlePasswordVisibility = () => {
     setIsPasswordShown(previsPasswordShown => !previsPasswordShown);
   };
 
   const handleAvatarDownload = e => {
-
     let formData = new FormData();
     formData.append('avatarURL', e.target.files[0]);
 
@@ -155,7 +176,7 @@ export const SettingModal = ({ onClose, onShow }) => {
                   <FormField>
                     <FormText>Your photo</FormText>
                     <DownloadWrap>
-                      {isAvatarLoading ? (
+                      {/* {isAvatarLoading ? (
                         <Loader
                           width={'80px'}
                           height={'80px'}
@@ -168,6 +189,12 @@ export const SettingModal = ({ onClose, onShow }) => {
                           width="80px"
                           height="80px"
                         />
+                      )} */}
+
+                      {avatarURL ? (
+                        <UserAvatar src={avatar} alt="user-avatar" />
+                      ) : (
+                        <UserDefaultAvatar>{avatar}</UserDefaultAvatar>
                       )}
                       <DownloadBtn>
                         <Field

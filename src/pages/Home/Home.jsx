@@ -18,11 +18,10 @@ import { MonthStatsTable } from '../../components/Home/MonthStatsTable/MonthStat
 import { getUserThunk } from '../../redux/auth/authOperations';
 
 const Home = () => {
-
   const dispatch = useDispatch();
-  
+
   useEffect(() => {
-    dispatch(getUserThunk())
+    dispatch(getUserThunk());
   });
 
   return (

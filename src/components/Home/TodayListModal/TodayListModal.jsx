@@ -78,10 +78,11 @@ export const TodayListModal = ({
   useEffect(() => {
     let interval;
 
-    if (onShow) {
+    // survey every 2 second
+    if (onShow && !isEditing) {
       interval = setInterval(() => {
         setTime(format(new Date(), 'HH:mm')); 
-      }, 60000);
+      }, 2000);
     }
 
     return () => {
@@ -89,7 +90,7 @@ export const TodayListModal = ({
         clearInterval(interval);
       }
     };
-  }, [onShow]); // Запуск таймера, коли модалка відкрита
+  }, [onShow, isEditing]);
 
   const handleSubmit = () => {
     let isoDate;
@@ -144,7 +145,6 @@ export const TodayListModal = ({
   };
 
   const handleOnClose = () => {
-    console.log('Closing modal');
     if (isEditing) {
       onClose();
       return

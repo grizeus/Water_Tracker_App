@@ -51,12 +51,14 @@ export const refresh = async () => {
 
 // User
 
+
 export const updateWaterRate = async dailyGoal => {
   const {data} = await instanceWater.patch(
     '/water/daily-norma',
     (dailyGoal),
   );
   return data;
+
 };
 
 export const getUser = async () => {
@@ -111,5 +113,6 @@ export const fetchTodayWater = async () => {
 
 export const fetchMonthWater = async month => {
   const { data: wrap } = await instanceWater.get(`/water/month/${month}`);
+  console.log(wrap.data)
   return wrap.data;
 };
