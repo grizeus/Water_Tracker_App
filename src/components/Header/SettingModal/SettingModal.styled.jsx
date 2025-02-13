@@ -313,3 +313,27 @@ export const GenderFormField = styled.div`
     margin-bottom: 52px;
   }
 `;
+
+export const UserAvatar = styled.img`
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+`;
+
+export const UserDefaultAvatar = styled.span`
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+
+  border: 1px solid ${({ theme }) => theme.color.secondaryLightBlue};
+  background-color: ${({ theme }) => theme.color.secondaryPowderBlue};
+  color: ${({ theme }) => theme.color.accent};
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  @media (min-width: ${({ theme }) => theme.breakpoint.mobile}) {
+    font-size: 36px;
+    line-height: 1.25em;
+  }
+`;
