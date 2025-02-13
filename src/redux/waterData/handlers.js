@@ -89,7 +89,7 @@ export const handleGetTodayWater = (state, { payload }) => {
 };
 
 export const handlerUpdateNorma = (state, { payload }) => {
-  state.today.dailyGoal = payload;
+  state.today.dailyGoal = payload.dailyGoal;
   handleProgress(state);
 
   const today = new Date().toISOString().slice(0, 10);
@@ -103,6 +103,7 @@ console.log(dayToUpd.percentage);
   state.month = state.month.map(day =>
     day.date === dayToUpd.date ? dayToUpd : day,
   );
+ 
 };
 
 export const handleGetMonthWater = (state, { payload }) => {

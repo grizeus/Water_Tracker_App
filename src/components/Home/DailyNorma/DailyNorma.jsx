@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useSelector } from 'react-redux';
 import {
   DailyWrapper,
@@ -8,10 +8,10 @@ import {
   Description,
 } from './DailyNorma.styled';
 import { DailyNormaModal } from '../DailyNormaModal/DailyNormaModal';
-import { selectDailyGoal } from '../../../redux/waterData/waterSelectors';
+import { selectDaily } from '../../../redux/auth/authSelectors.js';
 
 export const DailyNorma = () => {
-  const dailyGoal = useSelector(selectDailyGoal);
+  const dailyGoal = useSelector(selectDaily);
   const [isModalOpen, setIsModalOpen] = useState(false);
 
   const openModal = () => setIsModalOpen(true);
