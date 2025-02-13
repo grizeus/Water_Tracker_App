@@ -79,10 +79,8 @@ export const TodayListModal = ({
     let interval;
 
     if (onShow) {
-      console.log('Modal opened - Starting time update interval');
       interval = setInterval(() => {
         setTime(format(new Date(), 'HH:mm')); 
-        console.log('Time updated:', format(new Date(), 'HH:mm'));
       }, 60000);
     }
 
@@ -96,16 +94,16 @@ export const TodayListModal = ({
   const handleSubmit = () => {
     let isoDate;
     if (isEditing) {
-      // Коли редагуємо, використовуємо вже встановлений час з існуючого запису
+      
       isoDate = initialTime
         ? new Date(initialTime).toISOString().slice(0, 16)
         : new Date().toISOString();
     } else if (time) {
-      // Коли створюємо новий запис і час вибрано користувачем
+      
       const currentDate = new Date();
       const [hours, minutes] = time.split(':');
       currentDate.setHours(hours, minutes);
-      isoDate = currentDate.toISOString().slice(0, 16); // 2024-01-10T12:41
+      isoDate = currentDate.toISOString().slice(0, 16);
 
       const currentDate2 = new Date(isoDate);
 

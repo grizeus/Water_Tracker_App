@@ -25,19 +25,19 @@ export const DailyNormaModal = ({ onClose, onShow }) => {
   const dispatch = useDispatch();
 
   const [gender, setGender] = useState('woman');
-  const [weight, setWeight] = useState(0); // Відображається 0, але якщо порожнє - береться стандартна вага
+  const [weight, setWeight] = useState(0);
   const [timeOfActive, setTimeOfActive] = useState(0);
   const [dailyWaterNorm, setDailyWaterNorm] = useState('');
   const [intakeGoal, setIntakeGoal] = useState(selectDailyNorm || '');
 
-  // Автоматичний розрахунок при введенні часу або зміні ваги/гендеру
+  
   useEffect(() => {
     if (timeOfActive < 0) {
       toast.error('Please enter a valid data');
       return;
     }
 
-    const usedWeight = weight > 0 ? weight : gender === 'woman' ? 60 : 70; // Якщо 0, використовуємо стандартне значення
+    const usedWeight = weight > 0 ? weight : gender === 'woman' ? 60 : 70;
     const userGender = gender === 'woman' ? 0.03 : 0.04;
     const activityTime = gender === 'woman' ? 0.4 : 0.6;
 
