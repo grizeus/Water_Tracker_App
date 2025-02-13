@@ -2,7 +2,7 @@ import { BaseModalWindow, ContentLoader } from 'components';
 import { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import sprite from 'src/assets/images/sprite/sprite.svg';
-import { format, parseISO } from 'date-fns';
+import { format } from 'date-fns';
 import { selectIsLoading } from '../../../redux/root/rootSelectors';
 import {
   addWatersThunk,
@@ -74,19 +74,37 @@ export const TodayListModal = ({
     }
   }, [isEditing, initialAmount, initialTime]);
 
+  // Додано useEffect для запуску таймера
+  useEffect(() => {
+    let interval;
+
+    // survey every 2 second
+    if (onShow && !isEditing) {
+      interval = setInterval(() => {
+        setTime(format(new Date(), 'HH:mm')); 
+      }, 2000);
+    }
+
+    return () => {
+      if (interval) {
+        clearInterval(interval);
+      }
+    };
+  }, [onShow, isEditing]);
+
   const handleSubmit = () => {
     let isoDate;
     if (isEditing) {
-      // Коли редагуємо, використовуємо вже встановлений час з існуючого запису
+      
       isoDate = initialTime
         ? new Date(initialTime).toISOString().slice(0, 16)
         : new Date().toISOString();
     } else if (time) {
-      // Коли створюємо новий запис і час вибрано користувачем
+      
       const currentDate = new Date();
       const [hours, minutes] = time.split(':');
       currentDate.setHours(hours, minutes);
-      isoDate = currentDate.toISOString().slice(0, 16); // 2024-01-10T12:41
+      isoDate = currentDate.toISOString().slice(0, 16);
 
       const currentDate2 = new Date(isoDate);
 
@@ -203,4 +221,3 @@ export const TodayListModal = ({
     </BaseModalWindow>
   );
 };
-

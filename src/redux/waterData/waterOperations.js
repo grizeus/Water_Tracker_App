@@ -47,7 +47,7 @@ export const editWaterThunk = createAsyncThunk(
 );
 export const updateWaterNormaThunk = createAsyncThunk(
   'water/daily-norma',
-  async (dailyGoal , { rejectWithValue }) => {
+  async (dailyGoal, { rejectWithValue }) => {
     try {
       const res = await updateWaterRate(dailyGoal);
       return res;
@@ -59,6 +59,7 @@ export const updateWaterNormaThunk = createAsyncThunk(
     }
   },
 );
+
 
 export const deleteWaterThunk = createAsyncThunk(
   'water/deleteWater',

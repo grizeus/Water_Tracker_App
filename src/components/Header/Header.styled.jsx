@@ -5,6 +5,7 @@ export const ContainerHeader = styled.div`
   justify-content: space-between;
   align-items: center;
   padding-top: 12px;
+  width:100%;
 
   @media (min-width: ${({ theme }) => theme.breakpoint.mobile}) {
     padding-top: 8px;

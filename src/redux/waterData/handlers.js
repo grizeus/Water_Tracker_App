@@ -96,9 +96,10 @@ export const handlerUpdateNorma = (state, { payload }) => {
   const dayToUpd = state.month.find(item => item.date === today);
 
   if (dayToUpd) {
-     dayToUpd.percentage = state.today.progress;
+    dayToUpd.percentage = state.today.progress;
+    dayToUpd.dailyGoal = (payload / 1000).toFixed(1) + ' L';
   } 
-
+console.log(dayToUpd.percentage);
   state.month = state.month.map(day =>
     day.date === dayToUpd.date ? dayToUpd : day,
   );
