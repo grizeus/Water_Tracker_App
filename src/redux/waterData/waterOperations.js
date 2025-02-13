@@ -46,21 +46,18 @@ export const editWaterThunk = createAsyncThunk(
   },
 );
 export const updateWaterNormaThunk = createAsyncThunk(
-  '/water/daily-norma',
+  'water/daily-norma',
   async (dailyGoal, { rejectWithValue }) => {
     try {
       const res = await updateWaterRate(dailyGoal);
       return res;
     } catch (error) {
-      console.error("Error updating water norma:", error);
-
-      if (error.response && error.response.status === 400) {
+      if (error.response.status === 400) {
         toast.warning(`You must write at least 1 ml.`);
       }
-
       return rejectWithValue(error.message);
     }
-  }
+  },
 );
 
 

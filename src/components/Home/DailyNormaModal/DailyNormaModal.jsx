@@ -1,6 +1,6 @@
 import { toast } from 'react-toastify';
-import { useDispatch,useSelector } from 'react-redux';
-import { useCallback, useEffect, useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { useEffect, useState } from 'react';
 import {
   ButtonSave,
   CalculateWater,
@@ -17,46 +17,42 @@ import {
   Result,
 } from './DailyNormaModal.styled';
 import { BaseModalWindow } from '../../common/BaseModalWindow/BaseModalWindow';
-import { updateWaterNormaThunk } from '../../../redux/waterData/waterOperations';
-import {selectDailyGoal} from "../../../redux/waterData/waterSelectors.js";
+import { getMonthWater, updateWaterNormaThunk } from '../../../redux/waterData/waterOperations';
+import { selectDailyGoal } from '../../../redux/waterData/waterSelectors.js';
 
 export const DailyNormaModal = ({ onClose, onShow }) => {
-  const selectDailyNorm = useSelector(selectDailyGoal);
+  const dailyNormL = useSelector(selectDailyGoal) / 1000;
   const dispatch = useDispatch();
 
   const [gender, setGender] = useState('woman');
   const [weight, setWeight] = useState(0);
   const [timeOfActive, setTimeOfActive] = useState(0);
   const [dailyWaterNorm, setDailyWaterNorm] = useState('');
-  const [intakeGoal, setIntakeGoal] = useState(selectDailyNorm || '');
+  const [intakeGoal, setIntakeGoal] = useState('');
 
-  
   useEffect(() => {
     if (timeOfActive < 0) {
       toast.error('Please enter a valid data');
       return;
     }
 
-    const usedWeight = weight > 0 ? weight : gender === 'woman' ? 60 : 70;
     const userGender = gender === 'woman' ? 0.03 : 0.04;
     const activityTime = gender === 'woman' ? 0.4 : 0.6;
 
-    const intake = usedWeight * userGender + timeOfActive * activityTime;
+    const intake = weight * userGender + timeOfActive * activityTime;
     setDailyWaterNorm(intake.toFixed(2));
   }, [timeOfActive, gender, weight]);
 
   const handleSubmit = e => {
     e.preventDefault();
-  
+
     const userGoal = parseFloat(intakeGoal);
-    const dailyGoal = userGoal ? userGoal : dailyWaterNorm ;
-  
-    console.log("Sending to server:", { dailyGoal });
-  
-    dispatch(updateWaterNormaThunk(dailyGoal ));
+    const finishGoal = userGoal ? userGoal : dailyWaterNorm;
+    const dailyGoal = finishGoal * 1000; // in ml
+
+    dispatch(updateWaterNormaThunk({ dailyGoal }));
     onClose();
   };
-  
 
   return (
     <BaseModalWindow onClose={onClose} onShow={onShow} title="My daily norma">
@@ -72,7 +68,10 @@ export const DailyNormaModal = ({ onClose, onShow }) => {
           </Formula>
           <Description>
             <p>
-              <span>*</span>V is the volume of the water norm in liters per day, M is your body weight, T is the time of active sports, or another type of activity commensurate in terms of loads (in the absence of these, you must set 0)
+              <span>*</span>V is the volume of the water norm in liters per day,
+              M is your body weight, T is the time of active sports, or another
+              type of activity commensurate in terms of loads (in the absence of
+              these, you must set 0)
             </p>
           </Description>
         </Wrapper>
@@ -108,20 +107,23 @@ export const DailyNormaModal = ({ onClose, onShow }) => {
               type="number"
               name="weight"
               value={weight}
-              onChange={(e) => setWeight(e.target.value.replace(/[^0-9.]/g, ''))}
+              onChange={e => setWeight(e.target.value.replace(/[^0-9.]/g, ''))}
               placeholder="0"
             />
           </div>
 
           <div>
             <Paragraph>
-              The time of active participation in sports or other activities with a high physical load in hours:
+              The time of active participation in sports or other activities
+              with a high physical load in hours:
             </Paragraph>
             <Input
               type="number"
               name="timeOfActive"
               value={timeOfActive}
-              onChange={(e) => setTimeOfActive(e.target.value.replace(/[^0-9.]/g, ''))}
+              onChange={e =>
+                setTimeOfActive(e.target.value.replace(/[^0-9.]/g, ''))
+              }
             />
           </div>
 
@@ -129,7 +131,10 @@ export const DailyNormaModal = ({ onClose, onShow }) => {
           <CalculateWater>
             <Result>Recommended amount of water in liters per day:</Result>
             <span>
-              {dailyWaterNorm ? parseFloat(dailyWaterNorm).toFixed(1) : selectDailyNorm} L
+              {dailyWaterNorm > 0
+                ? parseFloat(dailyWaterNorm).toFixed(1)
+                : dailyNormL}{' '}
+              L
             </span>
           </CalculateWater>
 
@@ -142,7 +147,7 @@ export const DailyNormaModal = ({ onClose, onShow }) => {
               type="number"
               name="intakeGoal"
               value={intakeGoal}
-              onChange={(e) => setIntakeGoal(e.target.value)}
+              onChange={e => setIntakeGoal(e.target.value)}
             />
           </div>
 
@@ -154,5 +159,3 @@ export const DailyNormaModal = ({ onClose, onShow }) => {
     </BaseModalWindow>
   );
 };
-
-
