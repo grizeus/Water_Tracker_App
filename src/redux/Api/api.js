@@ -113,6 +113,6 @@ export const fetchTodayWater = async () => {
 
 export const fetchMonthWater = async month => {
   const { data: wrap } = await instanceWater.get(`/water/month/${month}`);
-  console.log(wrap.data)
+
   return wrap.data;
 };

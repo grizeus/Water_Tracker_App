@@ -65,14 +65,13 @@ export const DailyNormaModal = ({ onClose, onShow }) => {
     const userGoal = parseFloat(intakeGoal);
     const dailyGoal = !isNaN(userGoal) ? userGoal * 1000 : dailyWaterNorm * 1000; // Конвертація в мілілітри
 
-    console.log('Sending to server:', { dailyGoal });
 
     try {
       await dispatch(updateWaterNormaThunk({ dailyGoal }));
       await dispatch(getUserThunk()); // Оновлення даних юзера після збереження
       onClose();
     } catch (error) {
-      console.error('Error updating water norm:', error);
+     
       toast.error('Failed to update water norm');
     }
   };
