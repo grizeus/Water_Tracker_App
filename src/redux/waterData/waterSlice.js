@@ -8,7 +8,7 @@ import {
   handlerUpdateNorma,
 } from './handlers';
 import {
-  addWatersThunk,
+  addWaterThunk,
   deleteWaterThunk,
   editWaterThunk,
   getMonthWater,
@@ -30,7 +30,7 @@ const waterSlice = createSlice({
   initialState,
   extraReducers: builder => {
     builder
-      .addCase(addWatersThunk.fulfilled, handlerAddWater)
+      .addCase(addWaterThunk.fulfilled, handlerAddWater)
       .addCase(editWaterThunk.fulfilled, handleEditWater)
       .addCase(deleteWaterThunk.fulfilled, handlerDeleteWater)
       .addCase(getTodayWater.fulfilled, handleGetTodayWater)

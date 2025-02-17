@@ -12,8 +12,6 @@ export const handleLogin = (state, { payload }) => {
 
 export const handleLogout = () => initialState;
 
-export const handleDeleteUser = () => initialState;
-
 export const handleGetUSerReject = state => {
   state.isLoggedIn = false;
 };
@@ -21,10 +19,6 @@ export const handleGetUSerReject = state => {
 export const handleReqPass = () => initialState;
 
 export const handleResPass = () => initialState;
-export const handlerUpdateWaterRate = (state,  payload ) => {
-  console.log("Updating water rate with payload:", payload); // Додаємо лог
-  state.user.waterRate = payload;
-}
 
 export const handlerUpdateAvatar = (state, { payload }) => {
   state.user.avatarURL = payload;

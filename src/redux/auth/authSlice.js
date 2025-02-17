@@ -1,15 +1,13 @@
 import { createSlice } from '@reduxjs/toolkit';
 import {
   editUserInfoThunk,
-  logInThunk,
+  signInThunk,
   logOutThunk,
   getUserThunk,
-  registerThunk,
+  signUpThunk,
   updateAvatarThunk,
-  updateWaterRateThunk,
-  reqPassThunk,
-  resPassThunk,
-  deleteUserThunk,
+  requestPassThunk,
+  resetPassThunk,
   refreshUser,
 } from './authOperations';
 import {
@@ -18,10 +16,8 @@ import {
   handleGetUSerReject,
   handlerEditUserInfo,
   handlerUpdateAvatar,
-  handlerUpdateWaterRate,
   handleReqPass,
   handleResPass,
-  handleDeleteUser,
   handleGetUser,
 } from './handlers';
 
@@ -48,17 +44,15 @@ const authSlice = createSlice({
   },
   extraReducers: builder => {
     builder
-      .addCase(registerThunk.fulfilled, handleLogin)
-      .addCase(logInThunk.fulfilled, handleLogin)
+      .addCase(signUpThunk.fulfilled, handleLogin)
+      .addCase(signInThunk.fulfilled, handleLogin)
       .addCase(logOutThunk.fulfilled, handleLogout)
-      .addCase(updateWaterRateThunk.fulfilled, handlerUpdateWaterRate)
       .addCase(updateAvatarThunk.fulfilled, handlerUpdateAvatar)
       .addCase(editUserInfoThunk.fulfilled, handlerEditUserInfo)
       .addCase(getUserThunk.fulfilled, handleGetUser)
       .addCase(getUserThunk.rejected, handleGetUSerReject)
-      .addCase(reqPassThunk.fulfilled, handleReqPass)
-      .addCase(resPassThunk.fulfilled, handleResPass)
-      .addCase(deleteUserThunk.fulfilled, handleDeleteUser)
+      .addCase(requestPassThunk.fulfilled, handleReqPass)
+      .addCase(resetPassThunk.fulfilled, handleResPass)
       .addCase(refreshUser.pending, state => {
         state.isRefreshing = true;
       })

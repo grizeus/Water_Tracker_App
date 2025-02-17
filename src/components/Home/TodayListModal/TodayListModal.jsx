@@ -5,7 +5,7 @@ import sprite from 'src/assets/images/sprite/sprite.svg';
 import { format } from 'date-fns';
 import { selectIsLoading } from '../../../redux/root/rootSelectors';
 import {
-  addWatersThunk,
+  addWaterThunk,
   editWaterThunk,
 } from '../../../redux/waterData/waterOperations';
 import {
@@ -138,13 +138,13 @@ export const TodayListModal = ({
   
 
     if (isEditing) {
-      dispatch(editWaterThunk({ _id: existingRecordId, ...waterData })).then(
+      dispatch(editWaterThunk({ id: existingRecordId, ...waterData })).then(
         data => {
           if (!data.error) onClose();
         },
       );
     } else {
-      dispatch(addWatersThunk(waterData)).then(data => {
+      dispatch(addWaterThunk(waterData)).then(data => {
         if (!data.error) {
           onClose();
           setAmount(0);

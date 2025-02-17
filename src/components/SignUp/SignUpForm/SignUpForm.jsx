@@ -5,7 +5,7 @@ import PasswordStrengthBar from 'react-password-strength-bar';
 import { useDispatch, useSelector } from 'react-redux';
 import sprite from 'src/assets/images/sprite/sprite.svg';
 import * as Yup from 'yup';
-import { registerThunk } from '../../../redux/auth/authOperations';
+import { signUpThunk } from '../../../redux/auth/authOperations';
 import { selectIsLoading } from '../../../redux/root/rootSelectors';
 import {
   BootleImg,
@@ -54,7 +54,7 @@ export const SignUpForm = () => {
           initialValues={{ email: '', password: '', confirmPassword: '' }}
           validationSchema={validationSchema}
           onSubmit={({ email, password }) => {
-            dispatch(registerThunk({ email, password }));
+            dispatch(signUpThunk({ email, password }));
           }}
         >
           {({ errors, isValid, touched, values }) => (

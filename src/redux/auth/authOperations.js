@@ -1,25 +1,20 @@
-import { createAsyncThunk } from '@reduxjs/toolkit';
-import { toast } from 'react-toastify';
-import {
-  deleteUser,
-  editUserInfo,
-  logout,
-  getUser,
-  requestPassword,
-  resetPassword,
-  signin,
-  signup,
-  updateAvatar,
-  updateWaterRate,
-  setToken,
-} from '../Api/api';
+import { createAsyncThunk } from "@reduxjs/toolkit";
+import { toast } from "react-toastify";
+import instanceWater from "../Api/api";
 
-export const registerThunk = createAsyncThunk(
-  'auth/signup',
+export const setToken = token => {
+  instanceWater.defaults.headers.common["Authorization"] = `Bearer ${token}`;
+};
+
+const unsetToken = () => {
+  instanceWater.defaults.headers.common.Authorization = "";
+};
+
+export const signUpThunk = createAsyncThunk(
+  "auth/signup",
   async (credentials, { rejectWithValue }) => {
     try {
-      await signup(credentials);
-      const data = await signin(credentials);
+      const { data } = await instanceWater.post("/auth/signup", credentials);
       return data;
     } catch (error) {
       if (error.response.status === 409) {
@@ -27,124 +22,133 @@ export const registerThunk = createAsyncThunk(
       }
       return rejectWithValue(error.message);
     }
-  },
+  }
 );
-export const logInThunk = createAsyncThunk(
-  'auth/signin',
+
+export const signInThunk = createAsyncThunk(
+  "auth/signin",
   async (credentials, { rejectWithValue }) => {
     try {
-      const data = await signin(credentials);
-      return data;
+      const { data: wrap } = await instanceWater.post(
+        "/auth/signin",
+        credentials
+      );
+      console.log(wrap.data);
+      setToken(wrap.data.accessToken);
+      return wrap.data;
     } catch (error) {
       if (error.response.status === 401) {
         toast.error(`Email or password is wrong`);
       }
       return rejectWithValue(error.message);
     }
-  },
+  }
 );
+
 export const logOutThunk = createAsyncThunk(
-  'auth/logout',
+  "auth/logout",
   async (_, { rejectWithValue }) => {
     try {
-      await logout();
-      return;
+      await instanceWater.post("/auth/logout");
+      unsetToken();
     } catch (error) {
       return rejectWithValue(error.message);
     }
-  },
+  }
 );
-export const reqPassThunk = createAsyncThunk(
-  'auth/request-pass',
+
+export const requestPassThunk = createAsyncThunk(
+  "auth/request-pass",
   async (credentials, { rejectWithValue }) => {
     try {
-      const email = await requestPassword(credentials);
-      toast.success(
-        `Password reset link has been sent to your email - ${credentials.email}`,
+      const { data } = await instanceWater.post(
+        "/auth/request-pass",
+        credentials
       );
-      return email;
+      toast.success(
+        `Password reset link has been sent to your email - ${credentials.email}`
+      );
+      return data;
     } catch (error) {
       if (error.response.status === 404) {
         toast.error(`User ${credentials.email} not found`);
       }
       return rejectWithValue(error.message);
     }
-  },
+  }
 );
-export const resPassThunk = createAsyncThunk(
-  '/auth/reset-pass',
+export const resetPassThunk = createAsyncThunk(
+  "/auth/reset-pass",
   async (credentials, { rejectWithValue }) => {
     try {
-      const data = await resetPassword(credentials);
+      const { data } = await instanceWater.post(
+        "/auth/reset-pass",
+        credentials
+      );
       return data;
     } catch (error) {
       return rejectWithValue(error.message);
     }
-  },
+  }
 );
 export const refreshUser = createAsyncThunk(
-  'auth/refresh',
+  "auth/refresh",
   async (_, thunkAPI) => {
     const state = thunkAPI.getState();
-    const token = state.auth.token;
-    if (!token) {
-      return thunkAPI.rejectWithValue('No token found');
+    const persistedToken = state.auth.token;
+    if (!persistedToken) {
+      return thunkAPI.rejectWithValue("No token found");
     }
     try {
-      setToken(token); // Встановлюємо токен перед запитом
-      const data = await getUser(); // Отримуємо користувача
-      return data;
+      // setToken(persistedToken);
+      const { data: wrap } = await instanceWater.post("/auth/refresh");
+      setToken(wrap.data.accessToken);
+      const { data: user } = await instanceWater.get("/user");
+      return user.data;
     } catch (error) {
       return thunkAPI.rejectWithValue(error.message);
     }
-  },
+  }
 );
-// User
+
 export const getUserThunk = createAsyncThunk(
-  '/user',
-  async (_, { rejectWithValue, getState }) => {
+  "/user",
+  async (_, { rejectWithValue }) => {
     try {
-      const data = await getUser();
-      return data;
+      const { data: wrap } = await instanceWater.get("/user");
+      return wrap.data;
     } catch (error) {
       return rejectWithValue(error.message);
     }
-  },
+  }
 );
-export const updateWaterRateThunk = createAsyncThunk(
-  'auth/updateWaterRate',
-  async (newWaterRate, { rejectWithValue }) => {
-    try {
-      const rate = Number(newWaterRate) * 1000;
-      await updateWaterRate(rate);
-      return rate;
-    } catch (error) {
-      if (error.response.status === 400) {
-        toast.error(`WaterRate" must be greater than or equal to 0`);
-      }
-      return rejectWithValue(error.message);
-    }
-  },
-);
+
 export const updateAvatarThunk = createAsyncThunk(
-  'user/avatar',
+  "user/avatar",
   async (newPhotoFile, { rejectWithValue }) => {
     try {
-      const avatarURL = await updateAvatar(newPhotoFile);
+      const {
+        data: { avatarURL },
+      } = await instanceWater.patch("/user/avatar", newPhotoFile, {
+        headers: {
+          "Content-Type": "multipart/form-data",
+        },
+      });
       return avatarURL;
     } catch (error) {
       if (error.response.status === 400) {
-        toast.error(`Invalide file extention`);
+        toast.error(`Invalid file extention`);
       }
       return rejectWithValue(error.message);
     }
-  },
+  }
 );
+
 export const editUserInfoThunk = createAsyncThunk(
-  'user',
+  "user",
   async (body, { rejectWithValue }) => {
     try {
-      const data = await editUserInfo(body);
+      const { data } = await instanceWater.patch("/user", body);
       return data;
     } catch (error) {
       if (error.response.status === 401) {
@@ -152,16 +156,5 @@ export const editUserInfoThunk = createAsyncThunk(
       }
       return rejectWithValue(error.message);
     }
-  },
-);
-export const deleteUserThunk = createAsyncThunk(
-  'user/delete',
-  async (_, { rejectWithValue }) => {
-    try {
-      await deleteUser();
-      return;
-    } catch (error) {
-      return rejectWithValue(error.message);
-    }
-  },
+  }
 );

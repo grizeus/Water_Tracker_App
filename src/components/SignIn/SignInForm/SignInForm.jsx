@@ -7,7 +7,7 @@ import sprite from '../../../assets/images/sprite/sprite.svg';
 
 import { ContentLoader } from '../../common/Loader/Loader';
 import { selectIsLoading } from '../../../redux/root/rootSelectors';
-import { logInThunk } from '../../../redux/auth/authOperations';
+import { signInThunk } from '../../../redux/auth/authOperations';
 
 import { SignInLink } from './SignInForm.styled';
 import {
@@ -48,7 +48,7 @@ export const SignInForm = () => {
   };
 
   const handleLoginSubmit = (values, { setSubmitting, setStatus }) => {
-    dispatch(logInThunk(values))
+    dispatch(signInThunk(values))
       .unwrap()
       .catch(({ status }) => {
         if (status === 401) {
