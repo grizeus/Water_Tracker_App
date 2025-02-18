@@ -4,10 +4,10 @@ import {
   persistStore,
 } from 'redux-persist';
 import storage from 'redux-persist/lib/storage';
-import { authReducer } from './auth/authSlice';
-import { rootReducer }  from '/src/redux/root/rootSlice.js';
-import { waterReducer } from './waterData/waterSlice';
-import { optionsReducer } from './options/optionsSlice';
+import { authReducer } from './auth/slice.js';
+import { rootReducer }  from '/src/redux/root/slice.js';
+import { waterReducer } from './water/slice.js';
+import { optionsReducer } from './options/slice.js';
 
 const authPersistConfig = {
   key: 'auth',

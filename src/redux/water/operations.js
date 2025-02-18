@@ -1,13 +1,13 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import { toast } from "react-toastify";
-import instanceWater from "../Api/api";
+import instanceWater from "../api/api";
 
 export const addWaterThunk = createAsyncThunk(
   "water/addWater",
   async (newWater, { rejectWithValue }) => {
     try {
-      const data = await instanceWater.post("/water/entry", newWater);
-      return data.data;
+      const { data: wrap } = await instanceWater.post("/water/entry", newWater);
+      return wrap.data;
     } catch (error) {
       switch (error.response.status) {
         case 400:

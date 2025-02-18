@@ -1,6 +1,6 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import { toast } from "react-toastify";
-import instanceWater from "../Api/api";
+import instanceWater from "../api/api";
 
 export const setToken = token => {
   instanceWater.defaults.headers.common["Authorization"] = `Bearer ${token}`;
@@ -33,7 +33,6 @@ export const signInThunk = createAsyncThunk(
         "/auth/signin",
         credentials
       );
-      console.log(wrap.data);
       setToken(wrap.data.accessToken);
       return wrap.data;
     } catch (error) {

@@ -6,7 +6,7 @@ const initialState = {
   error: null,
 };
 
-export const rootSlice = createSlice({
+export const slice = createSlice({
   name: 'root',
   initialState,
   extraReducers: builder => {
@@ -17,4 +17,4 @@ export const rootSlice = createSlice({
   },
 });
 
-export const rootReducer = rootSlice.reducer;
+export const rootReducer = slice.reducer;

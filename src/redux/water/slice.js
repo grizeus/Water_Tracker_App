@@ -14,7 +14,7 @@ import {
   getMonthWater,
   getTodayWater,
   updateWaterNormaThunk,
-} from './waterOperations';
+} from './operations.js';
 
 const initialState = {
   month: [],
@@ -25,7 +25,7 @@ const initialState = {
   },
 };
 
-const waterSlice = createSlice({
+const slice = createSlice({
   name: 'water',
   initialState,
   extraReducers: builder => {
@@ -39,4 +39,4 @@ const waterSlice = createSlice({
   },
 });
 
-export const waterReducer = waterSlice.reducer;
+export const waterReducer = slice.reducer;

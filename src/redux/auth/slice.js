@@ -9,7 +9,7 @@ import {
   requestPassThunk,
   resetPassThunk,
   refreshUser,
-} from './authOperations';
+} from './operations.js';
 import {
   handleLogin,
   handleLogout,
@@ -26,18 +26,18 @@ import {
 
 export const initialState = {
   user: {
-    email: '',
-    avatarURL: '',
-    name: '',
-    gender: '',
-    waterRate: '',
+    email: null,
+    avatarURL: null,
+    name: null,
+    gender: null,
+    waterRate: null,
   },
   token: null,
   isLoggedIn: false,
   isRefreshing: false,
 };
 
-const authSlice = createSlice({
+const slice = createSlice({
   name: 'auth',
   initialState,
   reducers: {
@@ -62,4 +62,4 @@ const authSlice = createSlice({
   },
 });
 
-export const authReducer = authSlice.reducer;
+export const authReducer = slice.reducer;
