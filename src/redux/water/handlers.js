@@ -1,19 +1,33 @@
-import { format } from 'date-fns';
+import { format } from "date-fns";
 
 const handleProgress = state => {
   const currentAmount = state.today.dailyWaterList.reduce(
     (acc, entry) => acc + entry.amount,
-    0,
+    0
   );
   const progress = ((currentAmount / state.today.dailyGoal) * 100).toFixed(0);
 
-  state.today.progress = progress < 100 ? progress + '%' : '100%';
+  state.today.progress = progress < 100 ? progress + "%" : "100%";
+};
+
+const updateMonthData = state => {
+  handleProgress(state);
+
+  const today = new Date().toISOString().slice(0, 10);
+  const dayToUpd = state.month.find(item => item.date === today);
+
+  if (dayToUpd) {
+    dayToUpd.percentage = state.today.progress;
+  }
+
+  state.month = state.month.map(day =>
+    day.date === dayToUpd.date ? dayToUpd : day
+  );
 };
 
 export const handlerAddWater = (state, { payload: { _id, time, amount } }) => {
   state.today.dailyWaterList.push({ _id, time, amount });
   handleProgress(state);
-  console.log(state.today.dailyWaterList)
 
   const today = new Date().toISOString().slice(0, 10);
   const dayToUpd = state.month.find(item => item.date === today);
@@ -44,23 +58,12 @@ export const handleEditWater = (state, { payload }) => {
     array[idx] = payload;
   }
 
-  handleProgress(state);
-
-  const today = new Date().toISOString().slice(0, 10);
-  const dayToUpd = state.month.find(item => item.date === today);
-
-  if (dayToUpd) {
-    dayToUpd.percentage = state.today.progress;
-  }
-
-  state.month = state.month.map(day =>
-    day.date === dayToUpd.date ? dayToUpd : day,
-  );
+  updateMonthData(state);
 };
 
 export const handlerDeleteWater = (state, { payload }) => {
   state.today.dailyWaterList = state.today.dailyWaterList.filter(
-    data => data._id !== payload,
+    data => data._id !== payload
   );
 
   handleProgress(state);
@@ -79,7 +82,7 @@ export const handlerDeleteWater = (state, { payload }) => {
   }
 
   state.month = state.month.map(day =>
-    day.date === dayToUpd.date ? dayToUpd : day,
+    day.date === dayToUpd.date ? dayToUpd : day
   );
 };
 
@@ -91,45 +94,13 @@ export const handleGetTodayWater = (state, { payload }) => {
 
 export const handlerUpdateNorma = (state, { payload }) => {
   state.today.dailyGoal = payload.dailyGoal;
-  handleProgress(state);
-
-  const today = new Date().toISOString().slice(0, 10);
-  const dayToUpd = state.month.find(item => item.date === today);
-
-  if (dayToUpd) {
-     dayToUpd.percentage = state.today.progress;
-  } 
-
-  state.month = state.month.map(day =>
-    day.date === dayToUpd.date ? dayToUpd : day,
-  );
- 
+  updateMonthData(state);
 };
 
-// export const handlerUpdateNorma = (state, { payload }) => {
-//   state.today.dailyGoal = payload;
-//   handleProgress(state);
-
-  
-
-//   const today = new Date().toISOString().slice(0, 10);
-//   const dayToUpd = state.month.find(item => item.date === today);
-
-//   dayToUpd.percentage = state.today.progress;
-//   dayToUpd.dailyGoal = (payload / 1000).toFixed(1) + ' L';
-
-
-//   state.month = state.month.map(day =>
-//     day.date === dayToUpd.date ? dayToUpd : day
-//   );
-// };
-
-
-
 export const handleGetMonthWater = (state, { payload }) => {
-  const formattedMonth = payload.data.map(item => ({
+  const { data, year } = payload;
+  state.month = data.map(item => ({
     ...item,
-    date: format(`${payload.year},${item.date}`, 'yyyy-MM-dd'),
+    date: format(`${year},${item.date}`, "yyyy-MM-dd"),
   }));
-  state.month = formattedMonth;
 };
