@@ -19,10 +19,9 @@ import {
 } from './DailyNormaModal.styled';
 
 import { BaseModalWindow } from '../../common/BaseModalWindow/BaseModalWindow';
-import { updateWaterNormaThunk } from '../../../redux/waterData/waterOperations';
-import { selectDailyGoal } from '../../../redux/waterData/waterSelectors';
-import { getUserThunk } from '../../../redux/auth/authOperations';
-import { selectDaily } from '../../../redux/auth/authSelectors.js';
+import { updateWaterNormaThunk } from '../../../redux/water/operations.js';
+import { selectDailyGoal } from '../../../redux/water/selectors.js';
+import { selectDaily } from '../../../redux/auth/selectors.js';
 
 export const DailyNormaModal = ({ onClose, onShow }) => {
   const selectDailyNorm = useSelector(selectDailyGoal); // Отримуємо щоденну норму води
@@ -67,8 +66,7 @@ export const DailyNormaModal = ({ onClose, onShow }) => {
 
 
     try {
-      await dispatch(updateWaterNormaThunk({ dailyGoal }));
-      await dispatch(getUserThunk()); // Оновлення даних юзера після збереження
+      dispatch(updateWaterNormaThunk({ dailyGoal }));
       onClose();
     } catch (error) {
      

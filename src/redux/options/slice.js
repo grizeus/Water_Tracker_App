@@ -1,6 +1,6 @@
 import { createSlice } from '@reduxjs/toolkit';
 
-export const optionsSlice = createSlice({
+export const slice = createSlice({
   name: 'options',
   initialState: { theme: 'light' },
   reducers: {
@@ -10,5 +10,5 @@ export const optionsSlice = createSlice({
   },
 });
 
-export const { set } = optionsSlice.actions;
-export const optionsReducer = optionsSlice.reducer;
+export const { set } = slice.actions;
+export const optionsReducer = slice.reducer;

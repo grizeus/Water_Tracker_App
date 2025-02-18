@@ -1,15 +1,14 @@
-import { useDispatch, useSelector } from 'react-redux';
-import { useState } from 'react';
-import * as Yup from 'yup';
-import { Formik, ErrorMessage } from 'formik';
+import { useDispatch, useSelector } from "react-redux";
+import { useState } from "react";
+import * as Yup from "yup";
+import { Formik, ErrorMessage } from "formik";
 
-import sprite from '../../../assets/images/sprite/sprite.svg';
+import sprite from "../../../assets/images/sprite/sprite.svg";
 
-import { ContentLoader } from '../../common/Loader/Loader';
-import { selectIsLoading } from '../../../redux/root/rootSelectors';
-import { logInThunk } from '../../../redux/auth/authOperations';
+import { ContentLoader } from "src/components/index.js";
+import { signInThunk } from "src/redux/auth/operations.js";
 
-import { SignInLink } from './SignInForm.styled';
+import { SignInLink } from "./SignInForm.styled";
 import {
   BootleImg,
   ErrorSpan,
@@ -23,24 +22,26 @@ import {
   SignStyledLabel,
   SignUpContainer,
   SuccessSvg,
-} from '../../SignUp/SignUpForm/SignUpForm.styled';
+} from "../../SignUp/SignUpForm/SignUpForm.styled";
+
+import { selectIsLoading } from "src/redux/root/selectors.js";
 
 const emailRules = /\w+([-+.']\w+)*@\w+([-.]\w+)*\.\w+([-.]\w+)*/;
 const validationSchema = Yup.object({
-  email: Yup.string('Enter your email')
-    .email('Enter a valid email')
-    .matches(emailRules, 'Email is not valid')
-    .required('Email is required'),
+  email: Yup.string("Enter your email")
+    .email("Enter a valid email")
+    .matches(emailRules, "Email is not valid")
+    .required("Email is required"),
   password: Yup.string()
-    .required('Password is required')
-    .min(8, 'Your password is too short.'),
+    .required("Password is required")
+    .min(8, "Your password is too short."),
 });
 
-const initialValues = { email: '', password: '' };
+const initialValues = { email: "", password: "" };
 
 export const SignInForm = () => {
   const dispatch = useDispatch();
-  const { isLoading } = useSelector(selectIsLoading);
+  const isLoading = useSelector(selectIsLoading);
   const [iconStatus, setIconStatus] = useState(false);
 
   const iconClick = () => {
@@ -48,11 +49,11 @@ export const SignInForm = () => {
   };
 
   const handleLoginSubmit = (values, { setSubmitting, setStatus }) => {
-    dispatch(logInThunk(values))
+    dispatch(signInThunk(values))
       .unwrap()
       .catch(({ status }) => {
         if (status === 401) {
-          setStatus('Email or password is wrong');
+          setStatus("Email or password is wrong");
         }
       })
       .finally(() => {
@@ -68,14 +69,13 @@ export const SignInForm = () => {
         <Formik
           initialValues={initialValues}
           validationSchema={validationSchema}
-          onSubmit={handleLoginSubmit}
-        >
+          onSubmit={handleLoginSubmit}>
           {({ errors, isValid, values, status }) => (
             <SignForm>
               <SignStyledLabel>
                 Enter your email
                 <SignStyledInput
-                  className={errors.email ? 'input-with-error' : null}
+                  className={errors.email ? "input-with-error" : null}
                   type="email"
                   name="email"
                   placeholder="E-mail"
@@ -88,8 +88,8 @@ export const SignInForm = () => {
               <SignStyledLabel>
                 Enter your password
                 <SignStyledInput
-                  className={errors.password ? 'input-with-error' : null}
-                  type={iconStatus ? 'text' : 'password'}
+                  className={errors.password ? "input-with-error" : null}
+                  type={iconStatus ? "text" : "password"}
                   name="password"
                   placeholder="Password"
                   autoComplete="current-password"
@@ -107,10 +107,9 @@ export const SignInForm = () => {
               </SignStyledLabel>
               {status && <ErrorSpan>{status}</ErrorSpan>}
               <SignButton
-                className={!isValid || isLoading ? 'button-disabled' : null}
+                className={!isValid || isLoading ? "button-disabled" : null}
                 type="submit"
-                disabled={!isValid || isLoading}
-              >
+                disabled={!isValid || isLoading}>
                 Sign In {isLoading && <ContentLoader />}
               </SignButton>
             </SignForm>

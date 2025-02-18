@@ -1,18 +1,17 @@
-import { BaseModalWindow, ContentLoader } from 'components';
-import { useState, useEffect } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-import sprite from 'src/assets/images/sprite/sprite.svg';
-import { format } from 'date-fns';
-import { selectIsLoading } from '../../../redux/root/rootSelectors';
+import { BaseModalWindow, ContentLoader } from "components";
+import { useState, useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import sprite from "src/assets/images/sprite/sprite.svg";
+import { format } from "date-fns";
 import {
-  addWatersThunk,
+  addWaterThunk,
   editWaterThunk,
-} from '../../../redux/waterData/waterOperations';
+} from "src/redux/water/operations.js";
 import {
   IconGlass,
   TodayTime,
   TodayVolume,
-} from '../TodayWaterList/TodayWaterList.styled';
+} from "../TodayWaterList/TodayWaterList.styled";
 import {
   AddButtonSave,
   AddParagraph,
@@ -27,9 +26,11 @@ import {
   Water,
   Label,
   PreviousInfo,
-} from './TodayListModal.styled';
-import { formatCustomTime } from '../../../helpers/utils/dateUtils';
-import { toast } from 'react-toastify';
+} from "./TodayListModal.styled";
+import { formatCustomTime } from "src/helpers/utils/dateUtils.js";
+import { toast } from "react-toastify";
+
+import { selectIsLoading } from "src/redux/root/selectors.js";
 
 export const TodayListModal = ({
   initialAmount,
@@ -39,25 +40,25 @@ export const TodayListModal = ({
   onClose,
   onShow,
 }) => {
+  const dispatch = useDispatch();
+  const isLoading = useSelector(selectIsLoading);
   const [amount, setAmount] = useState(initialAmount !== undefined || 0);
   const [time, setTime] = useState(
     isEditing && initialTime
-      ? format(new Date(initialTime), 'HH:mm')
-      : format(new Date(), 'HH:mm'),
+      ? format(new Date(initialTime), "HH:mm")
+      : format(new Date(), "HH:mm")
   );
-  const dispatch = useDispatch();
-  const { isLoading } = useSelector(selectIsLoading);
 
   const increaseAmount = () => {
     setAmount(prevAmount => prevAmount + 50);
   };
   const decreaseAmount = () =>
-    setAmount(prevAmount => (prevAmount > 0 ? prevAmount - 50 : 0));
+    setAmount(prevAmount => (prevAmount > 100 ? prevAmount - 50 : 50));
 
   const handleAmountChange = e => {
     let newValue = e.target.value;
 
-    if (newValue.startsWith('0') && newValue.length > 1) {
+    if (newValue.startsWith("0") && newValue.length > 1) {
       newValue = parseFloat(newValue.substring(1));
     }
 
@@ -67,20 +68,19 @@ export const TodayListModal = ({
   useEffect(() => {
     if (isEditing) {
       setAmount(initialAmount || 0);
-      setTime(formatCustomTime(initialTime, 'HH:mm'));
+      setTime(formatCustomTime(initialTime, "HH:mm"));
     } else {
       setAmount(0);
-      setTime(format(new Date(), 'HH:mm'));
+      setTime(format(new Date(), "HH:mm"));
     }
   }, [isEditing, initialAmount, initialTime]);
 
-  
   useEffect(() => {
     let interval;
 
     if (onShow && !isEditing) {
       interval = setInterval(() => {
-        setTime(format(new Date(), 'HH:mm')); 
+        setTime(format(new Date(), "HH:mm"));
       }, 2000);
     }
 
@@ -93,79 +93,71 @@ export const TodayListModal = ({
 
   const handleSubmit = () => {
     let isoDate;
-  
+
     if (amount < 50) {
-      toast.error('The amount of water must be at least 50 ml');
-      return; 
-    }
-  
-    if (!time || !/^([0-9]{2}):([0-9]{2})$/.test(time)) {
-      toast.error('Please enter a valid time in the format HH:mm');
+      toast.error("The amount of water must be at least 50 ml");
       return;
     }
-  
+
+    if (!time || !/^([0-9]{2}):([0-9]{2})$/.test(time)) {
+      toast.error("Please enter a valid time in the format HH:mm");
+      return;
+    }
+
     if (isEditing) {
       isoDate = initialTime
         ? new Date(initialTime).toISOString().slice(0, 16)
         : new Date().toISOString();
     } else if (time) {
       const currentDate = new Date();
-      const [hours, minutes] = time.split(':');
+      const [hours, minutes] = time.split(":");
       currentDate.setHours(hours, minutes);
       isoDate = currentDate.toISOString().slice(0, 16);
-  
+
       const currentDate2 = new Date(isoDate);
       const newDate = new Date(currentDate2);
       newDate.setHours(currentDate2.getHours() + 2);
-  
+
       const formattedNewDate =
         newDate.getFullYear() +
-        '-' +
-        ('0' + (newDate.getMonth() + 1)).slice(-2) +
-        '-' +
-        ('0' + newDate.getDate()).slice(-2) +
-        'T' +
-        ('0' + newDate.getHours()).slice(-2) +
-        ':' +
-        ('0' + newDate.getMinutes()).slice(-2);
+        "-" +
+        ("0" + (newDate.getMonth() + 1)).slice(-2) +
+        "-" +
+        ("0" + newDate.getDate()).slice(-2) +
+        "T" +
+        ("0" + newDate.getHours()).slice(-2) +
+        ":" +
+        ("0" + newDate.getMinutes()).slice(-2);
       isoDate = formattedNewDate;
     }
-  
+
     const waterData = {
       time: isoDate,
       amount,
     };
-  
 
     if (isEditing) {
-      dispatch(editWaterThunk({ _id: existingRecordId, ...waterData })).then(
-        data => {
-          if (!data.error) onClose();
-        },
-      );
+      dispatch(editWaterThunk({ id: existingRecordId, ...waterData }));
     } else {
-      dispatch(addWatersThunk(waterData)).then(data => {
-        if (!data.error) {
-          onClose();
-          setAmount(0);
-        }
-      });
+      dispatch(addWaterThunk(waterData));
     }
+
+    onClose();
   };
-  
+
   const handleOnClose = () => {
     if (isEditing) {
       onClose();
-      return
+      return;
     }
     onClose();
     setAmount(0);
-  }
+  };
 
-  const title = isEditing ? 'Edit the entered amount of water' : 'Add water';
+  const title = isEditing ? "Edit the entered amount of water" : "Add water";
 
   const displayTime =
-    isEditing && initialTime ? formatCustomTime(initialTime) : '';
+    isEditing && initialTime ? formatCustomTime(initialTime) : "";
 
   return (
     <BaseModalWindow onClose={handleOnClose} onShow={onShow} title={title}>
@@ -176,12 +168,12 @@ export const TodayListModal = ({
               <use href={`${sprite}#icon-glass`}></use>
             </IconGlass>
             <TodayVolume>
-              {initialAmount ? `${initialAmount} ml` : 'No notes yet'}
+              {initialAmount ? `${initialAmount} ml` : "No notes yet"}
             </TodayVolume>
-            <TodayTime>{initialTime ? `${displayTime}` : ''}</TodayTime>
+            <TodayTime>{initialTime ? `${displayTime}` : ""}</TodayTime>
           </PreviousInfo>
         )}
-        <h3>{isEditing ? 'Correct entered data:' : 'Choose a value:'}</h3>
+        <h3>{isEditing ? "Correct entered data:" : "Choose a value:"}</h3>
         <AddWater>
           <AddParagraph>Amount of water:</AddParagraph>
           <div>

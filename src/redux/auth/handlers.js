@@ -1,4 +1,4 @@
-import { initialState } from './authSlice';
+import { initialState } from './slice.js';
 
 export const handleGetUser = (state, { payload }) => {
   state.user = payload;
@@ -12,24 +12,33 @@ export const handleLogin = (state, { payload }) => {
 
 export const handleLogout = () => initialState;
 
-export const handleDeleteUser = () => initialState;
-
-export const handleGetUSerReject = state => {
+export const handleGetUserReject = state => {
   state.isLoggedIn = false;
 };
 
 export const handleReqPass = () => initialState;
 
 export const handleResPass = () => initialState;
-export const handlerUpdateWaterRate = (state,  payload ) => {
-  console.log("Updating water rate with payload:", payload); // Додаємо лог
-  state.user.waterRate = payload;
-}
 
 export const handlerUpdateAvatar = (state, { payload }) => {
   state.user.avatarURL = payload;
+  state.isLoading = false;
 };
 
 export const handlerEditUserInfo = (state, { payload }) => {
   state.user = { ...state.user, ...payload.data };
+};
+
+export const handleRefreshPending = state => {
+  state.isRefreshing = true;
+};
+
+export const handleRefresh = (state, { payload }) => {
+  state.user = payload;
+  state.isRefreshing = false;
+  state.isLoggedIn = true;
+};
+
+export const handleRefreshRejected = state => {
+  state.isRefreshing = false;
 };

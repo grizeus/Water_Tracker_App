@@ -1,28 +1,28 @@
-import { BaseModalWindow } from '../../common/BaseModalWindow/BaseModalWindow.jsx';
-import { Loader } from '../../common/Loader/Loader.jsx';
+import { BaseModalWindow } from "../../common/BaseModalWindow/BaseModalWindow.jsx";
+import { Loader } from "../../common/Loader/Loader.jsx";
 import {
   ModalWrap,
   ModalTitle,
   List,
   CancelBtn,
   LogOutBtn,
-} from './UserLogoutModal.styled.jsx';
-import { useDispatch, useSelector } from 'react-redux';
-import { selectIsLoading } from '../../../redux/root/rootSelectors.js';
-import { logOutThunk } from '../../../redux/auth/authOperations.js';
+} from "./UserLogoutModal.styled.jsx";
+import { useDispatch, useSelector } from "react-redux";
+import { logOutThunk } from "../../../redux/auth/operations.js";
+
+import { selectIsLoading } from "src/redux/root/selectors.js";
 
 export const UserLogoutModal = ({ onClose, onShow }) => {
   const dispatch = useDispatch();
-  const { isLoading } = useSelector(selectIsLoading);
-  const stylesPadding = '32px 24px';
+  const isLoading = useSelector(selectIsLoading);
+  const stylesPadding = "32px 24px";
   return (
     <>
       <BaseModalWindow
         onClose={onClose}
         onShow={onShow}
         stylesPadding={stylesPadding}
-        title="Log out"
-      >
+        title="Log out">
         <ModalWrap>
           <ModalTitle>Do you really want to leave?</ModalTitle>
           <List>

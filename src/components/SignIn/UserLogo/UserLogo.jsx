@@ -1,10 +1,11 @@
-import { UserLogoModal } from 'components';
-import { AnimatePresence, motion } from 'framer-motion';
-import { useRef, useState } from 'react';
-import { useSelector } from 'react-redux';
-import sprite from 'src/assets/images/sprite/sprite.svg';
-import { selectUser } from '../../../redux/auth/authSelectors';
-import { UserLogoModalWrap } from '../UserLogoModal/UserLogoModal.styled';
+import { useCallback, useEffect, useMemo, useRef, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { AnimatePresence, motion } from "framer-motion";
+
+import { UserLogoModal } from "components";
+import { selectUser } from "src/redux/auth/selectors.js";
+import { getUserThunk } from "src/redux/auth/operations.js";
+import { UserLogoModalWrap } from "../UserLogoModal/UserLogoModal.styled";
 import {
   UserAvatar,
   UserDefaultAvatar,
@@ -12,47 +13,46 @@ import {
   UserLogoContainer,
   UserLogoTitle,
   UserModalIcon,
-} from './UserLogo.styled';
+} from "./UserLogo.styled";
+import sprite from "src/assets/images/sprite/sprite.svg";
 
-// import defaultAvatar from '../../../assets/images/default_avatar.png';
-// import { el } from 'date-fns/locale';
+const ANIMATION_CONFIG = {
+  initial: { opacity: 0, transform: "scale(0)" },
+  animate: { opacity: 1, transform: "scale(1)" },
+  exit: { opacity: 0, transform: "scale(0)" },
+  transition: { ease: "backOut", duration: 0.7 },
+};
 
 export const UserLogo = () => {
-  const myRef = useRef();
+  const dispatch = useDispatch();
+  const { name, email, avatarURL } = useSelector(selectUser);
 
   const [modalIsOpen, setModalIsOpen] = useState(false);
-  const { name, avatarURL } = useSelector(selectUser);
+  const btnRef = useRef(null);
 
-  const showModal = () => {
-    setModalIsOpen(!modalIsOpen);
-  };
-  // const firstLetter = name ? name.charAt(0).toUpperCase() : 'V';
+  useEffect(() => {
+    dispatch(getUserThunk());
+  }, [dispatch]);
 
-  const getUserInfo = () => {
-    const firstLetter = name.charAt(0).toUpperCase();
-    if (name && avatarURL) {
-      return {
-        userName: name,
-        avatar: avatarURL,
-      };
-    } else if (name || avatarURL) {
-      return {
-        userName: name || firstLetter,
-        avatar: avatarURL || firstLetter,
-      };
-    } else {
-      return {
-        userName: firstLetter,
-        avatar: firstLetter,
-      };
-    }
-  };
-  const { userName, avatar } = getUserInfo();
+  const toggleModal = useCallback(() => {
+    setModalIsOpen(prev => !prev);
+  }, []);
+
+  const getUserInfo = useMemo(() => {
+    const placeholder =
+      name?.charAt(0).toUpperCase() || email?.charAt(0).toUpperCase();
+
+    return {
+      userName: name || placeholder,
+      avatar: avatarURL || placeholder,
+    };
+  }, [name, email, avatarURL]);
+  const { userName, avatar } = getUserInfo;
 
   return (
     <UserLogoContainer>
       <UserLogoTitle>{userName}</UserLogoTitle>
-      <UserLogoBtn onClick={showModal} ref={myRef}>
+      <UserLogoBtn onClick={toggleModal} ref={btnRef}>
         {avatarURL ? (
           <UserAvatar src={avatar} alt="user-avatar" />
         ) : (
@@ -60,23 +60,17 @@ export const UserLogo = () => {
         )}
 
         <UserModalIcon
-          style={{ transform: modalIsOpen ? 'rotate(180deg)' : 'rotate(0deg)' }}
-        >
+          style={{ transform: `rotate(${modalIsOpen ? 180 : 0}deg)` }}>
           <use href={`${sprite}#icon-arrow-down`}></use>
         </UserModalIcon>
       </UserLogoBtn>
       <UserLogoModalWrap>
         <AnimatePresence>
           {modalIsOpen && (
-            <motion.div
-              initial={{ opacity: 0, transform: 'scale(0)' }}
-              animate={{ opacity: 1, transform: 'scale(1)' }}
-              exit={{ opacity: 0, transform: 'scale(0)' }}
-              transition={{ ease: 'backOut', duration: 0.7 }}
-            >
+            <motion.div {...ANIMATION_CONFIG}>
               <UserLogoModal
                 setOnShowDropdown={setModalIsOpen}
-                parentRef={myRef}
+                parentRef={btnRef}
               />
             </motion.div>
           )}

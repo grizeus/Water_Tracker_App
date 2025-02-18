@@ -8,13 +8,13 @@ import {
   handlerUpdateNorma,
 } from './handlers';
 import {
-  addWatersThunk,
+  addWaterThunk,
   deleteWaterThunk,
   editWaterThunk,
   getMonthWater,
   getTodayWater,
   updateWaterNormaThunk,
-} from './waterOperations';
+} from './operations.js';
 
 const initialState = {
   month: [],
@@ -25,12 +25,12 @@ const initialState = {
   },
 };
 
-const waterSlice = createSlice({
+const slice = createSlice({
   name: 'water',
   initialState,
   extraReducers: builder => {
     builder
-      .addCase(addWatersThunk.fulfilled, handlerAddWater)
+      .addCase(addWaterThunk.fulfilled, handlerAddWater)
       .addCase(editWaterThunk.fulfilled, handleEditWater)
       .addCase(deleteWaterThunk.fulfilled, handlerDeleteWater)
       .addCase(getTodayWater.fulfilled, handleGetTodayWater)
@@ -39,4 +39,4 @@ const waterSlice = createSlice({
   },
 });
 
-export const waterReducer = waterSlice.reducer;
+export const waterReducer = slice.reducer;
