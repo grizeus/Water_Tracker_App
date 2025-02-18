@@ -6,7 +6,6 @@ import { useDispatch, useSelector } from 'react-redux';
 import sprite from 'src/assets/images/sprite/sprite.svg';
 import * as Yup from 'yup';
 import { signUpThunk } from '../../../redux/auth/authOperations';
-import { selectIsLoading } from '../../../redux/root/rootSelectors';
 import {
   BootleImg,
   ErrorSpan,
@@ -22,6 +21,8 @@ import {
   SignUpLink,
   SuccessSvg,
 } from './SignUpForm.styled';
+
+import { selectIsLoading } from "src/redux/root/rootSelectors.js";
 
 const validationSchema = Yup.object({
   email: Yup.string('Enter your email')

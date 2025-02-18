@@ -6,7 +6,6 @@ import { Formik, ErrorMessage } from 'formik';
 import sprite from '../../../assets/images/sprite/sprite.svg';
 
 import { ContentLoader } from '../../common/Loader/Loader';
-import { selectIsLoading } from '../../../redux/root/rootSelectors';
 import { signInThunk } from '../../../redux/auth/authOperations';
 
 import { SignInLink } from './SignInForm.styled';
@@ -24,6 +23,8 @@ import {
   SignUpContainer,
   SuccessSvg,
 } from '../../SignUp/SignUpForm/SignUpForm.styled';
+
+import { selectIsLoading } from "src/redux/root/rootSelectors.js";
 
 const emailRules = /\w+([-+.']\w+)*@\w+([-.]\w+)*\.\w+([-.]\w+)*/;
 const validationSchema = Yup.object({

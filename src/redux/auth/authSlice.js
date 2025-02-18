@@ -13,13 +13,16 @@ import {
 import {
   handleLogin,
   handleLogout,
-  handleGetUSerReject,
+  handleGetUserReject,
   handlerEditUserInfo,
   handlerUpdateAvatar,
   handleReqPass,
   handleResPass,
   handleGetUser,
-} from './handlers';
+  handleRefresh,
+  handleRefreshPending,
+  handleRefreshRejected,
+} from "./handlers";
 
 export const initialState = {
   user: {
@@ -50,22 +53,13 @@ const authSlice = createSlice({
       .addCase(updateAvatarThunk.fulfilled, handlerUpdateAvatar)
       .addCase(editUserInfoThunk.fulfilled, handlerEditUserInfo)
       .addCase(getUserThunk.fulfilled, handleGetUser)
-      .addCase(getUserThunk.rejected, handleGetUSerReject)
+      .addCase(getUserThunk.rejected, handleGetUserReject)
       .addCase(requestPassThunk.fulfilled, handleReqPass)
       .addCase(resetPassThunk.fulfilled, handleResPass)
-      .addCase(refreshUser.pending, state => {
-        state.isRefreshing = true;
-      })
-      .addCase(refreshUser.fulfilled, (state, action) => {
-        state.user = action.payload;
-        state.isLoggedIn = true;
-        state.isRefreshing = false;
-      })
-      .addCase(refreshUser.rejected, state => {
-        state.isRefreshing = false;
-      });
+      .addCase(refreshUser.pending, handleRefreshPending)
+      .addCase(refreshUser.fulfilled, handleRefresh)
+      .addCase(refreshUser.rejected, handleRefreshRejected);
   },
 });
 
-export const { setToken } = authSlice.actions;
 export const authReducer = authSlice.reducer;

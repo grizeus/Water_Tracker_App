@@ -36,6 +36,7 @@ export const TodayWaterList = () => {
   const [selectedRecord, setSelectedRecord] = useState(null);
   const [isDeletingModalOpen, setDeletingModalOpen] = useState(false);
   const { dailyWaterList } = useSelector(selectWaterToday);
+  console.log(dailyWaterList)
 
   useEffect(() => {
     dispatch(getTodayWater());

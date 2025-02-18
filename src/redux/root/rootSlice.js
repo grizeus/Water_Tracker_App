@@ -3,7 +3,7 @@ import { handleFulfilled, handlePending, handleRejected } from './handlers';
 
 const initialState = {
   isLoading: false,
-  error: '',
+  error: null,
 };
 
 export const rootSlice = createSlice({

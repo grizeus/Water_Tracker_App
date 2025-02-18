@@ -8,8 +8,9 @@ import {
   LogOutBtn,
 } from './UserLogoutModal.styled.jsx';
 import { useDispatch, useSelector } from 'react-redux';
-import { selectIsLoading } from '../../../redux/root/rootSelectors.js';
 import { logOutThunk } from '../../../redux/auth/authOperations.js';
+
+import { selectIsLoading } from "src/redux/root/rootSelectors.js";
 
 export const UserLogoutModal = ({ onClose, onShow }) => {
   const dispatch = useDispatch();

@@ -1,6 +1,5 @@
 import { BaseModalWindow, ContentLoader } from 'components';
 import { useDispatch, useSelector } from 'react-redux';
-import { selectIsLoading } from '../../../redux/root/rootSelectors';
 import { deleteWaterThunk } from '../../../redux/waterData/waterOperations';
 import {
   BoxModal,
@@ -8,6 +7,8 @@ import {
   ButtonStyle,
   TextStyle,
 } from './DeletingEntryModal.styled';
+
+import { selectIsLoading } from "src/redux/root/rootSelectors.js";
 
 export const DeletingEntryModal = ({ onClose, onShow, recordId }) => {
   const dispatch = useDispatch();

@@ -9,8 +9,7 @@ import {
   editUserInfoThunk,
   updateAvatarThunk,
 } from '../../../redux/auth/authOperations';
-import { selectUser } from '../../../redux/auth/authSelectors';
-import { selectIsLoading } from '../../../redux/root/rootSelectors';
+import { selectUser } from "../../../redux/auth/authSelectors";
 import defaultAvatar from '../../../assets/images/default_avatar.png';
 
 import {
@@ -47,6 +46,7 @@ import {
   UserAvatar,
   UserDefaultAvatar,
 } from './SettingModal.styled';
+import { selectIsLoading } from "src/redux/root/rootSelectors.js";
 
 const settingFormValidationSchema = Yup.object().shape({
   gender: Yup.string(),

@@ -3,11 +3,10 @@ import { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import sprite from 'src/assets/images/sprite/sprite.svg';
 import { format } from 'date-fns';
-import { selectIsLoading } from '../../../redux/root/rootSelectors';
 import {
   addWaterThunk,
   editWaterThunk,
-} from '../../../redux/waterData/waterOperations';
+} from "src/redux/waterData/waterOperations.js";
 import {
   IconGlass,
   TodayTime,
@@ -28,8 +27,10 @@ import {
   Label,
   PreviousInfo,
 } from './TodayListModal.styled';
-import { formatCustomTime } from '../../../helpers/utils/dateUtils';
+import { formatCustomTime } from "src/helpers/utils/dateUtils.js";
 import { toast } from 'react-toastify';
+
+import { selectIsLoading } from "src/redux/root/rootSelectors.js";
 
 export const TodayListModal = ({
   initialAmount,
@@ -144,12 +145,13 @@ export const TodayListModal = ({
         },
       );
     } else {
-      dispatch(addWaterThunk(waterData)).then(data => {
+      dispatch(addWaterThunk(waterData))
+        /*.then(data => {
         if (!data.error) {
           onClose();
           setAmount(0);
         }
-      });
+      })*/;
     }
   };
   
