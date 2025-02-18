@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import { useSelector } from 'react-redux';
 import {
   DailyWrapper,
@@ -7,8 +7,8 @@ import {
   ButtonEdit,
   Description,
 } from './DailyNorma.styled';
-import { DailyNormaModal } from '../DailyNormaModal/DailyNormaModal';
-import { selectDaily } from '../../../redux/auth/selectors.js';
+import { DailyNormaModal } from "src/components/index.js";
+import { selectDaily } from "src/redux/auth/selectors.js";
 
 export const DailyNorma = () => {
   const dailyGoal = useSelector(selectDaily);

@@ -1,18 +1,20 @@
-import { Global } from '@emotion/react';
-import React from 'react';
-import ReactDOM from 'react-dom/client';
-import { Provider } from 'react-redux';
-import { PersistGate } from 'redux-persist/integration/react';
-import { persistor, store } from './redux/store';
+import { Global } from "@emotion/react";
+import React from "react";
+import ReactDOM from "react-dom/client";
+import { Provider } from "react-redux";
+import { PersistGate } from "redux-persist/integration/react";
+import { persistor, store } from "./redux/store";
 
-import { GlobalStyles } from './styles/GlobalStyles';
+import { GlobalStyles } from "./styles/GlobalStyles";
 
-import { Loader } from './components/common/Loader/Loader';
-import { BrowserRouter } from 'react-router-dom';
-import App from './components/App';
-import { Theme } from './components/Theme/Theme';
+import { Loader } from "./components";
+import { BrowserRouter } from "react-router-dom";
+import App from "./components/App";
+import { Theme } from "./components/Theme/Theme";
 
-const root = ReactDOM.createRoot(document.getElementById('root') as HTMLElement);
+const root = ReactDOM.createRoot(
+  document.getElementById("root") as HTMLElement
+);
 root.render(
   <React.StrictMode>
     <Provider store={store}>
@@ -25,5 +27,5 @@ root.render(
         </PersistGate>
       </Theme>
     </Provider>
-  </React.StrictMode>,
+  </React.StrictMode>
 );
