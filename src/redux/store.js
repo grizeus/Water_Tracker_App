@@ -1,22 +1,19 @@
-import { combineReducers, configureStore } from '@reduxjs/toolkit';
-import {
-  persistReducer,
-  persistStore,
-} from 'redux-persist';
-import storage from 'redux-persist/lib/storage';
-import { authReducer } from './auth/slice.js';
-import { rootReducer }  from '/src/redux/root/slice.js';
-import { waterReducer } from './water/slice.js';
-import { optionsReducer } from './options/slice.js';
+import { combineReducers, configureStore } from "@reduxjs/toolkit";
+import { persistReducer, persistStore } from "redux-persist";
+import storage from "redux-persist/lib/storage";
+import { authReducer } from "./auth/slice.js";
+import { rootReducer } from "/src/redux/root/slice.js";
+import { waterReducer } from "./water/slice.js";
+import { optionsReducer } from "./options/slice.js";
 
 const authPersistConfig = {
-  key: 'auth',
+  key: "auth",
   storage,
-  whitelist: ['token', 'user'],
+  whitelist: ["token", "user"],
 };
 
 const OptionsPersistConfig = {
-  key: 'options',
+  key: "options",
   storage,
 };
 
@@ -34,7 +31,7 @@ export const store = configureStore({
   middleware: getDefaultMiddleware =>
     getDefaultMiddleware({
       serializableCheck: {
-        ignoredActions: ['persist/PERSIST', 'persist/REHYDRATE'],
+        ignoredActions: ["persist/PERSIST", "persist/REHYDRATE"],
       },
     }),
 });
