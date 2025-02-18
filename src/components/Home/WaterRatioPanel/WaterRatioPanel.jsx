@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { useSelector } from 'react-redux';
-import { selectWaterVolumePercentage } from '../../../redux/waterData/waterSelectors';
+import { selectWaterVolumePercentage } from '../../../redux/water/selectors.js';
 import sprite from 'src/assets/images/sprite/sprite.svg';
 import { TodayListModal } from 'components';
 

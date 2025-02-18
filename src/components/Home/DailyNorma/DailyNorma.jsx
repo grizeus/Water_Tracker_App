@@ -8,7 +8,7 @@ import {
   Description,
 } from './DailyNorma.styled';
 import { DailyNormaModal } from '../DailyNormaModal/DailyNormaModal';
-import { selectDaily } from '../../../redux/auth/authSelectors.js';
+import { selectDaily } from '../../../redux/auth/selectors.js';
 
 export const DailyNorma = () => {
   const dailyGoal = useSelector(selectDaily);

@@ -5,9 +5,9 @@ import PrivateRoute from "./PrivateRoute";
 import RestrictedRoute from "./RestrictedRoute";
 
 import { useDispatch, useSelector } from "react-redux";
-import { selectIsRefreshing } from "../redux/auth/authSelectors";
+import { selectIsRefreshing } from "../redux/auth/selectors.js";
 import SharedLayout from "./SharedLayout";
-import { refreshUser } from "../redux/auth/authOperations";
+import { refreshUser } from "../redux/auth/operations.js";
 
 const WelcomePage = lazy(() => import("../pages/WelcomePage/WelcomePage"));
 const HomePage = lazy(() => import("../pages/Home/Home"));

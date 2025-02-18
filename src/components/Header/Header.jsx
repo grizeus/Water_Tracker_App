@@ -1,7 +1,7 @@
 import { Container, Logo, UserLogo } from 'components';
 import { UserAuth } from './UserAuth/UserAuth.jsx';
 import { useSelector } from 'react-redux';
-import { selectIsLoggedIn } from '../../redux/auth/authSelectors';
+import { selectIsLoggedIn } from '../../redux/auth/selectors.js';
 import { ContainerHeader, WrapHeader } from './Header.styled';
 
 export const Header = () => {

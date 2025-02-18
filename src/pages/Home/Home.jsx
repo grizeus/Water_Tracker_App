@@ -1,8 +1,5 @@
-import { useEffect } from 'react';
-import { useDispatch } from 'react-redux';
-
-import { DailyNorma } from '../../components/Home/DailyNorma/DailyNorma';
-import { WaterRatioPanel } from '../../components/Home/WaterRatioPanel/WaterRatioPanel';
+import { DailyNorma } from "components";
+import { WaterRatioPanel } from "components";
 import { Container } from 'components';
 import { FlexContainer, Section, WaterDescription, Hero } from './Home.styled';
 
@@ -13,16 +10,10 @@ import imgBottleTablet2x from '../../assets/images/background/homePage/tablet/bo
 import imgBottleDesktop1x from '../../assets/images/background/homePage/desktop/bottleDesc.png';
 import imgBottleDesktop2x from '../../assets/images/background/homePage/desktop/bottleDesc@2x.png';
 
-import { TodayWaterList } from '../../components/Home/TodayWaterList/TodayWaterList';
-import { MonthStatsTable } from '../../components/Home/MonthStatsTable/MonthStatsTable';
-import { getUserThunk } from '../../redux/auth/authOperations';
+import { TodayWaterList } from "components";
+import { MonthStatsTable } from "components";
 
 const Home = () => {
-  const dispatch = useDispatch();
-
-  useEffect(() => {
-    dispatch(getUserThunk());
-  });
 
   return (
     <Section>
@@ -39,12 +30,12 @@ const Home = () => {
                 srcSet={`${imgBottleTablet1x} 1x, ${imgBottleTablet2x} 2x`}
                 media="(min-width: 768px) and (max-width: 1439px)"
               />
-              <img
-                src={imgBottleMobile1x}
-                srcSet={`${imgBottleMobile1x} 1x, ${imgBottleMobile2x} 2x`}
-              />
               <source
                 srcSet={`${imgBottleMobile1x}} 1x, ${imgBottleMobile2x} 2x`}
+              />
+              <img
+                src={imgBottleMobile1x}
+                alt="Bottle of water"
               />
             </picture>
           </Hero>

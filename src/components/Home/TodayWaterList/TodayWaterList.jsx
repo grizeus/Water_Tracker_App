@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { selectWaterToday } from '../../../redux/waterData/waterSelectors';
+import { selectWaterToday } from "src/redux/water/selectors.js";
 import { TodayListModal, DeletingEntryModal } from 'components';
 import sprite from 'src/assets/images/sprite/sprite.svg';
 
@@ -20,8 +20,8 @@ import {
 } from './TodayWaterList.styled';
 import {
   getTodayWater,
-} from '../../../redux/waterData/waterOperations';
-import { formatCustomTime } from '../../../helpers/utils/dateUtils';
+} from "src/redux/water/operations.js";
+import { formatCustomTime } from "src/helpers/utils/dateUtils.js";
 
 const icons = {
   glass: `${sprite}#icon-glass`,
@@ -36,7 +36,6 @@ export const TodayWaterList = () => {
   const [selectedRecord, setSelectedRecord] = useState(null);
   const [isDeletingModalOpen, setDeletingModalOpen] = useState(false);
   const { dailyWaterList } = useSelector(selectWaterToday);
-  console.log(dailyWaterList)
 
   useEffect(() => {
     dispatch(getTodayWater());
@@ -55,10 +54,6 @@ export const TodayWaterList = () => {
   const openModalToEdit = record => {
     setSelectedRecord(record);
     setModalOpen(true);
-  };
-
-  const handleUpdate = () => {
-    dispatch(getTodayWater());
   };
 
   return (
@@ -107,7 +102,6 @@ export const TodayWaterList = () => {
         existingRecordId={selectedRecord?._id}
         onClose={() => setModalOpen(false)}
         onShow={isModalOpen}
-        onUpdate={handleUpdate}
       />
     </TodayWrapper>
   );

@@ -1,16 +1,16 @@
-import { BaseModalWindow } from '../../common/BaseModalWindow/BaseModalWindow.jsx';
-import { Loader } from '../../common/Loader/Loader.jsx';
-import { Field, Form, Formik } from 'formik';
-import { useState } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-import sprite from 'src/assets/images/sprite/sprite.svg';
-import * as Yup from 'yup';
+import { BaseModalWindow } from "../../common/BaseModalWindow/BaseModalWindow.jsx";
+import { Loader } from "../../common/Loader/Loader.jsx";
+import { Field, Form, Formik } from "formik";
+import { useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import sprite from "src/assets/images/sprite/sprite.svg";
+import * as Yup from "yup";
 import {
   editUserInfoThunk,
   updateAvatarThunk,
-} from '../../../redux/auth/authOperations';
-import { selectUser } from "../../../redux/auth/authSelectors";
-import defaultAvatar from '../../../assets/images/default_avatar.png';
+} from "../../../redux/auth/operations.js";
+import { selectUser } from "../../../redux/auth/selectors.js";
+import defaultAvatar from "../../../assets/images/default_avatar.png";
 
 import {
   Avatar,
@@ -45,53 +45,53 @@ import {
   RadioBtnWrap,
   UserAvatar,
   UserDefaultAvatar,
-} from './SettingModal.styled';
-import { selectIsLoading } from "src/redux/root/rootSelectors.js";
+} from "./SettingModal.styled";
+import { selectIsLoading } from "src/redux/root/selectors.js";
 
 const settingFormValidationSchema = Yup.object().shape({
   gender: Yup.string(),
   name: Yup.string()
-    .min(3, 'Username must be more then 3 characters long')
-    .max(32, 'Username must be less then 32 characters long'),
-  email: Yup.string().email('Invalid email'),
+    .min(3, "Username must be more then 3 characters long")
+    .max(32, "Username must be less then 32 characters long"),
+  email: Yup.string().email("Invalid email"),
   newPassword: Yup.string()
-    .min(8, 'New password must be at least 8 characters long')
-    .max(64, 'New password must be less then 64 characters long')
+    .min(8, "New password must be at least 8 characters long")
+    .max(64, "New password must be less then 64 characters long")
     .nullable()
     .test(
-      'isNewPasswordDifferent',
-      'New password should be different from the old one',
+      "isNewPasswordDifferent",
+      "New password should be different from the old one",
       // (value, { parent }) => !value || value !== parent.outdatedPassword,
-      (value, { parent }) => !value || value !== parent.oldPassword,
+      (value, { parent }) => !value || value !== parent.oldPassword
     ),
   oldPassword: Yup.string()
-    .min(8, 'Old password must be at least 8 characters long')
-    .max(64, 'Old password must be less then 64 characters long')
-    .when('newPassword', (newPassword, field) =>
-      newPassword[0] ? field.required('Please enter old password') : field,
+    .min(8, "Old password must be at least 8 characters long")
+    .max(64, "Old password must be less then 64 characters long")
+    .when("newPassword", (newPassword, field) =>
+      newPassword[0] ? field.required("Please enter old password") : field
     ),
   repeatedPassword: Yup.string().test(
-    'isRepeatedPasswordValueMatched',
-    'The entered password should match the new one',
-    (value, { parent }) => !value || value === parent.newPassword,
+    "isRepeatedPasswordValueMatched",
+    "The entered password should match the new one",
+    (value, { parent }) => !value || value === parent.newPassword
   ),
 });
 
 export const SettingModal = ({ onClose, onShow }) => {
   const dispatch = useDispatch();
   const { avatarURL, email, name, gender } = useSelector(selectUser);
-  const { isLoading } = useSelector(selectIsLoading);
+  const isLoading = useSelector(selectIsLoading);
   const [isPasswordShown, setIsPasswordShown] = useState(false);
   const [isAvatarLoading, setIsAvatarLoading] = useState(false);
 
   const initialValues = {
-    gender: gender || '',
-    name: name || '',
-    email: email || '',
+    gender: gender || "",
+    name: name || "",
+    email: email || "",
     // outdatedPassword: '',
-    oldPassword: '',
-    newPassword: '',
-    repeatedPassword: '',
+    oldPassword: "",
+    newPassword: "",
+    repeatedPassword: "",
   };
 
   const handleSubmit = (values, actions) => {
@@ -151,7 +151,7 @@ export const SettingModal = ({ onClose, onShow }) => {
 
   const handleAvatarDownload = e => {
     let formData = new FormData();
-    formData.append('avatarURL', e.target.files[0]);
+    formData.append("avatarURL", e.target.files[0]);
 
     dispatch(updateAvatarThunk(formData)).then(data => {
       if (!data.error) {
@@ -169,8 +169,7 @@ export const SettingModal = ({ onClose, onShow }) => {
             <Formik
               initialValues={initialValues}
               validationSchema={settingFormValidationSchema}
-              onSubmit={handleSubmit}
-            >
+              onSubmit={handleSubmit}>
               {({ values, errors, touched }) => (
                 <Form>
                   <FormField>
@@ -221,7 +220,7 @@ export const SettingModal = ({ onClose, onShow }) => {
                               type="radio"
                               name="gender"
                               value="woman"
-                              checked={values.gender === 'woman'}
+                              checked={values.gender === "woman"}
                             />
                             <RadioBtnText>Woman</RadioBtnText>
                           </RadioBtnLabel>
@@ -230,7 +229,7 @@ export const SettingModal = ({ onClose, onShow }) => {
                               type="radio"
                               name="gender"
                               value="man"
-                              checked={values.gender === 'man'}
+                              checked={values.gender === "man"}
                             />
                             <RadioBtnText>Man</RadioBtnText>
                           </RadioBtnLabel>
@@ -243,7 +242,7 @@ export const SettingModal = ({ onClose, onShow }) => {
                           id="username"
                           name="name"
                           className={
-                            errors.name && touched.name ? 'error-input' : null
+                            errors.name && touched.name ? "error-input" : null
                           }
                           placeholder={values.name}
                         />
@@ -256,7 +255,7 @@ export const SettingModal = ({ onClose, onShow }) => {
                           id="email"
                           name="email"
                           className={
-                            errors.email && touched.email ? 'error-input' : null
+                            errors.email && touched.email ? "error-input" : null
                           }
                           placeholder={values.email}
                         />
@@ -271,20 +270,19 @@ export const SettingModal = ({ onClose, onShow }) => {
                         </PasswordLabel>
                         <PasswordInputWrap>
                           <Input
-                            type={isPasswordShown ? 'text' : 'password'}
+                            type={isPasswordShown ? "text" : "password"}
                             id="oldPassword"
                             name="oldPassword"
                             className={
                               errors.oldPassword && touched.oldPassword
-                                ? 'error-input'
+                                ? "error-input"
                                 : null
                             }
                             placeholder="Password"
                           />
                           <IconBtn
                             type="button"
-                            onClick={handlePasswordVisibility}
-                          >
+                            onClick={handlePasswordVisibility}>
                             {isPasswordShown ? (
                               <PasswordIcon>
                                 <use href={`${sprite}#icon-to-open`}></use>
@@ -304,21 +302,20 @@ export const SettingModal = ({ onClose, onShow }) => {
                         </PasswordLabel>
                         <PasswordInputWrap>
                           <Input
-                            type={isPasswordShown ? 'text' : 'password'}
+                            type={isPasswordShown ? "text" : "password"}
                             id="password"
                             name="newPassword"
                             className={
                               (errors.newPassword && touched.newPassword) ||
                               (values.oldPassword && !values.newPassword)
-                                ? 'error-input'
+                                ? "error-input"
                                 : null
                             }
                             placeholder="Password"
                           />
                           <IconBtn
                             type="button"
-                            onClick={handlePasswordVisibility}
-                          >
+                            onClick={handlePasswordVisibility}>
                             {isPasswordShown ? (
                               <PasswordIcon>
                                 <use href={`${sprite}#icon-to-open`}></use>
@@ -343,20 +340,19 @@ export const SettingModal = ({ onClose, onShow }) => {
                         </PasswordLabel>
                         <PasswordInputWrap>
                           <Input
-                            type={isPasswordShown ? 'text' : 'password'}
+                            type={isPasswordShown ? "text" : "password"}
                             id="repeatedPassword"
                             name="repeatedPassword"
                             className={
                               values.newPassword !== values.repeatedPassword
-                                ? 'error-input'
+                                ? "error-input"
                                 : null
                             }
                             placeholder="Password"
                           />
                           <IconBtn
                             type="button"
-                            onClick={handlePasswordVisibility}
-                          >
+                            onClick={handlePasswordVisibility}>
                             {isPasswordShown ? (
                               <PasswordIcon>
                                 <use href={`${sprite}#icon-to-open`}></use>
