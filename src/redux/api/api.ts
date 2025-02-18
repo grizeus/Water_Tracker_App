@@ -13,7 +13,9 @@ instanceWater.interceptors.response.use(
   response => response,
   async err => {
     const originalRequest = err.config;
-    if (err.response?.status === 401 && !originalRequest._retry) {
+    originalRequest.retryCount = originalRequest.retryCount || 0;
+    if (err.response?.status === 401 && originalRequest.retryCount < 5) {
+      originalRequest.retryCount++;
       originalRequest._retry = true;
       try {
         const { data: wrap } = await instanceWater.post("/auth/refresh");
