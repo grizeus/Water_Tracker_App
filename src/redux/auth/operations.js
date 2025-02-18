@@ -22,7 +22,7 @@ export const signUpThunk = createAsyncThunk(
       }
       return rejectWithValue(error.message);
     }
-  }
+  },
 );
 
 export const signInThunk = createAsyncThunk(
@@ -31,7 +31,7 @@ export const signInThunk = createAsyncThunk(
     try {
       const { data: wrap } = await instanceWater.post(
         "/auth/signin",
-        credentials
+        credentials,
       );
       setToken(wrap.data.accessToken);
       return wrap.data;
@@ -41,7 +41,7 @@ export const signInThunk = createAsyncThunk(
       }
       return rejectWithValue(error.message);
     }
-  }
+  },
 );
 
 export const logOutThunk = createAsyncThunk(
@@ -53,7 +53,7 @@ export const logOutThunk = createAsyncThunk(
     } catch (error) {
       return rejectWithValue(error.message);
     }
-  }
+  },
 );
 
 export const requestPassThunk = createAsyncThunk(
@@ -62,10 +62,10 @@ export const requestPassThunk = createAsyncThunk(
     try {
       const { data } = await instanceWater.post(
         "/auth/request-pass",
-        credentials
+        credentials,
       );
       toast.success(
-        `Password reset link has been sent to your email - ${credentials.email}`
+        `Password reset link has been sent to your email - ${credentials.email}`,
       );
       return data;
     } catch (error) {
@@ -74,7 +74,7 @@ export const requestPassThunk = createAsyncThunk(
       }
       return rejectWithValue(error.message);
     }
-  }
+  },
 );
 export const resetPassThunk = createAsyncThunk(
   "/auth/reset-pass",
@@ -82,13 +82,13 @@ export const resetPassThunk = createAsyncThunk(
     try {
       const { data } = await instanceWater.post(
         "/auth/reset-pass",
-        credentials
+        credentials,
       );
       return data;
     } catch (error) {
       return rejectWithValue(error.message);
     }
-  }
+  },
 );
 export const refreshUser = createAsyncThunk(
   "auth/refresh",
@@ -99,15 +99,16 @@ export const refreshUser = createAsyncThunk(
       return thunkAPI.rejectWithValue("No token found");
     }
     try {
-      // setToken(persistedToken);
-      const { data: wrap } = await instanceWater.post("/auth/refresh");
-      setToken(wrap.data.accessToken);
-      const { data: user } = await instanceWater.get("/user");
-      return user.data;
+      const { status, data: wrap } = await instanceWater.post("/auth/refresh");
+      if (status === 200) {
+        setToken(wrap.data.accessToken);
+        const { data: user } = await instanceWater.get("/user");
+        return user.data;
+      }
     } catch (error) {
       return thunkAPI.rejectWithValue(error.message);
     }
-  }
+  },
 );
 
 export const getUserThunk = createAsyncThunk(
@@ -119,7 +120,7 @@ export const getUserThunk = createAsyncThunk(
     } catch (error) {
       return rejectWithValue(error.message);
     }
-  }
+  },
 );
 
 export const updateAvatarThunk = createAsyncThunk(
@@ -136,11 +137,11 @@ export const updateAvatarThunk = createAsyncThunk(
       return avatarURL;
     } catch (error) {
       if (error.response.status === 400) {
-        toast.error(`Invalid file extention`);
+        toast.error(`Invalid file extension`);
       }
       return rejectWithValue(error.message);
     }
-  }
+  },
 );
 
 export const editUserInfoThunk = createAsyncThunk(
@@ -155,5 +156,5 @@ export const editUserInfoThunk = createAsyncThunk(
       }
       return rejectWithValue(error.message);
     }
-  }
+  },
 );
