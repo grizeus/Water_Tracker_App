@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { selectWaterToday } from "src/redux/water/selectors.js";
+import { selectWaterToday } from "src/redux/water/selectors";
 import { TodayListModal, DeletingEntryModal } from 'components';
 import sprite from 'src/assets/images/sprite/sprite.svg';
 
@@ -20,8 +20,8 @@ import {
 } from './TodayWaterList.styled';
 import {
   getTodayWater,
-} from "src/redux/water/operations.js";
-import { formatCustomTime } from "src/helpers/utils/dateUtils.js";
+} from "src/redux/water/operations";
+import { formatCustomTime } from "src/helpers/utils/dateUtils";
 
 const icons = {
   glass: `${sprite}#icon-glass`,

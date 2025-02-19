@@ -24,7 +24,7 @@ import {
   SuccessSvg,
 } from "../../SignUp/SignUpForm/SignUpForm.styled";
 
-import { selectIsLoading } from "src/redux/root/selectors.js";
+import { selectIsLoading } from "src/redux/root/selectors";
 
 const emailRules = /\w+([-+.']\w+)*@\w+([-.]\w+)*\.\w+([-.]\w+)*/;
 const validationSchema = Yup.object({

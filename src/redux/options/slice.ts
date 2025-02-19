@@ -10,5 +10,5 @@ export const slice = createSlice({
   },
 });
 
-export const { setTheme: set } = slice.actions;
+export const { setTheme } = slice.actions;
 export const optionsReducer = slice.reducer;

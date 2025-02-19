@@ -8,7 +8,7 @@ import {
   TextStyle,
 } from "./DeletingEntryModal.styled";
 
-import { selectIsLoading } from "src/redux/root/selectors.js";
+import { selectIsLoading } from "src/redux/root/selectors";
 
 export const DeletingEntryModal = ({ onClose, onShow, recordId }) => {
   const dispatch = useDispatch();

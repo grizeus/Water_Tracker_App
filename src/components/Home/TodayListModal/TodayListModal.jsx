@@ -27,7 +27,7 @@ import {
 import { formatCustomTime } from "src/helpers/utils/dateUtils.js";
 import { toast } from "react-toastify";
 
-import { selectIsLoading } from "src/redux/root/selectors.js";
+import { selectIsLoading } from "src/redux/root/selectors";
 
 export const TodayListModal = ({
   initialAmount,

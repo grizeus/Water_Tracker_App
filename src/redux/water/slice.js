@@ -14,7 +14,7 @@ import {
   getMonthWater,
   getTodayWater,
   updateWaterNormaThunk,
-} from './operations.js';
+} from './operations';
 
 const initialState = {
   month: [],

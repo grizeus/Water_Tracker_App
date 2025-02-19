@@ -28,11 +28,7 @@ import {
 const slice = createSlice({
   name: "auth",
   initialState,
-  reducers: {
-    setToken: (state, { payload }) => {
-      state.token = payload;
-    },
-  },
+  reducers: {},
   extraReducers: builder => {
     builder
       .addCase(signUpThunk.fulfilled, handleLogin)

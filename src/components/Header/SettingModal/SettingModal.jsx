@@ -46,7 +46,7 @@ import {
   UserAvatar,
   UserDefaultAvatar,
 } from "./SettingModal.styled";
-import { selectIsLoading } from "src/redux/root/selectors.js";
+import { selectIsLoading } from "src/redux/root/selectors";
 
 const settingFormValidationSchema = Yup.object().shape({
   gender: Yup.string(),
