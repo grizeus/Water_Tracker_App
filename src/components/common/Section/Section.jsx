@@ -1,4 +1,4 @@
-import { Container } from 'components';
+import { Container } from "../Container/Container.tsx";
 
 export const Section = ({ className, children }) => {
   return (

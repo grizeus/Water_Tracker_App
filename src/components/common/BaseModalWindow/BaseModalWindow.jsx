@@ -1,15 +1,15 @@
-import { useEffect, useRef } from 'react';
-import { createPortal } from 'react-dom';
-import PropTypes from 'prop-types';
+import { useEffect, useRef } from "react";
+import { createPortal } from "react-dom";
+import PropTypes from "prop-types";
 import {
   BaseModalStyled,
   CloseButton,
   CloseIcon,
   ModalContent,
   ModalHeader,
-} from './BaseModalWindow.styled';
-import sprite from 'src/assets/images/sprite/sprite.svg';
-import { CSSTransition } from 'react-transition-group';
+} from "./BaseModalWindow.styled";
+import sprite from "src/assets/images/sprite/sprite.svg";
+import { CSSTransition } from "react-transition-group";
 export const BaseModalWindow = ({
   onShow = true,
   children,
@@ -17,26 +17,26 @@ export const BaseModalWindow = ({
   onClose,
   stylesPadding,
 }) => {
-  const modalRoot = document.querySelector('#modal-root');
+  const modalRoot = document.querySelector("#modal-root");
   const modalContainerRef = useRef(null);
   const backdropRef = useRef(null); // Створюємо реф для backdrop
   useEffect(() => {
     if (!onShow) return;
-    const bodyScroll = (disable) => {
-      document.body.style.overflow = disable ? 'hidden' : 'auto';
+    const bodyScroll = disable => {
+      document.body.style.overflow = disable ? "hidden" : "auto";
     };
     if (onShow || modalRoot.children.length !== 0) {
       bodyScroll(true);
     }
-    const handleEsc = (e) => {
-      if (e.code === 'Escape') {
+    const handleEsc = e => {
+      if (e.code === "Escape") {
         onClose();
       }
     };
-    window.addEventListener('keydown', handleEsc);
+    window.addEventListener("keydown", handleEsc);
     return () => {
       bodyScroll(false);
-      window.removeEventListener('keydown', handleEsc);
+      window.removeEventListener("keydown", handleEsc);
     };
   }, [modalRoot.children.length, onShow, onClose]);
   return createPortal(
@@ -46,8 +46,7 @@ export const BaseModalWindow = ({
         timeout={600}
         nodeRef={backdropRef} // Передаємо ref для backdrop
         classNames="base-modal"
-        unmountOnExit
-      >
+        unmountOnExit>
         <BaseModalStyled onClick={onClose} ref={backdropRef} />
       </CSSTransition>
       <CSSTransition
@@ -55,12 +54,10 @@ export const BaseModalWindow = ({
         timeout={600}
         nodeRef={modalContainerRef} // Передаємо ref для контейнера модалки
         classNames="modal-content"
-        unmountOnExit
-      >
+        unmountOnExit>
         <ModalContent
-          onClick={(e) => e.stopPropagation()}
-          ref={modalContainerRef}
-        >
+          onClick={e => e.stopPropagation()}
+          ref={modalContainerRef}>
           <ModalHeader stylesPadding={stylesPadding}>
             <h2>{title}</h2>
             <CloseButton onClick={onClose}>
@@ -73,7 +70,7 @@ export const BaseModalWindow = ({
         </ModalContent>
       </CSSTransition>
     </>,
-    modalRoot,
+    modalRoot
   );
 };
 BaseModalWindow.propTypes = {
