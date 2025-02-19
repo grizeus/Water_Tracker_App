@@ -1,6 +1,6 @@
 import { BaseModalWindow, ContentLoader } from "components";
 import { useDispatch, useSelector } from "react-redux";
-import { deleteWaterThunk } from "../../../redux/water/operations.js";
+import { deleteWaterThunk } from "src/redux/water/operations";
 import {
   BoxModal,
   ButtonBox,

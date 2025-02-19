@@ -1,7 +1,7 @@
 import { useEffect, useRef, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { getMonthWater } from '../../../redux/water/operations.js';
-import { selectMonthData } from '../../../redux/water/selectors.js';
+import { getMonthWater } from "src/redux/water/operations";
+import { selectMonthData } from "src/redux/water/selectors";
 import {
   format,
   subMonths,

@@ -3,8 +3,8 @@ import { useDispatch, useSelector } from "react-redux";
 import { AnimatePresence, motion } from "framer-motion";
 
 import { UserLogoModal } from "components";
-import { selectUser } from "src/redux/auth/selectors.js";
-import { getUserThunk } from "src/redux/auth/operations.js";
+import { selectUser } from "src/redux/auth/selectors";
+import { getUserThunk } from "src/redux/auth/operations";
 import { UserLogoModalWrap } from "../UserLogoModal/UserLogoModal.styled";
 import {
   UserAvatar,

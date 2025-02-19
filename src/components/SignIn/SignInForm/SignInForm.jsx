@@ -5,8 +5,8 @@ import { Formik, ErrorMessage } from "formik";
 
 import sprite from "../../../assets/images/sprite/sprite.svg";
 
-import { ContentLoader } from "src/components/index.js";
-import { signInThunk } from "src/redux/auth/operations.js";
+import { ContentLoader } from "src/components/index";
+import { signInThunk } from "src/redux/auth/operations";
 
 import { SignInLink } from "./SignInForm.styled";
 import {

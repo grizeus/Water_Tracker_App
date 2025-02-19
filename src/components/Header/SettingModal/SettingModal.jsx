@@ -1,5 +1,5 @@
-import { BaseModalWindow } from "../../common/BaseModalWindow/BaseModalWindow.jsx";
-import { Loader } from "../../common/Loader/Loader.jsx";
+import { BaseModalWindow } from "src/components/index";
+import { Loader } from "src/components/index";
 import { Field, Form, Formik } from "formik";
 import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
@@ -8,8 +8,8 @@ import * as Yup from "yup";
 import {
   editUserInfoThunk,
   updateAvatarThunk,
-} from "../../../redux/auth/operations.js";
-import { selectUser } from "../../../redux/auth/selectors.js";
+} from "src/redux/auth/operations";
+import { selectUser } from "src/redux/auth/selectors";
 import defaultAvatar from "../../../assets/images/default_avatar.png";
 
 import {

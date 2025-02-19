@@ -18,10 +18,10 @@ import {
   Result,
 } from './DailyNormaModal.styled';
 
-import { BaseModalWindow } from '../../common/BaseModalWindow/BaseModalWindow';
-import { updateWaterNormaThunk } from '../../../redux/water/operations.js';
-import { selectDailyGoal } from '../../../redux/water/selectors.js';
-import { selectDaily } from '../../../redux/auth/selectors.js';
+import { BaseModalWindow } from "src/components/index";
+import { updateWaterNormaThunk } from "src/redux/water/operations";
+import { selectDailyGoal } from "src/redux/water/selectors";
+import { selectDaily } from "src/redux/auth/selectors";
 
 export const DailyNormaModal = ({ onClose, onShow }) => {
   const selectDailyNorm = useSelector(selectDailyGoal); // Отримуємо щоденну норму води
