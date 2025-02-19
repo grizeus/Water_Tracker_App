@@ -29,7 +29,6 @@ import { selectIsLoading } from "src/redux/root/selectors.js";
 const emailRules = /\w+([-+.']\w+)*@\w+([-.]\w+)*\.\w+([-.]\w+)*/;
 const validationSchema = Yup.object({
   email: Yup.string("Enter your email")
-    .email("Enter a valid email")
     .matches(emailRules, "Email is not valid")
     .required("Email is required"),
   password: Yup.string()
@@ -49,16 +48,9 @@ export const SignInForm = () => {
   };
 
   const handleLoginSubmit = (values, { setSubmitting, setStatus }) => {
-    dispatch(signInThunk(values))
-      .unwrap()
-      .catch(({ status }) => {
-        if (status === 401) {
-          setStatus("Email or password is wrong");
-        }
-      })
-      .finally(() => {
-        setSubmitting(false);
-      });
+    dispatch(signInThunk(values));
+
+    setSubmitting(false);
   };
 
   return (

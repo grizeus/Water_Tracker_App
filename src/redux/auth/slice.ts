@@ -22,15 +22,16 @@ import {
   handleRefresh,
   handleRefreshPending,
   handleRefreshRejected,
-} from "./handlers";
+} from "./handlers.js";
+import type { AuthState } from '../redux.d.ts';
 
-export const initialState = {
+export const initialState: AuthState = {
   user: {
     email: null,
     avatarURL: null,
     name: null,
     gender: null,
-    waterRate: null,
+    dailyGoal: null,
   },
   token: null,
   isLoggedIn: false,

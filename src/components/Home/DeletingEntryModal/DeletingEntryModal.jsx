@@ -16,9 +16,8 @@ export const DeletingEntryModal = ({ onClose, onShow, recordId }) => {
   const stylesPadding = "32px 24px";
 
   const handleDelete = () => {
-    dispatch(deleteWaterThunk(recordId)).then(data => {
-      if (!data.error) onClose();
-    });
+    dispatch(deleteWaterThunk(recordId));
+    onClose();
   };
   return (
     <BaseModalWindow

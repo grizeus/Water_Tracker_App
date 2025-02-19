@@ -1,6 +1,5 @@
 import { useEffect, useRef } from 'react';
 import { createPortal } from 'react-dom';
-import PropTypes from 'prop-types';
 import {
   BaseModalStyled,
   CloseButton,
@@ -76,9 +75,9 @@ export const BaseModalWindow = ({
     modalRoot,
   );
 };
-BaseModalWindow.propTypes = {
-  onClose: PropTypes.func.isRequired,
-  children: PropTypes.node.isRequired,
-  onShow: PropTypes.bool,
-  title: PropTypes.string.isRequired,
-};
+// BaseModalWindow.propTypes = {
+//   onClose: PropTypes.func.isRequired,
+//   children: PropTypes.node.isRequired,
+//   onShow: PropTypes.bool,
+//   title: PropTypes.string.isRequired,
+// };

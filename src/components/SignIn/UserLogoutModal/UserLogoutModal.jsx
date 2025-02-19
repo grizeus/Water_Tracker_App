@@ -1,5 +1,5 @@
-import { BaseModalWindow } from "../../common/BaseModalWindow/BaseModalWindow.jsx";
-import { Loader } from "../../common/Loader/Loader.jsx";
+import { BaseModalWindow } from "src/components/index.js";
+import { Loader } from "src/components/index.js";
 import {
   ModalWrap,
   ModalTitle,
@@ -8,7 +8,7 @@ import {
   LogOutBtn,
 } from "./UserLogoutModal.styled.jsx";
 import { useDispatch, useSelector } from "react-redux";
-import { logOutThunk } from "../../../redux/auth/operations.js";
+import { logOutThunk } from "src/redux/auth/operations.js";
 
 import { selectIsLoading } from "src/redux/root/selectors.js";
 
