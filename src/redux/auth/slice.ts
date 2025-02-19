@@ -1,4 +1,4 @@
-import { createSlice } from '@reduxjs/toolkit';
+import { createSlice } from "@reduxjs/toolkit";
 import {
   editUserInfoThunk,
   signInThunk,
@@ -9,7 +9,7 @@ import {
   requestPassThunk,
   resetPassThunk,
   refreshUser,
-} from './operations.js';
+} from "./operations";
 import {
   handleLogin,
   handleLogout,
@@ -22,24 +22,11 @@ import {
   handleRefresh,
   handleRefreshPending,
   handleRefreshRejected,
-} from "./handlers.js";
-import type { AuthState } from '../redux.d.ts';
-
-export const initialState: AuthState = {
-  user: {
-    email: null,
-    avatarURL: null,
-    name: null,
-    gender: null,
-    dailyGoal: null,
-  },
-  token: null,
-  isLoggedIn: false,
-  isRefreshing: false,
-};
+  initialState,
+} from "./handlers";
 
 const slice = createSlice({
-  name: 'auth',
+  name: "auth",
   initialState,
   reducers: {
     setToken: (state, { payload }) => {

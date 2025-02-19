@@ -1,6 +1,18 @@
 import { PayloadAction } from "@reduxjs/toolkit";
 import type { AuthState } from "../redux.d.ts";
-import { initialState } from "./slice.js";
+
+export const initialState: AuthState = {
+  user: {
+    email: null,
+    avatarURL: null,
+    name: null,
+    gender: null,
+    dailyGoal: null,
+  },
+  token: null,
+  isLoggedIn: false,
+  isRefreshing: false,
+};
 
 export const handleGetUser = (state: AuthState, action: PayloadAction<any>) => {
   state.user = action.payload;
