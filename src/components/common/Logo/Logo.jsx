@@ -2,7 +2,7 @@ import { NavLink } from 'react-router-dom';
 import logo from 'src/assets/images/Logo.png';
 import { LogoImg } from './Logo.styled';
 import { useSelector } from 'react-redux';
-import { selectIsLoggedIn } from '../../../redux/auth/selectors.js';
+import { selectIsLoggedIn } from "src/redux/auth/selectors";
 
 export const Logo = () => {
   const isLoggedIn = useSelector(selectIsLoggedIn);

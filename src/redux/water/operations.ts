@@ -2,13 +2,19 @@ import { createAsyncThunk } from "@reduxjs/toolkit";
 import { toast } from "react-toastify";
 import instanceWater from "../api/api";
 
+type EditWaterEntry = {
+  id: string;
+  amount: number;
+  time: number;
+};
+
 export const addWaterThunk = createAsyncThunk(
   "water/addWater",
   async (newWater, { rejectWithValue }) => {
     try {
       const { data: wrap } = await instanceWater.post("/water/entry", newWater);
       return wrap.data;
-    } catch (error) {
+    } catch (error: any) {
       switch (error.response.status) {
         case 400:
           toast.warning(`You must add from 50 ml to 5 L.`);
@@ -22,14 +28,14 @@ export const addWaterThunk = createAsyncThunk(
 
 export const editWaterThunk = createAsyncThunk(
   "water/editWater",
-  async ({ id, amount, time }, { rejectWithValue }) => {
+  async ({ id, amount, time }: EditWaterEntry, { rejectWithValue }) => {
     try {
       const { data: wrap } = await instanceWater.patch(`/water/entry/${id}`, {
         amount,
         time,
       });
       return wrap.data;
-    } catch (error) {
+    } catch (error: any) {
       if (error.response.status === 400) {
         toast.warning(`You must add from 50 ml to 5.0 L.`);
       }
@@ -47,7 +53,7 @@ export const updateWaterNormaThunk = createAsyncThunk(
         dailyGoal
       );
       return data;
-    } catch (error) {
+    } catch (error: any) {
       if (error.response.status === 400) {
         toast.warning(`You must add from 500 ml to 15.0 L.`);
       }
@@ -58,11 +64,11 @@ export const updateWaterNormaThunk = createAsyncThunk(
 
 export const deleteWaterThunk = createAsyncThunk(
   "water/deleteWater",
-  async (id, { rejectWithValue }) => {
+  async (id: string, { rejectWithValue }) => {
     try {
       await instanceWater.delete(`/water/entry/${id}`);
       return id;
-    } catch (error) {
+    } catch (error: any) {
       return rejectWithValue(error.message);
     }
   }
@@ -74,7 +80,7 @@ export const getTodayWater = createAsyncThunk(
     try {
       const { data: wrap } = await instanceWater.get("/water/today");
       return wrap.data;
-    } catch (error) {
+    } catch (error: any) {
       return rejectWithValue(error.message);
     }
   }
@@ -82,11 +88,11 @@ export const getTodayWater = createAsyncThunk(
 
 export const getMonthWater = createAsyncThunk(
   "water/getMonthWater",
-  async (month, { rejectWithValue }) => {
+  async (month: string, { rejectWithValue }) => {
     try {
       const { data } = await instanceWater.get(`/water/month/${month}`);
       return { data: data.data, year: month.slice(0, 4) };
-    } catch (error) {
+    } catch (error: any) {
       return rejectWithValue(error.message);
     }
   }

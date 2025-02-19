@@ -1,5 +1,5 @@
 import { useRef, useEffect } from 'react';
-import { formatDate } from '../../../helpers/utils/dateUtils';
+import { formatDate } from "src/helpers/utils/dateUtils";
 import {
   DaysGeneralStatsModal,
   DaysGeneralStatsList,

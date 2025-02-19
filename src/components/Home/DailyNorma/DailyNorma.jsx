@@ -7,8 +7,8 @@ import {
   ButtonEdit,
   Description,
 } from './DailyNorma.styled';
-import { DailyNormaModal } from "src/components/index.js";
-import { selectDaily } from "src/redux/auth/selectors.js";
+import { DailyNormaModal } from "src/components/index";
+import { selectDaily } from "src/redux/auth/selectors";
 
 export const DailyNorma = () => {
   const dailyGoal = useSelector(selectDaily);

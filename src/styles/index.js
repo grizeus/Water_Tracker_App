@@ -18,7 +18,6 @@ export * from '../components/Home/TodayListModal/TodayListModal';
 export * from '../components/Home/TodayWaterList/TodayWaterList';
 export * from '../components/Home/WaterRatioPanel/WaterRatioPanel';
 // SignIn
-export * from '../components/SignIn/SettingModal/SettingModal';
 export * from '../components/SignIn/SignInForm/SignInForm';
 export * from '../components/SignIn/UserAuth/UserAuth';
 export * from '../components/SignIn/UserLogo/UserLogo';
@@ -27,7 +26,6 @@ export * from '../components/SignIn/UserLogoutModal/UserLogoutModal';
 // SignUp
 export * from '../components/SignUp/SignUpForm/SignUpForm';
 // WelcomePage
-export * from '../components/Welcome/Main/MainContent';
 export * from '../components/Welcome/WaterConsumptionTracker/WaterConsumptionTracker';
 export * from '../components/Welcome/WhyDrinkWater/WhyDrinkWater';
 // Error

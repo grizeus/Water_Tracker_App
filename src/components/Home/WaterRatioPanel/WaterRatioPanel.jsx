@@ -1,8 +1,8 @@
-import { useState } from 'react';
-import { useSelector } from 'react-redux';
-import { selectWaterVolumePercentage } from '../../../redux/water/selectors.js';
-import sprite from 'src/assets/images/sprite/sprite.svg';
-import { TodayListModal } from 'components';
+import { useState } from "react";
+import { useSelector } from "react-redux";
+import { selectProgress } from "src/redux/water/selectors";
+import sprite from "src/assets/images/sprite/sprite.svg";
+import { TodayListModal } from "components";
 
 import {
   AddIcon,
@@ -15,17 +15,17 @@ import {
   WaterRangeContainer,
   WaterRangeHeader,
   WaterRatioPanelContainer,
-} from './WaterRatioPanel.styled';
+} from "./WaterRatioPanel.styled";
 
 export const WaterRatioPanel = () => {
   const [isModalOpen, setModalOpen] = useState(false);
-  const percentage = useSelector(selectWaterVolumePercentage);
+  const percentage = useSelector(selectProgress);
   const roundedWaterVolumePercentage = parseInt(percentage);
 
   const getMarkPosition = () => {
     const limitedPercentage = Math.min(
       100,
-      Math.max(0, roundedWaterVolumePercentage),
+      Math.max(0, roundedWaterVolumePercentage)
     );
     if (limitedPercentage < 50) {
       return {

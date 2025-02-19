@@ -1,4 +1,4 @@
-import { createSlice } from '@reduxjs/toolkit';
+import { createSlice } from "@reduxjs/toolkit";
 import {
   editUserInfoThunk,
   signInThunk,
@@ -9,7 +9,7 @@ import {
   requestPassThunk,
   resetPassThunk,
   refreshUser,
-} from './operations.js';
+} from "./operations";
 import {
   handleLogin,
   handleLogout,
@@ -22,29 +22,13 @@ import {
   handleRefresh,
   handleRefreshPending,
   handleRefreshRejected,
+  initialState,
 } from "./handlers";
 
-export const initialState = {
-  user: {
-    email: null,
-    avatarURL: null,
-    name: null,
-    gender: null,
-    waterRate: null,
-  },
-  token: null,
-  isLoggedIn: false,
-  isRefreshing: false,
-};
-
 const slice = createSlice({
-  name: 'auth',
+  name: "auth",
   initialState,
-  reducers: {
-    setToken: (state, { payload }) => {
-      state.token = payload;
-    },
-  },
+  reducers: {},
   extraReducers: builder => {
     builder
       .addCase(signUpThunk.fulfilled, handleLogin)

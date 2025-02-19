@@ -1,5 +1,5 @@
-import { BaseModalWindow } from "../../common/BaseModalWindow/BaseModalWindow.jsx";
-import { Loader } from "../../common/Loader/Loader.jsx";
+import { BaseModalWindow } from "src/components/index";
+import { Loader } from "src/components/index";
 import { Field, Form, Formik } from "formik";
 import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
@@ -8,8 +8,8 @@ import * as Yup from "yup";
 import {
   editUserInfoThunk,
   updateAvatarThunk,
-} from "../../../redux/auth/operations.js";
-import { selectUser } from "../../../redux/auth/selectors.js";
+} from "src/redux/auth/operations";
+import { selectUser } from "src/redux/auth/selectors";
 import defaultAvatar from "../../../assets/images/default_avatar.png";
 
 import {
@@ -46,7 +46,7 @@ import {
   UserAvatar,
   UserDefaultAvatar,
 } from "./SettingModal.styled";
-import { selectIsLoading } from "src/redux/root/selectors.js";
+import { selectIsLoading } from "src/redux/root/selectors";
 
 const settingFormValidationSchema = Yup.object().shape({
   gender: Yup.string(),
@@ -62,18 +62,18 @@ const settingFormValidationSchema = Yup.object().shape({
       "isNewPasswordDifferent",
       "New password should be different from the old one",
       // (value, { parent }) => !value || value !== parent.outdatedPassword,
-      (value, { parent }) => !value || value !== parent.oldPassword
+      (value, { parent }) => !value || value !== parent.oldPassword,
     ),
   oldPassword: Yup.string()
     .min(8, "Old password must be at least 8 characters long")
     .max(64, "Old password must be less then 64 characters long")
     .when("newPassword", (newPassword, field) =>
-      newPassword[0] ? field.required("Please enter old password") : field
+      newPassword[0] ? field.required("Please enter old password") : field,
     ),
   repeatedPassword: Yup.string().test(
     "isRepeatedPasswordValueMatched",
     "The entered password should match the new one",
-    (value, { parent }) => !value || value === parent.newPassword
+    (value, { parent }) => !value || value === parent.newPassword,
   ),
 });
 
@@ -105,7 +105,6 @@ export const SettingModal = ({ onClose, onShow }) => {
       gender,
       name,
       email,
-      // outdatedPassword,
       oldPassword,
       newPassword,
     };
@@ -117,12 +116,10 @@ export const SettingModal = ({ onClose, onShow }) => {
         dataSend[key] = value;
       }
     });
-    dispatch(editUserInfoThunk(dataSend)).then(data => {
-      if (!data.error) {
-        onClose();
-        actions.resetForm();
-      }
-    });
+    dispatch(editUserInfoThunk(dataSend));
+
+    onClose();
+    actions.resetForm();
   };
   // ==========================
   const getUserInfo = () => {

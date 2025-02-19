@@ -5,9 +5,9 @@ import PrivateRoute from "./PrivateRoute";
 import RestrictedRoute from "./RestrictedRoute";
 
 import { useDispatch, useSelector } from "react-redux";
-import { selectIsRefreshing } from "../redux/auth/selectors.js";
+import { selectIsRefreshing } from "src/redux/auth/selectors";
 import SharedLayout from "./SharedLayout";
-import { refreshUser } from "../redux/auth/operations.js";
+import { refreshUser } from "src/redux/auth/operations";
 
 const WelcomePage = lazy(() => import("../pages/WelcomePage/WelcomePage"));
 const HomePage = lazy(() => import("../pages/Home/Home"));
@@ -16,7 +16,7 @@ const SignUpPage = lazy(() => import("../pages/SignUp/SignUp"));
 const ErrorPage = lazy(() => import("../pages/Error/Error"));
 
 const ResetPassPage = lazy(() =>
-  import("../pages/ResetPasswordPage/ResetPassword")
+  import("../pages/ResetPasswordPage/ResetPassword"),
 );
 
 const App = () => {
