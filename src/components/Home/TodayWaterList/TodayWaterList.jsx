@@ -32,14 +32,14 @@ const icons = {
 
 export const TodayWaterList = () => {
   const dispatch = useDispatch();
+  useEffect(() => {
+    dispatch(getTodayWater());
+  }, []);
+  
   const [isModalOpen, setModalOpen] = useState(false);
   const [selectedRecord, setSelectedRecord] = useState(null);
   const [isDeletingModalOpen, setDeletingModalOpen] = useState(false);
-  const { dailyWaterList } = useSelector(selectWaterToday);
-
-  useEffect(() => {
-    dispatch(getTodayWater());
-  }, [dispatch]);
+  const dailyWaterList = useSelector(selectWaterToday);
 
   const openModalToAdd = () => {
     setSelectedRecord(null);

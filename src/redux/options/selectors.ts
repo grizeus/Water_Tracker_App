@@ -1,3 +1,3 @@
-import { OptionsState } from "../redux";
+import { GeneralState } from "../redux";
 
-export const selectTheme = (state: OptionsState)  => state.theme;
+export const selectTheme = (state: GeneralState)  => state.options.theme;

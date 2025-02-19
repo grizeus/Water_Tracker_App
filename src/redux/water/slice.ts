@@ -1,4 +1,4 @@
-import { createSlice } from '@reduxjs/toolkit';
+import { createSlice } from "@reduxjs/toolkit";
 import {
   handleEditWater,
   handleGetMonthWater,
@@ -6,7 +6,7 @@ import {
   handlerAddWater,
   handlerDeleteWater,
   handlerUpdateNorma,
-} from './handlers';
+} from "./handlers";
 import {
   addWaterThunk,
   deleteWaterThunk,
@@ -14,20 +14,22 @@ import {
   getMonthWater,
   getTodayWater,
   updateWaterNormaThunk,
-} from './operations';
+} from "./operations";
+import type { WaterDataState } from "../redux";
 
-const initialState = {
+const initialState: WaterDataState = {
   month: [],
   today: {
     dailyWaterList: [],
     dailyGoal: 2000,
-    progress: '0%',
+    progress: "0%",
   },
 };
 
 const slice = createSlice({
-  name: 'water',
+  name: "water",
   initialState,
+  reducers: {},
   extraReducers: builder => {
     builder
       .addCase(addWaterThunk.fulfilled, handlerAddWater)

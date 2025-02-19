@@ -1,15 +1,16 @@
-type MonthData = {
+export type MonthData = {
   date: string;
   dailyGoal: string;
   percentage: string;
   entriesCount: number;
 };
 
-type DailyData = {
+export type EntryData = {
   _id: string;
   time: string;
   amount: number;
 };
+
 export type GeneralState = {
   root: RootState;
   auth: AuthState;
@@ -38,7 +39,7 @@ export type AuthState = {
 export type WaterDataState = {
   month: MonthData[];
   today: {
-    dailyWaterList: DailyData[];
+    dailyWaterList: EntryData[];
     dailyGoal: number;
     progress: string;
   };
