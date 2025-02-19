@@ -1,4 +1,4 @@
-import { SignInForm } from '../../components/SignIn/SignInForm/SignInForm';
+import { SignInForm } from "components";
 import { SignInSection } from './SignIn.styled';
 
 const SignIn = () => {

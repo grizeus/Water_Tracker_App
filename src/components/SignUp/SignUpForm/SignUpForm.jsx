@@ -5,7 +5,7 @@ import PasswordStrengthBar from "react-password-strength-bar";
 import { useDispatch, useSelector } from "react-redux";
 import sprite from "src/assets/images/sprite/sprite.svg";
 import * as Yup from "yup";
-import { signUpThunk } from "../../../redux/auth/operations.js";
+import { signUpThunk } from "src/redux/auth/operations";
 import {
   BootleImg,
   ErrorSpan,
@@ -22,7 +22,7 @@ import {
   SuccessSvg,
 } from "./SignUpForm.styled";
 
-import { selectIsLoading } from "src/redux/root/selectors.js";
+import { selectIsLoading } from "src/redux/root/selectors";
 
 const validationSchema = Yup.object({
   email: Yup.string("Enter your email")

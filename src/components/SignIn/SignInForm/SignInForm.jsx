@@ -5,8 +5,8 @@ import { Formik, ErrorMessage } from "formik";
 
 import sprite from "../../../assets/images/sprite/sprite.svg";
 
-import { ContentLoader } from "src/components/index.js";
-import { signInThunk } from "src/redux/auth/operations.js";
+import { ContentLoader } from "src/components/index";
+import { signInThunk } from "src/redux/auth/operations";
 
 import { SignInLink } from "./SignInForm.styled";
 import {
@@ -24,12 +24,11 @@ import {
   SuccessSvg,
 } from "../../SignUp/SignUpForm/SignUpForm.styled";
 
-import { selectIsLoading } from "src/redux/root/selectors.js";
+import { selectIsLoading } from "src/redux/root/selectors";
 
 const emailRules = /\w+([-+.']\w+)*@\w+([-.]\w+)*\.\w+([-.]\w+)*/;
 const validationSchema = Yup.object({
   email: Yup.string("Enter your email")
-    .email("Enter a valid email")
     .matches(emailRules, "Email is not valid")
     .required("Email is required"),
   password: Yup.string()
@@ -49,16 +48,9 @@ export const SignInForm = () => {
   };
 
   const handleLoginSubmit = (values, { setSubmitting, setStatus }) => {
-    dispatch(signInThunk(values))
-      .unwrap()
-      .catch(({ status }) => {
-        if (status === 401) {
-          setStatus("Email or password is wrong");
-        }
-      })
-      .finally(() => {
-        setSubmitting(false);
-      });
+    dispatch(signInThunk(values));
+
+    setSubmitting(false);
   };
 
   return (

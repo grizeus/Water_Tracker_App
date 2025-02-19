@@ -1,6 +1,6 @@
 import { BaseModalWindow, ContentLoader } from "components";
 import { useDispatch, useSelector } from "react-redux";
-import { deleteWaterThunk } from "../../../redux/water/operations.js";
+import { deleteWaterThunk } from "src/redux/water/operations";
 import {
   BoxModal,
   ButtonBox,
@@ -8,7 +8,7 @@ import {
   TextStyle,
 } from "./DeletingEntryModal.styled";
 
-import { selectIsLoading } from "src/redux/root/selectors.js";
+import { selectIsLoading } from "src/redux/root/selectors";
 
 export const DeletingEntryModal = ({ onClose, onShow, recordId }) => {
   const dispatch = useDispatch();
@@ -16,9 +16,8 @@ export const DeletingEntryModal = ({ onClose, onShow, recordId }) => {
   const stylesPadding = "32px 24px";
 
   const handleDelete = () => {
-    dispatch(deleteWaterThunk(recordId)).then(data => {
-      if (!data.error) onClose();
-    });
+    dispatch(deleteWaterThunk(recordId));
+    onClose();
   };
   return (
     <BaseModalWindow

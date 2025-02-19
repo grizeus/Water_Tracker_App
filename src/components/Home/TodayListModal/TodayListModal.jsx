@@ -3,10 +3,7 @@ import { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import sprite from "src/assets/images/sprite/sprite.svg";
 import { format } from "date-fns";
-import {
-  addWaterThunk,
-  editWaterThunk,
-} from "src/redux/water/operations.js";
+import { addWaterThunk, editWaterThunk } from "src/redux/water/operations";
 import {
   IconGlass,
   TodayTime,
@@ -30,7 +27,7 @@ import {
 import { formatCustomTime } from "src/helpers/utils/dateUtils.js";
 import { toast } from "react-toastify";
 
-import { selectIsLoading } from "src/redux/root/selectors.js";
+import { selectIsLoading } from "src/redux/root/selectors";
 
 export const TodayListModal = ({
   initialAmount,
@@ -118,7 +115,7 @@ export const TodayListModal = ({
       const newDate = new Date(currentDate2);
       newDate.setHours(currentDate2.getHours() + 2);
 
-      const formattedNewDate =
+      isoDate =
         newDate.getFullYear() +
         "-" +
         ("0" + (newDate.getMonth() + 1)).slice(-2) +
@@ -128,7 +125,6 @@ export const TodayListModal = ({
         ("0" + newDate.getHours()).slice(-2) +
         ":" +
         ("0" + newDate.getMinutes()).slice(-2);
-      isoDate = formattedNewDate;
     }
 
     const waterData = {
