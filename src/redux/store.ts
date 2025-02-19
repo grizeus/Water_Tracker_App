@@ -4,7 +4,7 @@ import storage from "redux-persist/lib/storage";
 import { authReducer } from "./auth/slice";
 import { rootReducer } from "./root/slice.js";
 import { waterReducer } from "./water/slice.js";
-import { optionsReducer } from "./options/slice.js";
+import { optionsReducer } from "./options/slice";
 
 const authPersistConfig = {
   key: "auth",
