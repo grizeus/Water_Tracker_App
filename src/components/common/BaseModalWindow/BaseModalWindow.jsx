@@ -19,7 +19,7 @@ export const BaseModalWindow = ({
 }) => {
   const modalRoot = document.querySelector("#modal-root");
   const modalContainerRef = useRef(null);
-  const backdropRef = useRef(null); // Створюємо реф для backdrop
+  const backdropRef = useRef(null);
   useEffect(() => {
     if (!onShow) return;
     const bodyScroll = disable => {
@@ -44,7 +44,7 @@ export const BaseModalWindow = ({
       <CSSTransition
         in={onShow}
         timeout={600}
-        nodeRef={backdropRef} // Передаємо ref для backdrop
+        nodeRef={backdropRef}
         classNames="base-modal"
         unmountOnExit>
         <BaseModalStyled onClick={onClose} ref={backdropRef} />
@@ -52,7 +52,7 @@ export const BaseModalWindow = ({
       <CSSTransition
         in={onShow}
         timeout={600}
-        nodeRef={modalContainerRef} // Передаємо ref для контейнера модалки
+        nodeRef={modalContainerRef}
         classNames="modal-content"
         unmountOnExit>
         <ModalContent
