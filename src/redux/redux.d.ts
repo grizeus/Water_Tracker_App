@@ -1,55 +1,108 @@
-export type MonthData = {
+type Gender = "woman" | "man";
+
+export interface MonthData {
   date: string;
   dailyGoal: string;
   percentage: string;
   entriesCount: number;
-};
+}
 
-export type EntryData = {
+export interface EntryData {
   _id: string;
   time: string;
   amount: number;
-};
+}
 
-export type GeneralState = {
+export interface GeneralState {
   root: RootState;
   auth: AuthState;
   waterData: WaterDataState;
   options: OptionsState;
-};
+}
 
-export type RootState = {
+export interface RootState {
   isLoading: boolean;
   error: object | null;
-};
+}
 
-export type AuthState = {
-  user: {
+export interface PersistedUser {
+  email: string;
+  avatarURL: string | null;
+  name: string ;
+  gender: Gender;
+  dailyGoal: number;
+}
+
+export interface User {
     email: string | null;
     avatarURL: string | null;
     name: string | null;
-    gender: "woman" | "man" | null;
+    gender: Gender | null;
     dailyGoal: number | null;
-  };
+}
+
+export interface AuthState {
+  user: User;
   token: string | null;
   isLoggedIn: boolean;
   isRefreshing: boolean;
-};
+}
 
-export type WaterDataState = {
+export interface WaterDataState {
   month: MonthData[];
   today: {
     dailyWaterList: EntryData[];
     dailyGoal: number;
     progress: string;
   };
-};
+}
 
-export type OptionsState = {
+export interface OptionsState {
   theme: "light" | "dark";
-};
+}
 
-export type Credentials = {
+export interface Credentials {
   email: string;
   password: string;
-};
+}
+
+export interface SignUpInResponse {
+  status: number;
+  message: string;
+  data: {
+    accessToken: string;
+  };
+}
+
+export interface GetUserResponse {
+  status: number;
+  message: string;
+  data: {
+    name: string
+    email: string;
+    dailyGoal: number;
+    gender: Gender;
+    avatarURL?: string;
+  };
+}
+
+export interface AddWaterResponse {
+  status: number;
+  message: string;
+  data: EntryData;
+}
+
+export interface UpdAvatarResponse {
+  status: number;
+  message: string;
+  avatarURL: string;
+}
+
+export interface UpdUserReq {
+  name?: string;
+  email?: string;
+  dailyGoal?: number;
+  gender?: Gender;
+  oldPassword?: string
+  newPassword?: string
+}

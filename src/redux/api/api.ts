@@ -13,6 +13,10 @@ instanceWater.interceptors.response.use(
   response => response,
   async err => {
     const originalRequest = err.config;
+    console.log(err.response.status);
+    if (err.response.data.data.message === "Invalid email or password!") {
+      return Promise.reject(err);
+    }
     originalRequest.retryCount = originalRequest.retryCount || 0;
     if (err.response?.status === 401 && originalRequest.retryCount < 5) {
       originalRequest.retryCount++;

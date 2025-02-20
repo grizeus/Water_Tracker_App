@@ -1,26 +1,34 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import { toast } from "react-toastify";
 import instanceWater from "../api/api";
+import type { AddWaterResponse, EntryData } from "../redux.d.ts";
+import axios from "axios";
 
-type EditWaterEntry = {
+interface EditWaterEntry {
   id: string;
   amount: number;
   time: number;
-};
+}
 
 export const addWaterThunk = createAsyncThunk(
   "water/addWater",
-  async (newWater, { rejectWithValue }) => {
+  async (newWater: EntryData, { rejectWithValue }) => {
     try {
-      const { data: wrap } = await instanceWater.post("/water/entry", newWater);
-      return wrap.data;
-    } catch (error: any) {
-      switch (error.response.status) {
-        case 400:
+      const { data } = await instanceWater.post<AddWaterResponse>(
+        "/water/entry",
+        newWater
+      );
+      return data;
+    } catch (error: unknown) {
+      if (axios.isAxiosError(error) && error.response) {
+        if (error.response.status === 400) {
           toast.warning(`You must add from 50 ml to 5 L.`);
-          return rejectWithValue(error.message);
-        default:
-          return rejectWithValue(error.message);
+        }
+        return rejectWithValue(error.response.data);
+      } else if (error instanceof Error) {
+        return rejectWithValue(error.message);
+      } else {
+        return rejectWithValue("An unknown error occurred");
       }
     }
   }

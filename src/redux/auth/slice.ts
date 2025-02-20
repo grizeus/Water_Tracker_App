@@ -1,14 +1,12 @@
 import { createSlice } from "@reduxjs/toolkit";
 import {
-  editUserInfoThunk,
+  updateUserInfoThunk,
   signInThunk,
   logOutThunk,
   getUserThunk,
   signUpThunk,
   updateAvatarThunk,
-  requestPassThunk,
-  resetPassThunk,
-  refreshUser,
+  refreshUserThunk,
 } from "./operations";
 import {
   handleLogin,
@@ -16,12 +14,10 @@ import {
   handleGetUserReject,
   handlerEditUserInfo,
   handlerUpdateAvatar,
-  handleReqPass,
-  handleResPass,
   handleGetUser,
-  handleRefresh,
+  handleUserRefresh,
   handleRefreshPending,
-  handleRefreshRejected,
+  handleUserRefreshRejected,
   initialState,
 } from "./handlers";
 
@@ -35,14 +31,12 @@ const slice = createSlice({
       .addCase(signInThunk.fulfilled, handleLogin)
       .addCase(logOutThunk.fulfilled, handleLogout)
       .addCase(updateAvatarThunk.fulfilled, handlerUpdateAvatar)
-      .addCase(editUserInfoThunk.fulfilled, handlerEditUserInfo)
+      .addCase(updateUserInfoThunk.fulfilled, handlerEditUserInfo)
       .addCase(getUserThunk.fulfilled, handleGetUser)
       .addCase(getUserThunk.rejected, handleGetUserReject)
-      .addCase(requestPassThunk.fulfilled, handleReqPass)
-      .addCase(resetPassThunk.fulfilled, handleResPass)
-      .addCase(refreshUser.pending, handleRefreshPending)
-      .addCase(refreshUser.fulfilled, handleRefresh)
-      .addCase(refreshUser.rejected, handleRefreshRejected);
+      .addCase(refreshUserThunk.pending, handleRefreshPending)
+      .addCase(refreshUserThunk.fulfilled, handleUserRefresh)
+      .addCase(refreshUserThunk.rejected, handleUserRefreshRejected);
   },
 });
 
