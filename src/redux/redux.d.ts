@@ -86,10 +86,28 @@ export interface GetUserResponse {
   };
 }
 
-export interface AddWaterResponse {
+export interface AddEditWaterResponse {
   status: number;
   message: string;
   data: EntryData;
+}
+
+export interface NormaWaterResponse {
+  status: number;
+  message: string;
+  data: number;
+}
+
+export interface MonthlyWaterResponse {
+  status: number;
+  message: string;
+  data: MonthData[];
+}
+
+export interface DailyWaterResponse {
+  status: number;
+  message: string;
+  data: DailyData;
 }
 
 export interface UpdAvatarResponse {
@@ -105,4 +123,10 @@ export interface UpdUserReq {
   gender?: Gender;
   oldPassword?: string
   newPassword?: string
+}
+
+export interface DailyData {
+  entries: EntryData[];
+  dailyGoal: number;
+  progress: string;
 }
