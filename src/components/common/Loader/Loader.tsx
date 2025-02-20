@@ -1,5 +1,11 @@
 import { RotatingLines, ThreeDots } from 'react-loader-spinner';
+// TODO: styles await
 import { WrapThreeDotsDiv } from './Loader.styled';
+
+interface Props {
+  width: string;
+  strokeColor: string;
+}
 
 export const Loader = () => {
   return (
@@ -11,7 +17,6 @@ export const Loader = () => {
         color="#407bff"
         ariaLabel="three-dots-loading"
         visible={true}
-        timeout={2000}
       />
     </WrapThreeDotsDiv>
   );
@@ -19,20 +24,16 @@ export const Loader = () => {
 
 export const ContentLoader = ({
   width = '18px',
-  height = '18px',
   strokeColor = 'white',
-}) => {
+}: Props) => {
   return (
     <RotatingLines
       visible={true}
-      height={width}
-      width={height}
+      width={width}
       strokeColor={strokeColor}
       strokeWidth="5"
       animationDuration="0.75"
       ariaLabel="rotating-lines-loading"
-      wrapperStyle={{}}
-      wrapperClass=""
     />
   );
 };

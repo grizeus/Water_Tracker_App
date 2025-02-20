@@ -1,4 +1,5 @@
-import { BaseModalWindow, ContentLoader } from "components";
+import { BaseModalWindow } from "components";
+import { ContentLoader } from "src/components/index";
 import { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import sprite from "src/assets/images/sprite/sprite.svg";
