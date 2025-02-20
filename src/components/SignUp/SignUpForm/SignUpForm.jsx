@@ -1,4 +1,4 @@
-import { ContentLoader } from "components";
+import { ContentLoader } from "src/components/index";
 import { ErrorMessage, Formik } from "formik";
 import { useState } from "react";
 import PasswordStrengthBar from "react-password-strength-bar";

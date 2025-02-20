@@ -1,4 +1,4 @@
-import { BaseModalWindow, ContentLoader } from "components";
+import { BaseModalWindow } from "components";
 import { useDispatch, useSelector } from "react-redux";
 import { deleteWaterThunk } from "src/redux/water/operations";
 import {
@@ -9,6 +9,7 @@ import {
 } from "./DeletingEntryModal.styled";
 
 import { selectIsLoading } from "src/redux/root/selectors";
+import { ContentLoader } from "src/components/index";
 
 export const DeletingEntryModal = ({ onClose, onShow, recordId }) => {
   const dispatch = useDispatch();
