@@ -8,18 +8,22 @@ export default [
   { files: ["**/*.{js,mjs,cjs,ts,jsx,tsx}"] },
   { languageOptions: { globals: globals.browser } },
   eslint.configs.recommended,
-  tseslint.configs.recommendedTypeChecked,
-  tseslint.configs.stylistic,
+  ...tseslint.configs.recommendedTypeChecked,
+  ...tseslint.configs.stylistic,
   pluginReact.configs.flat.recommended,
+  pluginReact.configs.flat["jsx-runtime"],
   {
     languageOptions: {
       parserOptions: {
         projectService: true,
-        tsconfigRootDir: import.meta.dirname,
+        tsconfigRootDir: String(import.meta.dirname),
       },
     },
   },
   {
+    plugins: {
+      pluginReact,
+    },
     files: ["**/*.js"],
     extends: [tseslint.configs.disableTypeChecked],
   },

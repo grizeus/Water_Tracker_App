@@ -16,6 +16,7 @@ export const signUpThunk = createAsyncThunk(
   async (credentials: Credentials, { rejectWithValue }) => {
     try {
       const { data } = await instanceWater.post("/auth/signup", credentials);
+      setToken(data.accessToken);
       return data;
     } catch (error: any) {
       if (error.response.status === 409) {
