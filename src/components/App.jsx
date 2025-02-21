@@ -33,10 +33,7 @@ const App = () => {
         <Route
           path="/"
           element={
-            <RestrictedRoute
-              component={<WelcomePage /> && <Loader />}
-              redirectTo="/home"
-            />
+            <RestrictedRoute component={<WelcomePage />} redirectTo="/home" />
           }
         />
         <Route
