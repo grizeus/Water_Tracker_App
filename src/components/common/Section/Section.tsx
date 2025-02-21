@@ -1,6 +1,6 @@
 import { Container } from "../Container/Container";
 
-import { ChildrenProps } from "../common.i";
+import type { ChildrenProps } from "../common.d.ts";
 
 export const Section = ({ children }: ChildrenProps) => {
   return (

@@ -22,5 +22,3 @@ export interface ContentLoaderProps {
   ariaLabel?: string;
   visible?: boolean;
 }
-
-//

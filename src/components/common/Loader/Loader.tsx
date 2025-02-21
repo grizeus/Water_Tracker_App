@@ -2,7 +2,7 @@ import { ThreeDots, RotatingLines } from "react-loader-spinner";
 
 import styles from "./Loader.module.css";
 
-import { LoaderProps, ContentLoaderProps } from "../common.i";
+import type { LoaderProps, ContentLoaderProps } from "../common.d.ts";
 
 export const Loader = ({
   size = 90,
