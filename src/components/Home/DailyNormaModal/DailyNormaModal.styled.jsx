@@ -1,6 +1,4 @@
-import styled from '@emotion/styled';
-
-export const Wrapper = styled.div``;
+import styled from "@emotion/styled";
 
 export const Container = styled.div`
   padding-left: 12px;
@@ -104,7 +102,7 @@ export const InputRadio = styled.input`
     cursor: pointer;
 
     &:before {
-      content: '';
+      content: "";
       position: absolute;
       left: 0;
       top: 50%;
@@ -117,7 +115,7 @@ export const InputRadio = styled.input`
     }
 
     &:after {
-      content: '';
+      content: "";
       position: absolute;
       width: 8px;
       height: 8px;
