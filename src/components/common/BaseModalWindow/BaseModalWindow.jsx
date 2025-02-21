@@ -2,11 +2,11 @@ import { useEffect, useRef } from "react";
 import { createPortal } from "react-dom";
 import {
   BaseModalStyled,
-  CloseButton,
+ 
   CloseIcon,
   ModalContent,
   ModalHeader,
-} from "./BaseModalWindow.styled";
+} from "./BaseModalWindow.module.css";
 import sprite from "src/assets/images/sprite/sprite.svg";
 import { CSSTransition } from "react-transition-group";
 export const BaseModalWindow = ({
@@ -46,7 +46,7 @@ export const BaseModalWindow = ({
         nodeRef={backdropRef}
         classNames="base-modal"
         unmountOnExit>
-        <BaseModalStyled onClick={onClose} ref={backdropRef} />
+        <div className={BaseModalStyled} onClick={onClose} ref={backdropRef}></div>
       </CSSTransition>
       <CSSTransition
         in={onShow}
@@ -54,19 +54,19 @@ export const BaseModalWindow = ({
         nodeRef={modalContainerRef}
         classNames="modal-content"
         unmountOnExit>
-        <ModalContent
+        <div className={ModalContent}
           onClick={e => e.stopPropagation()}
           ref={modalContainerRef}>
-          <ModalHeader stylesPadding={stylesPadding}>
+          <div div className={ModalHeader} stylesPadding={stylesPadding}>
             <h2>{title}</h2>
-            <CloseButton onClick={onClose}>
-              <CloseIcon>
+            <button onClick={onClose}>
+              <svg className={CloseIcon} >
                 <use href={`${sprite}#icon-outline`}></use>
-              </CloseIcon>
-            </CloseButton>
-          </ModalHeader>
+              </svg>
+            </button>
+          </div>
           <div>{children}</div>
-        </ModalContent>
+        </div>
       </CSSTransition>
     </>,
     modalRoot
