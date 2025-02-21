@@ -1,11 +1,7 @@
 import styles from "../Container/Container.module.css";
 
-import { ReactNode } from "react";
+import type { ChildrenProps } from "../common.d.ts";
 
-interface ContainerProps {
-  children: ReactNode;
-}
-
-export const Container = ({ children }: ContainerProps) => {
+export const Container = ({ children }: ChildrenProps) => {
   return <div className={styles.container}>{children}</div>;
 };
