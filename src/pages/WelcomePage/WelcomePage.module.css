@@ -1,34 +1,72 @@
-.wrapper {
-  /*fallback for pre Chrome 113*/
-  background-image: -webkit-image-set(
-    url("../../assets/images/background/WelcomePage/mob/bg_mob_1x.png") 1x,
-    url("../../assets/images/background/WelcomePage/mob/bg_mob_2x.png") 2x
-  );
-  background-image: image-set(
-    url("../../assets/images/background/WelcomePage/mob/bg_mob_1x.png") 1x,
-    url("../../assets/images/background/WelcomePage/mob/bg_mob_2x.png") 2x
-  );
+.background {
+  background-image:
+    image-set(
+      url("../../assets/images/background/WelcomePage/mob/bubbles_mob.svg")
+    ),
+    image-set("../../assets/images/background/WelcomePage/desk/bg_wave.svg");
   background-repeat: no-repeat;
-  background-size: cover;
-  background-position: center bottom;
-  padding-inline: 0;
+  background-size:
+    320px,
+    2960px 1150px;
+  background-position:
+    center bottom -32px,
+    left calc(50% + 540px) bottom -80px;
+
+  @media screen and (min-width: 768px) {
+    background-image:
+      image-set(
+        url("../../assets/images/background/homePage/tablet/bottleTabl.png") 1x,
+        url("../../assets/images/background/homePage/tablet/bottleTabl@2x.png")
+          2x
+      ),
+      image-set(
+        url("../../assets/images/background/WelcomePage/tab/bubbles_tab.svg")
+      ),
+      image-set(
+        url("../../assets/images/background/WelcomePage/desk/bg_wave.svg")
+      );
+    background-size:
+      518px,
+      768px,
+      2560px 750px;
+    background-position:
+      right calc(50% - 263px) bottom 50px,
+      center top -80px,
+      left calc(50% + 400px) bottom;
+  }
+
+  @media screen and (min-width: 1440px) {
+    background-image:
+      image-set(
+        url("../../assets/images/background/homePage/desktop/bottleDesc.png") 1x,
+        url("../../assets/images/background/homePage/desktop/bottleDesc@2x.png")
+          2x
+      ),
+      image-set(
+        url("../../assets/images/background/WelcomePage/desk/bubbles_desk.svg")
+      ),
+      image-set(
+        url("../../assets/images/background/WelcomePage/desk/bg_wave.svg")
+      );
+
+    background-size: 350px, 1404px, 100%;
+    background-position:
+      right calc(50% - 478px) bottom 48px,
+      center bottom 109px,
+      center bottom;
+  }
+}
+
+.wrapper {
   padding-top: 24px;
   padding-bottom: 40px;
   display: flex;
   flex-direction: column;
   align-items: center;
+
   @media screen and (min-width: 768px) {
-    background-image: -webkit-image-set(
-      url("../../assets/images/background/WelcomePage/tab/bg_tab_1x.png") 1x,
-      url("../../assets/images/background/WelcomePage/tab/bg_tab_2x.png") 2x
-    );
-    background-image: image-set(
-      url("../../assets/images/background/WelcomePage/tab/bg_tab_1x.png") 1x,
-      url("../../assets/images/background/WelcomePage/tab/bg_tab_2x.png") 2x
-    );
     padding-top: 40px;
     padding-bottom: 50px;
-    background-size: 100%;
     display: block;
   }
 
@@ -39,32 +77,5 @@
     align-items: flex-end;
     justify-content: center;
     padding: 80px 0 294px;
-    background-image:
-      -webkit-image-set(
-        url("../../assets/images/background/WelcomePage/desktop/bg_img_1x.png")
-          1x,
-        url("../../assets/images/background/WelcomePage/desktop/bg_img_2x.png")
-          2x
-      ),
-      -webkit-image-set(
-          url("../../assets/images/background/WelcomePage/desktop/bg_img_1x_bubbles.png")
-            1x,
-          url("../../assets/images/background/WelcomePage/desktop/bg_img_2x_bubbles.png")
-            2x
-        );
-    background-image:
-      image-set(
-        url("../../assets/images/background/WelcomePage/desktop/bg_img_1x.png")
-          1x,
-        url("../../assets/images/background/WelcomePage/desktop/bg_img_2x.png")
-          2x
-      ),
-      image-set(
-        url("../../assets/images/background/WelcomePage/desktop/bg_img_1x_bubbles.png")
-          1x,
-        url("../../assets/images/background/WelcomePage/desktop/bg_img_2x_bubbles.png")
-          2x
-      );
-    background-size: contain;
   }
 }
