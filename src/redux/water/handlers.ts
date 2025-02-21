@@ -1,12 +1,12 @@
 import { format } from "date-fns";
 import { PayloadAction } from "@reduxjs/toolkit";
-import type { EntryData, MonthData, WaterDataState } from "../redux";
-
-type DailyData = {
-  entries: EntryData[];
-  dailyGoal: number;
-  progress: string;
-};
+import type {
+  AddEditWaterResponse,
+  DailyWaterResponse,
+  MonthData,
+  NormaWaterResponse,
+  WaterDataState,
+} from "../redux";
 
 const handleProgress = (state: WaterDataState) => {
   const currentAmount = state.today.dailyWaterList.reduce(
@@ -28,6 +28,7 @@ const updateMonthData = (state: WaterDataState) => {
 
   if (dayToUpd) {
     dayToUpd.percentage = state.today.progress;
+    dayToUpd.dailyGoal = (state.today.dailyGoal / 1000).toFixed(1) + " L";
 
     state.month = state.month.map(day =>
       day.date === dayToUpd.date ? dayToUpd : day
@@ -37,9 +38,9 @@ const updateMonthData = (state: WaterDataState) => {
 
 export const handlerAddWater = (
   state: WaterDataState,
-  action: PayloadAction<EntryData>
+  action: PayloadAction<AddEditWaterResponse>
 ) => {
-  const data = action.payload;
+  const data = action.payload.data;
   state.today.dailyWaterList.push(data);
   handleProgress(state);
 
@@ -66,9 +67,9 @@ export const handlerAddWater = (
 
 export const handleEditWater = (
   state: WaterDataState,
-  action: PayloadAction<EntryData>
+  action: PayloadAction<AddEditWaterResponse>
 ) => {
-  const data = action.payload;
+  const data = action.payload.data;
   const array = state.today.dailyWaterList;
   const idx = array.findIndex(item => item._id === data._id);
 
@@ -108,20 +109,29 @@ export const handlerDeleteWater = (
   }
 };
 
-export const handleGetTodayWater = (state: WaterDataState, action: PayloadAction<DailyData>) => {
-  const { entries, dailyGoal, progress } = action.payload;
+export const handleGetTodayWater = (
+  state: WaterDataState,
+  action: PayloadAction<DailyWaterResponse>
+) => {
+  const { entries, dailyGoal, progress } = action.payload.data;
   state.today.dailyWaterList = entries;
   state.today.dailyGoal = dailyGoal;
   state.today.progress = progress;
 };
 
-export const handlerUpdateNorma = (state: WaterDataState, action: PayloadAction<{dailyGoal:number}>) => {
-  const dailyGoal = action.payload.dailyGoal;
+export const handlerUpdateNorma = (
+  state: WaterDataState,
+  action: PayloadAction< NormaWaterResponse >
+) => {
+  const dailyGoal = action.payload.data;
   state.today.dailyGoal = dailyGoal;
   updateMonthData(state);
 };
 
-export const handleGetMonthWater = (state: WaterDataState, action: PayloadAction<{data: MonthData[], year: string}>) => {
+export const handleGetMonthWater = (
+  state: WaterDataState,
+  action: PayloadAction<{ data: MonthData[]; year: string }>
+) => {
   const { data, year } = action.payload;
   state.month = data.map(item => ({
     ...item,

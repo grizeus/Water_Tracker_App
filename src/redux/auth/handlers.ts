@@ -1,5 +1,11 @@
 import { PayloadAction } from "@reduxjs/toolkit";
-import type { AuthState } from "../redux.d.ts";
+import type {
+  AuthState,
+  GetUserResponse,
+  PersistedUser,
+  SignUpInResponse,
+  UpdAvatarResponse,
+} from "../redux.d.ts";
 
 export const initialState: AuthState = {
   user: {
@@ -14,13 +20,20 @@ export const initialState: AuthState = {
   isRefreshing: false,
 };
 
-export const handleGetUser = (state: AuthState, action: PayloadAction<any>) => {
-  state.user = action.payload;
+export const handleGetUser = (
+  state: AuthState,
+  action: PayloadAction<GetUserResponse>
+) => {
+  const userInfo = action.payload.data;
+  state.user = { avatarURL: userInfo.avatarURL ?? null, ...userInfo };
   state.isLoggedIn = true;
 };
 
-export const handleLogin = (state: AuthState, action: PayloadAction<any>) => {
-  state.token = action.payload.accessToken;
+export const handleLogin = (
+  state: AuthState,
+  action: PayloadAction<SignUpInResponse>
+) => {
+  state.token = action.payload.data.accessToken;
   state.isLoggedIn = true;
 };
 
@@ -30,34 +43,43 @@ export const handleGetUserReject = (state: AuthState) => {
   state.isLoggedIn = false;
 };
 
-export const handleReqPass = () => initialState;
-
-export const handleResPass = () => initialState;
-
 export const handlerUpdateAvatar = (
   state: AuthState,
-  action: PayloadAction<any>
+  action: PayloadAction<UpdAvatarResponse>
 ) => {
-  state.user.avatarURL = action.payload;
+  state.user.avatarURL = action.payload.avatarURL;
 };
 
 export const handlerEditUserInfo = (
   state: AuthState,
-  action: PayloadAction<any>
+  action: PayloadAction<GetUserResponse | undefined>
 ) => {
-  state.user = { ...state.user, ...action.payload.data };
+  if (action.payload) {
+    const userInfo = action.payload.data;
+    state.user = {
+      avatarURL: state.user.avatarURL
+        ? (userInfo.avatarURL ?? state.user.avatarURL)
+        : (userInfo.avatarURL ?? null),
+      ...userInfo,
+    };
+  }
 };
 
 export const handleRefreshPending = (state: AuthState) => {
   state.isRefreshing = true;
 };
 
-export const handleRefresh = (state: AuthState, action: PayloadAction<any>) => {
-  state.user = action.payload;
-  state.isRefreshing = false;
-  state.isLoggedIn = true;
+export const handleUserRefresh = (
+  state: AuthState,
+  action: PayloadAction<PersistedUser | undefined>
+) => {
+  if (action.payload) {
+    state.user = action.payload;
+    state.isRefreshing = false;
+    state.isLoggedIn = true;
+  }
 };
 
-export const handleRefreshRejected = (state: AuthState) => {
+export const handleUserRefreshRejected = (state: AuthState) => {
   state.isRefreshing = false;
 };

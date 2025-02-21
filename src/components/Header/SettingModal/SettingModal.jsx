@@ -6,7 +6,7 @@ import { useDispatch, useSelector } from "react-redux";
 import sprite from "src/assets/images/sprite/sprite.svg";
 import * as Yup from "yup";
 import {
-  editUserInfoThunk,
+  updateUserInfoThunk,
   updateAvatarThunk,
 } from "src/redux/auth/operations";
 import { selectUser } from "src/redux/auth/selectors";
@@ -116,7 +116,7 @@ export const SettingModal = ({ onClose, onShow }) => {
         dataSend[key] = value;
       }
     });
-    dispatch(editUserInfoThunk(dataSend));
+    dispatch(updateUserInfoThunk(dataSend));
 
     onClose();
     actions.resetForm();
