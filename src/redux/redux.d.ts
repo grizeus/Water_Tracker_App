@@ -28,17 +28,17 @@ export interface RootState {
 export interface PersistedUser {
   email: string;
   avatarURL: string | null;
-  name: string ;
+  name: string;
   gender: Gender;
   dailyGoal: number;
 }
 
 export interface User {
-    email: string | null;
-    avatarURL: string | null;
-    name: string | null;
-    gender: Gender | null;
-    dailyGoal: number | null;
+  email: string | null;
+  avatarURL: string | null;
+  name: string | null;
+  gender: Gender | null;
+  dailyGoal: number | null;
 }
 
 export interface AuthState {
@@ -66,49 +66,35 @@ export interface Credentials {
   password: string;
 }
 
-export interface SignUpInResponse {
+interface Response<T> {
   status: number;
   message: string;
-  data: {
-    accessToken: string;
-  };
+  data: T;
 }
 
-export interface GetUserResponse {
-  status: number;
-  message: string;
-  data: {
-    name: string
-    email: string;
-    dailyGoal: number;
-    gender: Gender;
-    avatarURL?: string;
-  };
+interface AuthData {
+  accessToken: string;
 }
 
-export interface AddEditWaterResponse {
-  status: number;
-  message: string;
-  data: EntryData;
+interface UserData {
+  name: string;
+  email: string;
+  dailyGoal: number;
+  gender: Gender;
+  avatarURL?: string;
 }
 
-export interface NormaWaterResponse {
-  status: number;
+interface ErrorData {
   message: string;
-  data: number;
 }
 
-export interface MonthlyWaterResponse {
-  status: number;
-  message: string;
-  data: MonthData[];
-}
-
-export interface DailyWaterResponse {
-  status: number;
-  message: string;
-  data: DailyData;
-}
+export type SignUpInResponse = Response<AuthData>;
+export type GetUserResponse = Response<UserData>;
+export type AddEditWaterResponse = Response<EntryData>;
+export type NormaWaterResponse = Response<number>;
+export type MonthlyWaterResponse = Response<MonthData[]>;
+export type DailyWaterResponse = Response<DailyData>;
+export type WaterError = Response<ErrorData>;
 
 export interface UpdAvatarResponse {
   status: number;
@@ -121,8 +107,8 @@ export interface UpdUserReq {
   email?: string;
   dailyGoal?: number;
   gender?: Gender;
-  oldPassword?: string
-  newPassword?: string
+  oldPassword?: string;
+  newPassword?: string;
 }
 
 export interface DailyData {
@@ -130,3 +116,4 @@ export interface DailyData {
   dailyGoal: number;
   progress: string;
 }
+
