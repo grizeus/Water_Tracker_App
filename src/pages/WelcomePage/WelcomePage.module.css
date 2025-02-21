@@ -1,17 +1,17 @@
 .wrapper {
   /*fallback for pre Chrome 113*/
   background-image: -webkit-image-set(
-    url('../../assets/images/background/WelcomePage/mob/bg_mob_1x.png') 1x,
-    url('../../assets/images/background/WelcomePage/mob/bg_mob_2x.png') 2x
+    url("../../assets/images/background/WelcomePage/mob/bg_mob_1x.png") 1x,
+    url("../../assets/images/background/WelcomePage/mob/bg_mob_2x.png") 2x
   );
   background-image: image-set(
-    url('../../assets/images/background/WelcomePage/mob/bg_mob_1x.png') 1x,
-    url('../../assets/images/background/WelcomePage/mob/bg_mob_2x.png') 2x
+    url("../../assets/images/background/WelcomePage/mob/bg_mob_1x.png") 1x,
+    url("../../assets/images/background/WelcomePage/mob/bg_mob_2x.png") 2x
   );
   background-repeat: no-repeat;
   background-size: cover;
   background-position: center bottom;
-  padding-inline: 20px;
+  padding-inline: 0;
   padding-top: 24px;
   padding-bottom: 40px;
   display: flex;
@@ -19,12 +19,12 @@
   align-items: center;
   @media screen and (min-width: 768px) {
     background-image: -webkit-image-set(
-      url('../../assets/images/background/WelcomePage/tab/bg_tab_1x.png') 1x,
-      url('../../assets/images/background/WelcomePage/tab/bg_tab_2x.png') 2x
+      url("../../assets/images/background/WelcomePage/tab/bg_tab_1x.png") 1x,
+      url("../../assets/images/background/WelcomePage/tab/bg_tab_2x.png") 2x
     );
     background-image: image-set(
-      url('../../assets/images/background/WelcomePage/tab/bg_tab_1x.png') 1x,
-      url('../../assets/images/background/WelcomePage/tab/bg_tab_2x.png') 2x
+      url("../../assets/images/background/WelcomePage/tab/bg_tab_1x.png") 1x,
+      url("../../assets/images/background/WelcomePage/tab/bg_tab_2x.png") 2x
     );
     padding-top: 40px;
     padding-bottom: 50px;
@@ -38,27 +38,31 @@
     gap: 80px;
     align-items: flex-end;
     justify-content: center;
-    padding: 80px 0 294px 0;
+    padding: 80px 0 294px;
     background-image:
       -webkit-image-set(
-        url('../../assets/images/background/WelcomePage/desktop/bg_img_1x.png')
+        url("../../assets/images/background/WelcomePage/desktop/bg_img_1x.png")
           1x,
-        url('../../assets/images/background/WelcomePage/desktop/bg_img_2x.png')
+        url("../../assets/images/background/WelcomePage/desktop/bg_img_2x.png")
           2x
       ),
-      -webkit-image-set(url('../../assets/images/background/WelcomePage/desktop/bg_img_1x_bubbles.png')
-            1x, url('../../assets/images/background/WelcomePage/desktop/bg_img_2x_bubbles.png')
-            2x);
-    background-image: image-set(
-        url('../../assets/images/background/WelcomePage/desktop/bg_img_1x.png')
+      -webkit-image-set(
+          url("../../assets/images/background/WelcomePage/desktop/bg_img_1x_bubbles.png")
+            1x,
+          url("../../assets/images/background/WelcomePage/desktop/bg_img_2x_bubbles.png")
+            2x
+        );
+    background-image:
+      image-set(
+        url("../../assets/images/background/WelcomePage/desktop/bg_img_1x.png")
           1x,
-        url('../../assets/images/background/WelcomePage/desktop/bg_img_2x.png')
+        url("../../assets/images/background/WelcomePage/desktop/bg_img_2x.png")
           2x
       ),
       image-set(
-        url('../../assets/images/background/WelcomePage/desktop/bg_img_1x_bubbles.png')
+        url("../../assets/images/background/WelcomePage/desktop/bg_img_1x_bubbles.png")
           1x,
-        url('../../assets/images/background/WelcomePage/desktop/bg_img_2x_bubbles.png')
+        url("../../assets/images/background/WelcomePage/desktop/bg_img_2x_bubbles.png")
           2x
       );
     background-size: contain;
