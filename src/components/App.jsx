@@ -7,7 +7,7 @@ import RestrictedRoute from "./RestrictedRoute";
 import { useDispatch, useSelector } from "react-redux";
 import { selectIsRefreshing } from "src/redux/auth/selectors";
 import SharedLayout from "./SharedLayout";
-import { refreshUser } from "src/redux/auth/operations";
+import { refreshUserThunk } from "src/redux/auth/operations";
 
 const WelcomePage = lazy(() => import("../pages/WelcomePage/WelcomePage"));
 const HomePage = lazy(() => import("../pages/Home/Home"));
@@ -24,7 +24,7 @@ const App = () => {
   const isRefreshing = useSelector(selectIsRefreshing);
 
   useEffect(() => {
-    dispatch(refreshUser());
+    dispatch(refreshUserThunk());
   }, [dispatch]);
 
   return !isRefreshing ? (

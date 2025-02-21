@@ -13,9 +13,9 @@ export const slice = createSlice({
   reducers: {},
   extraReducers: builder => {
     builder
-      .addMatcher(action => action.type.endsWith("/pending"), handlePending)
-      .addMatcher(action => action.type.endsWith("/fulfilled"), handleFulfilled)
-      .addMatcher(action => action.type.endsWith("/rejected"), handleRejected);
+      .addMatcher((action: { type: string }) => action.type.endsWith("/pending"), handlePending)
+      .addMatcher((action: { type: string }) => action.type.endsWith("/fulfilled"), handleFulfilled)
+      .addMatcher((action: { type: string }) => action.type.endsWith("/rejected"), handleRejected);
   },
 });
 

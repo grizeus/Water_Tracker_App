@@ -1,7 +1,38 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import { toast } from "react-toastify";
 import instanceWater from "../api/api";
-import type { Credentials, GeneralState } from "../redux.d.ts";
+import type {
+  Credentials,
+  GeneralState,
+  GetUserResponse,
+  PersistedUser,
+  SignUpInResponse,
+  UpdAvatarResponse,
+  UpdUserReq,
+} from "../redux.d.ts";
+import axios from "axios";
+
+interface intermediateData {
+  user: string;
+  token: string;
+  _persist: string;
+}
+
+const getPersistedUser = (jsonString: string | null): PersistedUser | null => {
+  if (!jsonString) {
+    return null;
+  }
+  try {
+    const parsedData = JSON.parse(jsonString) as intermediateData;
+    if (parsedData) {
+      return JSON.parse(parsedData.user) as PersistedUser;
+    }
+  } catch (error) {
+    console.error("JSON parsing failed:", error);
+    return null;
+  }
+  return null;
+};
 
 export const setToken = (token: string) => {
   instanceWater.defaults.headers.common["Authorization"] = `Bearer ${token}`;
@@ -15,14 +46,23 @@ export const signUpThunk = createAsyncThunk(
   "auth/signup",
   async (credentials: Credentials, { rejectWithValue }) => {
     try {
-      const { data } = await instanceWater.post("/auth/signup", credentials);
-      setToken(data.accessToken);
+      const { data } = await instanceWater.post<SignUpInResponse>(
+        "/auth/signup",
+        credentials,
+      );
+      setToken(data.data.accessToken);
       return data;
-    } catch (error: any) {
-      if (error.response.status === 409) {
-        toast.error(`User with email - ${credentials.email}, already exist`);
+    } catch (error: unknown) {
+      if (axios.isAxiosError(error) && error.response) {
+        if (error.response.status === 409) {
+          toast.error(`User with email ${credentials.email} already exist`);
+        }
+        return rejectWithValue(error.response.data);
+      } else if (error instanceof Error) {
+        return rejectWithValue(error.message);
+      } else {
+        return rejectWithValue("An unknown error occurred");
       }
-      return rejectWithValue(error.message);
     }
   },
 );
@@ -31,17 +71,23 @@ export const signInThunk = createAsyncThunk(
   "auth/signin",
   async (credentials: Credentials, { rejectWithValue }) => {
     try {
-      const { data: wrap } = await instanceWater.post(
+      const { data } = await instanceWater.post<SignUpInResponse>(
         "/auth/signin",
         credentials,
       );
-      setToken(wrap.data.accessToken);
-      return wrap.data;
-    } catch (error: any) {
-      if (error.response.status === 401) {
-        toast.error(`Email or password is wrong`);
+      setToken(data.data.accessToken);
+      return data;
+    } catch (error: unknown) {
+      if (axios.isAxiosError(error) && error.response) {
+        if (error.response.status === 401) {
+          toast.error(`Email or password is wrong`);
+        }
+        return rejectWithValue(error.response.data);
+      } else if (error instanceof Error) {
+        return rejectWithValue(error.message);
+      } else {
+        return rejectWithValue("An unknown error occurred");
       }
-      return rejectWithValue(error.message);
     }
   },
 );
@@ -52,47 +98,19 @@ export const logOutThunk = createAsyncThunk(
     try {
       await instanceWater.post("/auth/logout");
       unsetToken();
-    } catch (error: any) {
-      return rejectWithValue(error.message);
+    } catch (error: unknown) {
+      if (axios.isAxiosError(error) && error.response) {
+        return rejectWithValue(error.response.data);
+      } else if (error instanceof Error) {
+        return rejectWithValue(error.message);
+      } else {
+        return rejectWithValue("An unknown error occurred");
+      }
     }
   },
 );
 
-export const requestPassThunk = createAsyncThunk(
-  "auth/request-pass",
-  async (credentials: {email:string}, { rejectWithValue }) => {
-    try {
-      const { data } = await instanceWater.post(
-        "/auth/request-pass",
-        credentials,
-      );
-      toast.success(
-        `Password reset link has been sent to your email - ${credentials.email}`,
-      );
-      return data;
-    } catch (error:any) {
-      if (error.response.status === 404) {
-        toast.error(`User ${credentials.email} not found`);
-      }
-      return rejectWithValue(error.message);
-    }
-  },
-);
-export const resetPassThunk = createAsyncThunk(
-  "/auth/reset-pass",
-  async (credentials:{password:string}, { rejectWithValue }) => {
-    try {
-      const { data } = await instanceWater.post(
-        "/auth/reset-pass",
-        credentials,
-      );
-      return data;
-    } catch (error:any) {
-      return rejectWithValue(error.message);
-    }
-  },
-);
-export const refreshUser = createAsyncThunk(
+export const refreshUserThunk = createAsyncThunk(
   "auth/refresh",
   async (_, thunkAPI) => {
     const state: GeneralState = thunkAPI.getState() as GeneralState;
@@ -101,62 +119,93 @@ export const refreshUser = createAsyncThunk(
       return thunkAPI.rejectWithValue("No token found");
     }
     try {
-      const { status, data: wrap } = await instanceWater.post("/auth/refresh");
+      const { status, data: wrap } =
+        await instanceWater.post<SignUpInResponse>("/auth/refresh");
       if (status === 200) {
         setToken(wrap.data.accessToken);
-        const { data: user } = await instanceWater.get("/user");
-        return user.data;
+        const rawData = localStorage.getItem("persist:auth");
+        if (rawData) {
+          const persistedUser = getPersistedUser(rawData);
+          if (persistedUser) {
+            return persistedUser;
+          }
+        }
       }
-    } catch (error: any) {
-      return thunkAPI.rejectWithValue(error.message);
+    } catch (error: unknown) {
+      if (axios.isAxiosError(error) && error.response) {
+        return thunkAPI.rejectWithValue(error.response.data);
+      } else if (error instanceof Error) {
+        return thunkAPI.rejectWithValue(error.message);
+      } else {
+        return thunkAPI.rejectWithValue("An unknown error occurred");
+      }
     }
   },
 );
 
 export const getUserThunk = createAsyncThunk(
-  "/user",
+  "auth/user",
   async (_, { rejectWithValue }) => {
     try {
-      const { data: wrap } = await instanceWater.get("/user");
-      return wrap.data;
-    } catch (error: any) {
-      return rejectWithValue(error.message);
+      const { data } = await instanceWater.get<GetUserResponse>("/user");
+      return data;
+    } catch (error: unknown) {
+      if (axios.isAxiosError(error) && error.response) {
+        return rejectWithValue(error.response.data);
+      } else if (error instanceof Error) {
+        return rejectWithValue(error.message);
+      } else {
+        return rejectWithValue("An unknown error occurred");
+      }
     }
   },
 );
 
 export const updateAvatarThunk = createAsyncThunk(
-  "user/avatar",
-  async (newPhotoFile, { rejectWithValue }) => {
+  "auth/avatar",
+  async (newPhotoFile: string, { rejectWithValue }) => {
     try {
-      const {
-        data: { avatarURL },
-      } = await instanceWater.patch("/user/avatar", newPhotoFile, {
-        headers: {
-          "Content-Type": "multipart/form-data",
+      const { data } = await instanceWater.patch<UpdAvatarResponse>(
+        "/user/avatar",
+        newPhotoFile,
+        {
+          headers: {
+            "Content-Type": "multipart/form-data",
+          },
         },
-      });
-      return avatarURL;
-    } catch (error: any) {
-      if (error.response.status === 400) {
-        toast.error(`Invalid file extension`);
+      );
+      return data;
+    } catch (error: unknown) {
+      if (axios.isAxiosError(error) && error.response) {
+        if (error.response.status === 400) {
+          toast.error(`Invalid file extension`);
+        }
+        return rejectWithValue(error.response.data);
+      } else if (error instanceof Error) {
+        return rejectWithValue(error.message);
+      } else {
+        return rejectWithValue("An unknown error occurred");
       }
-      return rejectWithValue(error.message);
     }
   },
 );
 
-export const editUserInfoThunk = createAsyncThunk(
-  "user",
-  async (body, { rejectWithValue }) => {
+export const updateUserInfoThunk = createAsyncThunk(
+  "auth/edit",
+  async (updInfo: UpdUserReq, { rejectWithValue }) => {
     try {
-      const { data } = await instanceWater.patch("/user", body);
+      const { data } = await instanceWater.patch<GetUserResponse>("/user", updInfo);
       return data;
-    } catch (error: any) {
-      if (error.response.status === 401) {
-        toast.error(`Current password is incorrect`);
+    } catch (error: unknown) {
+      if (axios.isAxiosError(error) && error.response) {
+        if (error.response.status === 401) {
+          toast.error(`Current password is incorrect`);
+        }
+      } else if (error instanceof Error) {
+        return rejectWithValue(error.message);
+      } else {
+        return rejectWithValue("An unknown error occurred");
       }
-      return rejectWithValue(error.message);
     }
   },
 );
