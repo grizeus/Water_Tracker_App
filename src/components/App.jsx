@@ -15,8 +15,8 @@ const SigninPage = lazy(() => import("../pages/SignIn/SignIn"));
 const SignUpPage = lazy(() => import("../pages/SignUp/SignUp"));
 const ErrorPage = lazy(() => import("../pages/Error/Error"));
 
-const ResetPassPage = lazy(() =>
-  import("../pages/ResetPasswordPage/ResetPassword"),
+const ResetPassPage = lazy(
+  () => import("../pages/ResetPasswordPage/ResetPassword")
 );
 
 const App = () => {
@@ -33,7 +33,10 @@ const App = () => {
         <Route
           path="/"
           element={
-            <RestrictedRoute component={<WelcomePage />} redirectTo="/home" />
+            <RestrictedRoute
+              component={<WelcomePage /> && <Loader />}
+              redirectTo="/home"
+            />
           }
         />
         <Route

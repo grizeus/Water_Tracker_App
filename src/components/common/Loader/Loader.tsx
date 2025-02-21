@@ -1,39 +1,46 @@
-import { RotatingLines, ThreeDots } from 'react-loader-spinner';
-// TODO: styles await
-import { WrapThreeDotsDiv } from './Loader.styled';
+import { ThreeDots, RotatingLines } from "react-loader-spinner";
 
-interface Props {
-  width: string;
-  strokeColor: string;
-}
+import styles from "./Loader.module.css";
 
-export const Loader = () => {
+import { LoaderProps, ContentLoaderProps } from "../common.i";
+
+export const Loader = ({
+  size = 90,
+  color = "#407bff",
+  visible = true,
+}: LoaderProps) => {
   return (
-    <WrapThreeDotsDiv>
+    <div className={styles.threeDots}>
       <ThreeDots
-        height="90"
-        width="90"
+        height={size}
+        width={size}
         radius="9"
-        color="#407bff"
+        color={color}
         ariaLabel="three-dots-loading"
-        visible={true}
+        visible={visible}
       />
-    </WrapThreeDotsDiv>
+    </div>
   );
 };
 
 export const ContentLoader = ({
-  width = '18px',
-  strokeColor = 'white',
-}: Props) => {
+  width = "18px",
+  strokeColor = "white",
+  strokeWidth = "5",
+  animationDuration = "0.75",
+  ariaLabel = "rotating-lines-loading",
+  visible = true,
+}: ContentLoaderProps) => {
   return (
-    <RotatingLines
-      visible={true}
-      width={width}
-      strokeColor={strokeColor}
-      strokeWidth="5"
-      animationDuration="0.75"
-      ariaLabel="rotating-lines-loading"
-    />
+    <div className={styles.rotatingLines}>
+      <RotatingLines
+        visible={visible}
+        width={width}
+        strokeColor={strokeColor}
+        strokeWidth={strokeWidth}
+        animationDuration={animationDuration}
+        ariaLabel={ariaLabel}
+      />
+    </div>
   );
 };
