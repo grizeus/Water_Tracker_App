@@ -1,51 +1,34 @@
-import { DailyNorma } from "components";
-import { WaterRatioPanel } from "components";
-import { Container } from 'components';
-import { FlexContainer, Section, WaterDescription, Hero } from './Home.styled';
+import { useState } from "react";
 
-import imgBottleMobile1x from '../../assets/images/background/homePage/mobile/bottleMob.png';
-import imgBottleMobile2x from '../../assets/images/background/homePage/mobile/bottleMob@2x.png';
-import imgBottleTablet1x from '../../assets/images/background/homePage/tablet/bottleTabl.png';
-import imgBottleTablet2x from '../../assets/images/background/homePage/tablet/bottleTabl@2x.png';
-import imgBottleDesktop1x from '../../assets/images/background/homePage/desktop/bottleDesc.png';
-import imgBottleDesktop2x from '../../assets/images/background/homePage/desktop/bottleDesc@2x.png';
+import { DailyNorma } from "../../components/Home/DailyNorma/DailyNorma";
+import { WaterRatioPanel } from "components";
+import { Section } from "../../components/common/Section/Section";
 
 import { TodayWaterList } from "components";
 import { MonthStatsTable } from "components";
 
-const Home = () => {
+import styles from "./Home.module.css";
+import { DailyNormaModal } from "../../components";
 
+const Home = () => {
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const openModal = () => setIsModalOpen(true);
+  const closeModal = () => setIsModalOpen(false);
   return (
-    <Section>
-      <Container>
-        <FlexContainer>
-          <DailyNorma />
-          <Hero>
-            <picture>
-              <source
-                srcSet={`${imgBottleDesktop1x} 1x, ${imgBottleDesktop2x} 2x`}
-                media="(min-width: 1440px)"
-              />
-              <source
-                srcSet={`${imgBottleTablet1x} 1x, ${imgBottleTablet2x} 2x`}
-                media="(min-width: 768px) and (max-width: 1439px)"
-              />
-              <source
-                srcSet={`${imgBottleMobile1x}} 1x, ${imgBottleMobile2x} 2x`}
-              />
-              <img
-                src={imgBottleMobile1x}
-                alt="Bottle of water"
-              />
-            </picture>
-          </Hero>
-          <WaterRatioPanel />
-          <WaterDescription>
+    <Section secStyles={styles.section}>
+        {isModalOpen && (
+          <DailyNormaModal onClose={closeModal} onShow={openModal} />
+        )}
+        <div className="relative flex flex-col justify-between gap-10 xl:flex-row">
+          <div className=" ">
+            <DailyNorma onModalOpen={openModal}/>
+            <WaterRatioPanel />
+          </div>
+          <div className="bg-solitude mb-10 max-w-[280px] px-2 py-6 shadow-[0_4px_14px_0_rgba(64,123,255,0.3)] md:mb-11 md:max-w-[688px] md:px-6 md:py-8 xl:max-w-[680px] xl:mt-0">
             <TodayWaterList />
             <MonthStatsTable />
-          </WaterDescription>
-        </FlexContainer>
-      </Container>
+          </div>
+        </div>
     </Section>
   );
 };

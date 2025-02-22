@@ -9,9 +9,11 @@ export const theme = {
       "3xl": "2560px",
     },
     colors: {
-      "charcoal": "#2f2f2f",
-      "royal": "#407bff",
-      "solitude": "#ecf2ff",
+      charcoal: "#2f2f2f",
+      royal: "#407bff",
+      solitude: "#ecf2ff",
+      jordy: "#8baeff",
+      sunshade: "#ff9d43",
     },
   },
 };
