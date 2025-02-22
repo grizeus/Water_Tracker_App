@@ -1,3 +1,3 @@
-import type { GeneralState } from "../redux.d.ts";
+import type { RootState } from "../store";
 
-export const selectIsLoading = (state: GeneralState) => state.root.isLoading;
+export const selectIsLoading = (state: RootState) => state.root.isLoading;

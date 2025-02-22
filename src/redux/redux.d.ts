@@ -13,13 +13,6 @@ export interface EntryData {
   amount: number;
 }
 
-export interface GeneralState {
-  root: RootState;
-  auth: AuthState;
-  waterData: WaterDataState;
-  options: OptionsState;
-}
-
 export interface RootState {
   isLoading: boolean;
   error: object | null;

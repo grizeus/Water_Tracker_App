@@ -3,7 +3,6 @@ import { toast } from "react-toastify";
 import instanceWater from "../api/api";
 import type {
   Credentials,
-  GeneralState,
   GetUserResponse,
   PersistedUser,
   SignUpInResponse,
@@ -11,6 +10,7 @@ import type {
   UpdUserReq,
 } from "../redux.d.ts";
 import axios from "axios";
+import type { RootState } from "../store";
 
 interface intermediateData {
   user: string;
@@ -113,7 +113,7 @@ export const logOutThunk = createAsyncThunk(
 export const refreshUserThunk = createAsyncThunk(
   "auth/refresh",
   async (_, thunkAPI) => {
-    const state: GeneralState = thunkAPI.getState() as GeneralState;
+    const state = thunkAPI.getState() as RootState;
     const persistedToken = state.auth.token;
     if (!persistedToken) {
       return thunkAPI.rejectWithValue("No token found");
