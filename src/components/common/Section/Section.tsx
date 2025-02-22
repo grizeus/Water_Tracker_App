@@ -9,11 +9,11 @@ export const Section = ({
 }: {
   children: ChildrenProps;
   secStyles: string;
-  contStyles: string;
+  contStyles?: string | undefined;
 }) => {
   return (
     <section className={secStyles}>
-      <Container contStyles={contStyles}>{children}</Container>
+      <Container contStyles={contStyles ?? ''}>{children}</Container>
     </section>
   );
 };
