@@ -12,19 +12,9 @@ export const WaterRatioPanel = ({
   const percentage = useSelector(selectProgress);
   const roundedWaterVolumePercentage = parseInt(percentage);
 
-  const getMarkPosition = () => {
-    const limitedPercentage = Math.min(
-      100,
-      Math.max(0, roundedWaterVolumePercentage)
-    );
-    return {
-      left: `calc(${limitedPercentage}%)`,
-    };
-  };
-
   const showMarkLabel =
     roundedWaterVolumePercentage > 5 && roundedWaterVolumePercentage < 95;
-
+// TODO: add shadows defaults
   return (
     <div className="flex w-[280px] flex-col justify-center gap-2 md:w-[704px] md:flex-row md:items-center md:gap-6 xl:w-[594px] xl:gap-8">
       <div className="flex w-[280px] flex-col md:w-[356px] xl:w-[390px]">
@@ -37,14 +27,12 @@ export const WaterRatioPanel = ({
             style={{ width: `${roundedWaterVolumePercentage}%` }}
           />
           <div
-            className="thumb relative top-1/2 h-[14px] w-[14px] -translate-x-1/2 -translate-y-1/2 rounded-full border border-royal bg-white transition-all duration-300"
+            className="relative top-1/2 h-[14px] w-[14px] -translate-x-1/2 -translate-y-1/2 rounded-full border border-royal bg-white transition-all duration-300"
             style={{
               left: `${roundedWaterVolumePercentage}%`,
             }}>
             {showMarkLabel && (
-              <span
-                className="md:-translate-x-13 absolute flex -translate-x-1/2 flex-col text-center text-sm font-medium leading-4 text-royal before:content-['|']"
-                style={getMarkPosition()}>{`${roundedWaterVolumePercentage}%`}</span>
+              <span className="absolute flex -translate-x-1/3 translate-y-1/3 flex-col text-center text-sm font-medium leading-4 text-royal before:content-['|']">{`${roundedWaterVolumePercentage}%`}</span>
             )}
           </div>
         </div>
