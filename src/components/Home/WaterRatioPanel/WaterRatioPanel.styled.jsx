@@ -1,4 +1,4 @@
-import styled from '@emotion/styled';
+import styled from "@emotion/styled";
 
 export const WaterRatioPanelContainer = styled.div`
   width: 280px;
@@ -6,7 +6,6 @@ export const WaterRatioPanelContainer = styled.div`
   justify-content: center;
   flex-direction: column;
   gap: 8px;
-  margin-bottom: 40px;
 
   @media screen and (min-width: ${({ theme }) => theme.breakpoint.tablet}) {
     width: 704px;
@@ -25,7 +24,7 @@ export const WaterRatioPanelContainer = styled.div`
 `;
 
 export const WaterRange = styled.input`
-  &[type='range'] {
+  &[type="range"] {
     appearance: none;
     width: 100%;
     border-radius: 10px;
@@ -37,11 +36,11 @@ export const WaterRange = styled.input`
     background-repeat: no-repeat;
   }
 
-  &[type='range']:focus {
+  &[type="range"]:focus {
     outline: none;
   }
 
-  &[type='range']::-webkit-slider-runnable-track {
+  &[type="range"]::-webkit-slider-runnable-track {
     width: 100%;
     height: 8px;
     animation: 0.2s;
@@ -52,7 +51,7 @@ export const WaterRange = styled.input`
     background: transparent;
   }
 
-  &[type='range']::-webkit-slider-thumb {
+  &[type="range"]::-webkit-slider-thumb {
     height: 14px;
     width: 14px;
     border-radius: 50%;
@@ -104,7 +103,7 @@ export const Mark = styled.span`
   color: ${({ theme }) => theme.color.accent};
 
   &::before {
-    content: '|';
+    content: "|";
     justify-content: center;
     align-items: center;
     color: ${({ theme }) => theme.color.secondaryLightBlue};
@@ -120,7 +119,7 @@ export const LeftMark = styled.span`
   color: ${({ theme }) => theme.color.accent};
 
   &::before {
-    content: '|';
+    content: "|";
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -140,7 +139,7 @@ export const RightMark = styled.span`
   color: ${({ theme }) => theme.color.accent};
 
   &::before {
-    content: '|';
+    content: "|";
     display: flex;
     flex-direction: column;
     justify-content: center;
