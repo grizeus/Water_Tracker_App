@@ -1,0 +1,18 @@
+.containerHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding-top: 8px;
+  width: 100%;
+  margin-bottom: 24px;
+
+  @media (min-width: 768px) {
+    padding-top: 16px;
+    margin-bottom: 40px;
+  }
+
+  @media (min-width: 1440px) {
+    padding-top: 12px;
+    margin-bottom: 20px;
+  }
+}

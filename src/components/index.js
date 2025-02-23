@@ -26,10 +26,10 @@ export * from "./Home/WaterRatioPanel/WaterRatioPanel";
 
 export * from "./Header/SettingModal/SettingModal";
 export * from "./SignIn/SignInForm/SignInForm";
-export * from "./SignIn/UserAuth/UserAuth";
-export * from "./SignIn/UserLogo/UserLogo";
-export * from "./SignIn/UserLogoModal/UserLogoModal";
-export * from "./SignIn/UserLogoutModal/UserLogoutModal";
+export * from "./Header/UserAuth/UserAuth";
+export * from "./Header/UserLogo/UserLogo";
+export * from "./Header/UserLogoModal/UserLogoModal";
+export * from "./Header/UserLogoutModal/UserLogoutModal";
 
 // SignUp
 

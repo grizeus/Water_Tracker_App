@@ -7,7 +7,7 @@ export const Container = ({
   contStyles,
 }: {
   children: ChildrenProps;
-  contStyles: string;
+  contStyles?: string;
 }) => {
   return <div className={clsx(contStyles, styles.container)}>{children}</div>;
 };
