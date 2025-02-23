@@ -12,18 +12,16 @@ export const WaterRatioPanel = ({
   const percentage = useSelector(selectProgress);
   const intPercentage = parseInt(percentage);
 
-  const showMarkLabel =
-    intPercentage > 5 && intPercentage < 95;
-// TODO: add shadows defaults
+  const showMarkLabel = intPercentage > 5 && intPercentage < 95;
   return (
     <div className="flex w-[280px] flex-col justify-center gap-2 md:w-[704px] md:flex-row md:items-center md:gap-6 xl:w-[594px] xl:gap-8">
       <div className="flex w-[280px] flex-col md:w-[356px] xl:w-[390px]">
         <h4 className="mb-2 text-lg font-normal leading-6 text-royal md:mb-4">
           Today
         </h4>
-        <div className="bg-hawkes relative h-2 w-full rounded-full">
+        <div className="relative h-2 w-full rounded-full bg-hawkes">
           <div
-            className="bg-perano absolute h-full rounded-full transition-all duration-300"
+            className="absolute h-full rounded-full bg-perano transition-all duration-300"
             style={{ width: `${intPercentage}%` }}
           />
           <div
