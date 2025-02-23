@@ -10,10 +10,10 @@ export const WaterRatioPanel = ({
   onModalOpen: OpenerType;
 }) => {
   const percentage = useSelector(selectProgress);
-  const roundedWaterVolumePercentage = parseInt(percentage);
+  const intPercentage = parseInt(percentage);
 
   const showMarkLabel =
-    roundedWaterVolumePercentage > 5 && roundedWaterVolumePercentage < 95;
+    intPercentage > 5 && intPercentage < 95;
 // TODO: add shadows defaults
   return (
     <div className="flex w-[280px] flex-col justify-center gap-2 md:w-[704px] md:flex-row md:items-center md:gap-6 xl:w-[594px] xl:gap-8">
@@ -24,15 +24,15 @@ export const WaterRatioPanel = ({
         <div className="bg-hawkes relative h-2 w-full rounded-full">
           <div
             className="bg-perano absolute h-full rounded-full transition-all duration-300"
-            style={{ width: `${roundedWaterVolumePercentage}%` }}
+            style={{ width: `${intPercentage}%` }}
           />
           <div
             className="relative top-1/2 h-[14px] w-[14px] -translate-x-1/2 -translate-y-1/2 rounded-full border border-royal bg-white transition-all duration-300"
             style={{
-              left: `${roundedWaterVolumePercentage}%`,
+              left: `${intPercentage}%`,
             }}>
             {showMarkLabel && (
-              <span className="absolute flex -translate-x-1/3 translate-y-1/3 flex-col text-center text-sm font-medium leading-4 text-royal before:content-['|']">{`${roundedWaterVolumePercentage}%`}</span>
+              <span className="absolute flex -translate-x-1/3 translate-y-1/3 flex-col text-center text-sm font-medium leading-4 text-royal before:content-['|']">{`${intPercentage}%`}</span>
             )}
           </div>
         </div>
