@@ -14,6 +14,8 @@ export const theme = {
       solitude: "#ecf2ff",
       jordy: "#8baeff",
       sunshade: "#ff9d43",
+      hawkes: "#d7e3ff",
+      perano: "#9ebbff",
     },
   },
 };

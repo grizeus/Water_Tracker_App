@@ -1,9 +1,9 @@
-import { css, useTheme } from '@emotion/react';
-import emotionNormalize from 'emotion-normalize';
+import { css, useTheme } from "@emotion/react";
+import emotionNormalize from "emotion-normalize";
 
-import RobotoRegular from '../assets/fonts/Roboto-Regular.ttf';
-import RobotoMedium from '../assets/fonts/Roboto-Medium.ttf';
-import RobotoBold from '../assets/fonts/Roboto-Bold.ttf';
+import RobotoRegular from "../assets/fonts/Roboto-Regular.ttf";
+import RobotoMedium from "../assets/fonts/Roboto-Medium.ttf";
+import RobotoBold from "../assets/fonts/Roboto-Bold.ttf";
 
 export const GlobalStyles = () => {
   const theme = useTheme();
@@ -94,7 +94,6 @@ export const GlobalStyles = () => {
     video {
       margin: 0;
       padding: 0;
-      border: 0;
       font-size: 100%;
       font: inherit;
       vertical-align: baseline;
@@ -133,7 +132,7 @@ export const GlobalStyles = () => {
     blockquote:after,
     q:before,
     q:after {
-      content: '';
+      content: "";
       content: none;
     }
 
@@ -171,25 +170,25 @@ export const GlobalStyles = () => {
 
     /* ========================= Fonts ========================= */
     @font-face {
-      font-family: 'Roboto';
+      font-family: "Roboto";
       font-weight: 400;
-      src: url(${RobotoRegular}) format('truetype');
+      src: url(${RobotoRegular}) format("truetype");
     }
 
     @font-face {
-      font-family: 'Roboto';
+      font-family: "Roboto";
       font-weight: 500;
-      src: url(${RobotoMedium}) format('truetype');
+      src: url(${RobotoMedium}) format("truetype");
     }
 
     @font-face {
-      font-family: 'Roboto';
+      font-family: "Roboto";
       font-weight: 700;
-      src: url(${RobotoBold}) format('truetype');
+      src: url(${RobotoBold}) format("truetype");
     }
 
-    input[type='password'] {
-      font-family: 'font-stars-password';
+    input[type="password"] {
+      font-family: "font-stars-password";
       font-style: normal;
       font-weight: normal;
       font-size: 12px;
@@ -205,7 +204,7 @@ export const GlobalStyles = () => {
       letter-spacing: 2px;
 
       &:placeholder-shown {
-        font-family: 'Roboto', sans-serif;
+        font-family: "Roboto", sans-serif;
         font-size: 18px;
         line-height: 1.15;
         letter-spacing: normal;
@@ -227,7 +226,7 @@ export const GlobalStyles = () => {
     }
 
     body {
-      font-family: 'Roboto', sans-serif;
+      font-family: "Roboto", sans-serif;
       font-weight: 400;
       transition: all 0.5s linear;
     }
