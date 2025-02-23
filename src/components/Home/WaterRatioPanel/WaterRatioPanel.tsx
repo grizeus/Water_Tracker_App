@@ -1,24 +1,22 @@
-import { useState } from "react";
 import { useSelector } from "react-redux";
-import { selectProgress } from "src/redux/water/selectors";
+import { selectProgress } from "../../../redux/water/selectors";
 import sprite from "src/assets/images/sprite/sprite.svg";
-import { TodayListModal } from "components";
 
 import {
-  AddIcon,
   AddWaterButton,
   LeftMark,
   Mark,
-  MarksContainer,
   RightMark,
   WaterRange,
   WaterRangeContainer,
-  WaterRangeHeader,
-  WaterRatioPanelContainer,
 } from "./WaterRatioPanel.styled";
+import { OpenerType } from "../../components";
 
-export const WaterRatioPanel = () => {
-  const [isModalOpen, setModalOpen] = useState(false);
+export const WaterRatioPanel = ({
+  onModalOpen,
+}: {
+  onModalOpen: OpenerType;
+}) => {
   const percentage = useSelector(selectProgress);
   const roundedWaterVolumePercentage = parseInt(percentage);
 
@@ -56,9 +54,11 @@ export const WaterRatioPanel = () => {
     roundedWaterVolumePercentage > 0 && roundedWaterVolumePercentage < 100;
 
   return (
-    <WaterRatioPanelContainer>
+    <div className="flex w-[280px] flex-col justify-center gap-2 md:w-[704px] md:flex-row md:items-center md:gap-6 xl:w-[594px] xl:gap-8">
       <WaterRangeContainer>
-        <WaterRangeHeader>Today</WaterRangeHeader>
+        <h4 className="text-royal mb-2 text-lg font-normal leading-6 md:mb-4">
+          Today
+        </h4>
         <WaterRange
           type="range"
           maxValue={100}
@@ -68,27 +68,22 @@ export const WaterRatioPanel = () => {
           style={getBackgroundSize()}
           aria-label="Water range"
         />
-        <MarksContainer>
+        <div className="flex h-8 flex-row justify-between">
           <LeftMark>0%</LeftMark>
           {showMarkLabel && (
             <Mark
               id="waterMark"
-              style={getMarkPosition()}
-            >{`${roundedWaterVolumePercentage}%`}</Mark>
+              style={getMarkPosition()}>{`${roundedWaterVolumePercentage}%`}</Mark>
           )}
           <RightMark>100%</RightMark>
-        </MarksContainer>
+        </div>
       </WaterRangeContainer>
-      <AddWaterButton onClick={() => setModalOpen(true)}>
-        <AddIcon>
+      <AddWaterButton onClick={onModalOpen}>
+        <svg className="h-6 w-6 fill-transparent stroke-white">
           <use href={`${sprite}#icon-increment-outline`}></use>
-        </AddIcon>
+        </svg>
         Add Water
       </AddWaterButton>
-      <TodayListModal
-        onClose={() => setModalOpen(false)}
-        onShow={isModalOpen}
-      />
-    </WaterRatioPanelContainer>
+    </div>
   );
 };

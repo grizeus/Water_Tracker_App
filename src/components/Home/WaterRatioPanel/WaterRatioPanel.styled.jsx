@@ -1,28 +1,5 @@
 import styled from "@emotion/styled";
 
-export const WaterRatioPanelContainer = styled.div`
-  width: 280px;
-  display: flex;
-  justify-content: center;
-  flex-direction: column;
-  gap: 8px;
-
-  @media screen and (min-width: ${({ theme }) => theme.breakpoint.tablet}) {
-    width: 704px;
-    gap: 24px;
-    flex-direction: row;
-    align-items: center;
-  }
-
-  @media screen and (min-width: ${({ theme }) => theme.breakpoint.desktop}) {
-    position: absolute;
-    left: 0;
-    top: 594px;
-    width: 592px;
-    gap: 32px;
-  }
-`;
-
 export const WaterRange = styled.input`
   &[type="range"] {
     appearance: none;
@@ -62,14 +39,6 @@ export const WaterRange = styled.input`
   }
 `;
 
-export const WaterRangeHeader = styled.p`
-  font-size: 18px;
-  line-height: 24px;
-  letter-spacing: 0em;
-  text-align: left;
-  margin-bottom: 16px;
-  color: ${({ theme }) => theme.color.accent};
-`;
 export const WaterRangeContainer = styled.div`
   position: relative;
   height: 102px;
@@ -80,13 +49,6 @@ export const WaterRangeContainer = styled.div`
     width: 356px;
     height: 90px;
   }
-`;
-
-export const MarksContainer = styled.div`
-  height: 32px;
-  display: flex;
-  flex-direction: row;
-  justify-content: space-between;
 `;
 
 export const Mark = styled.span`
@@ -174,11 +136,4 @@ export const AddWaterButton = styled.button`
     height: 44px;
     padding: 10px 30px 10px 30px;
   }
-`;
-
-export const AddIcon = styled.svg`
-  width: 24px;
-  height: 24px;
-  fill: transparent;
-  stroke: #fff;
 `;
