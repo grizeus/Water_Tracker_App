@@ -46,7 +46,7 @@ export const WaterConsumptionTracker = () => {
 
       <NavLink
         to={"/signup"}
-        className="bg-royal mt-6 inline-block w-[280px] rounded-lg px-8 py-2 text-center text-base font-medium leading-5 text-white shadow-[0_4px_8px_0_rgba(64,123,255,0.34)] transition-shadow duration-[350] ease-in-out hover:shadow-[0_4px_14px_0_rgba(64,123,255,0.54)] active:shadow-none md:h-11 md:w-[336px] md:text-lg md:leading-6 xl:w-96">
+        className="bg-royal mt-6 inline-block w-[280px] rounded-lg px-8 py-2 text-center text-base font-medium leading-5 text-white shadow-sm transition-shadow duration-[350] ease-in-out hover:shadow-lg active:shadow-none md:h-11 md:w-[336px] md:text-lg md:leading-6 xl:w-96">
         Try tracker
       </NavLink>
     </div>
