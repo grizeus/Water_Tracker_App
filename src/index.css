@@ -1,3 +1,18 @@
 @import "tailwindcss/base";
 @import "tailwindcss/components";
 @import "tailwindcss/utilities";
+
+:root {
+  --charcoal-black: #2f2f2f;
+  --royal-blue: #407bff;
+  --solitude-blue: #ecf2ff;
+  --jordy-blue: #8baeff;
+  --sunshade-orange: #ff9d43;
+  --sunset-orange: #ef5050;
+  --hawkes-blue: #d7e3ff;
+  --perano-blue: #9ebbff;
+  --transperent-black: #000000cc;
+  --shadow-sm: 0 4px 8px 0 rgba(64, 123, 255, 0.34);
+  --shadow-md: 0 4px 14px 0 rgba(64, 123, 255, 0.3);
+  --shadow-lg: 0 4px 14px 0 rgba(64, 123, 255, 0.54);
+}

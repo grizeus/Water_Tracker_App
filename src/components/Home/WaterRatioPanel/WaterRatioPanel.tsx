@@ -46,7 +46,7 @@ export const WaterRatioPanel = ({
         </div>
       </div>
       <button
-        className="flex items-center justify-center gap-3 rounded-xl border-none bg-royal px-[76px] py-[6px] text-white shadow-[0_4px_8px_0_rgba(64,123,255,0.34)] transition-shadow duration-[350] ease-in-out hover:shadow-[0_4px_14px_0_rgba(64,123,255,0.54);] active:shadow-none md:w-[336px] md:px-24 md:py-[10px] xl:w-44 xl:px-8"
+        className="flex items-center justify-center gap-3 rounded-xl border-none bg-royal px-[76px] py-[6px] text-white shadow-sm transition-shadow duration-[350] ease-in-out hover:shadow-lg active:shadow-none md:w-[336px] md:px-24 md:py-[10px] xl:w-44 xl:px-8"
         type="button"
         onClick={onModalOpen}>
         <svg className="h-6 w-6 fill-transparent stroke-white">

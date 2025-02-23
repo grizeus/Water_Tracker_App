@@ -10,7 +10,7 @@ export const WhyDrinkWater = () => {
   ];
 
   return (
-    <div className="bg-solitude flex w-[288px] flex-col items-start justify-start gap-3 rounded-[10px] px-4 py-6 shadow-[0_4px_14px_0_rgba(64,123,255,0.3)] md:w-[494px] md:px-6 md:py-8">
+    <div className="bg-solitude flex w-[288px] flex-col items-start justify-start gap-3 rounded-[10px] px-4 py-6 shadow-md md:w-[494px] md:px-6 md:py-8">
       <h2 className="text-charcoal text-lg font-medium leading-5">
         Why drink water
       </h2>
