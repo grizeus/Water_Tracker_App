@@ -1,0 +1,15 @@
+.containerHeader{
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding-top: 8px;
+  width:100%;
+
+  @media (min-width: 768px){
+    padding-top: 16px;
+  }
+
+  @media (min-width:1440px){
+    padding-top: 12px;
+  }
+}
