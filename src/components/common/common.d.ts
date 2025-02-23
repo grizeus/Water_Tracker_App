@@ -20,3 +20,10 @@ export interface ContentLoaderProps {
   ariaLabel?: string;
   visible?: boolean;
 }
+
+export interface BaseModalWindowProps {
+  onShow?: boolean;
+  children: ReactNode;
+  title: string;
+  onClose: () => void;
+}
