@@ -10,7 +10,7 @@
   left: 0;
   width: 100%;
   height: 100%;
-  background: rgba(0, 0, 0, 0.8);
+  background: var(--transperent-black);
   z-index: 1;
 }
 
@@ -62,9 +62,9 @@
   left: 50%;
   min-width: 280px;
   max-height: 90vh;
-  background-color: white;
+  background-color: var(--white-original);
   border-radius: 10px;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  box-shadow: var(--shadow-sm, --shadow-sm, --shadow-lg);
   overflow: auto;
   z-index: 1;
   transform: translate(-50%, -50%);
@@ -95,7 +95,7 @@
     font-weight: 500;
     font-size: 26px;
     line-height: 1.2;
-    color: black;
+    color: var(--charcoal-black);
   }
 
 
@@ -109,12 +109,12 @@
   .closeIcon {
     width: 24px;
     height: 24px;
-    stroke: #407BFF;
+    stroke:var(--royal-blue);
     transition: stroke 0.3s ease-in-out;
   }
   
   .closeBtn:hover .closeIcon,
   .closeBtn:focus .closeIcon {
-    stroke: #EF5050;
+    stroke:var(--sunset-orange);
   }
   
