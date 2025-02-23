@@ -1,0 +1,57 @@
+.bg {
+  background-image:
+    image-set(
+      url("../../assets/images/background/homePage/mobile/bottleMob.png") 1x,
+      url("../../assets/images/background/homePage/mobile/bottleMob@2x.png") 2x
+    ),
+    image-set(url("../../assets/images/background/homePage/mobile/bubbles.svg"));
+
+  height: 100dvh;
+  background-size:
+    280px 208px,
+    auto;
+  background-position:
+    left 50% top 104px,
+    center top 64px;
+  background-repeat: no-repeat;
+  background-attachment: local;
+  padding-top: 24px;
+  padding-bottom: 40px;
+
+  @media screen and (min-width: 768px) {
+    background-image:
+      image-set(
+        url("../../assets/images/background/homePage/tablet/bottleTabl.png") 1x,
+        url("../../assets/images/background/homePage/tablet/bottleTabl@2x.png")
+          2x
+      ),
+      image-set(
+        url("../../assets/images/background/homePage/tablet/bubbles.svg")
+      );
+    background-position:
+      left 50% top 38px,
+      center top 36px;
+    background-size:
+      518px 386px,
+      auto;
+    padding-top: 40px;
+    padding-bottom: 44px;
+  }
+
+  @media screen and (min-width: 1440px) {
+    background-image:
+      image-set(
+        url("../../assets/images/background/homePage/desktop/botle.png") 1x,
+        url("../../assets/images/background/homePage/desktop/botle@2x.png") 2x
+      ),
+      image-set(
+        url("../../assets/images/background/WelcomePage/desk/bubbles_desk.svg")
+      );
+    background-position:
+      left calc(50% - 310px) top 44px,
+      left calc(50% - 8px) top 100px;
+    background-size:
+      738px 548px,
+      auto;
+  }
+}

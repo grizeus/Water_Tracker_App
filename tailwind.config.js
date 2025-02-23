@@ -9,9 +9,18 @@ export const theme = {
       "3xl": "2560px",
     },
     colors: {
-      "charcoal": "#2f2f2f",
-      "royal": "#407bff",
-      "solitude": "#ecf2ff",
+      charcoal: "var(--charcoal)",
+      royal: "var(--royal-blue)",
+      solitude: "var(--solitude-blue)",
+      jordy: "var(--jordy-blue)",
+      sunshade: "var(--sunshade-orange)",
+      hawkes: "var(--hawkes-blue)",
+      perano: "var(--perano-blue)",
+    },
+    boxShadow: {
+      sm: "var(--shadow-sm)",
+      md: "var(--shadow-md)",
+      lg: "var(--shadow-lg)",
     },
   },
 };

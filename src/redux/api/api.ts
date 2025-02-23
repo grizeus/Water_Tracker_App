@@ -1,6 +1,10 @@
-import axios, { AxiosError } from "axios";
+import axios, { AxiosError, AxiosRequestConfig, AxiosResponse } from "axios";
 import { setToken } from "../auth/operations";
-import type { SignUpInResponse, WaterError } from "../redux.d.ts";
+import type { SignUpInResponse } from "../redux.d.ts";
+
+interface CustomAxiosRequestConfig extends AxiosRequestConfig {
+  _retry?: boolean;
+}
 
 const instanceWater = axios.create({
   withCredentials: true,
@@ -10,66 +14,38 @@ const instanceWater = axios.create({
   },
 });
 
-let isRefreshing = false;
-type WaterErrorResponse = AxiosError<WaterError>;
-let refreshSubs: ((token: string) => void)[] = [];
-
-function subscribeTokenRefresh(cb: (token: string) => void) {
-  refreshSubs.push(cb);
-}
-
-function onTokenRefreshed(token: string) {
-  refreshSubs.forEach(cb => cb(token));
-  refreshSubs = [];
-}
-
 instanceWater.interceptors.response.use(
   response => response,
-  async (err: unknown) => {
-    if (err instanceof AxiosError) {
-      const typedError = err as WaterErrorResponse;
-      const originalRequest = typedError.config;
-      if (
-        typedError.response?.data.data.message === "Invalid email or password!"
-      ) {
-        return Promise.reject(err);
-      }
-      if (typedError.response?.status === 401) {
-        if (!originalRequest._retry) {
-          originalRequest._retry = true;
-
-          if (isRefreshing) {
-            // Wait for the token to be refreshed
-            return new Promise(resolve => {
-              subscribeTokenRefresh(token => {
-                originalRequest.headers["Authorization"] = `Bearer ${token}`;
-                resolve(instanceWater(originalRequest));
-              });
-            });
-          }
-
-          isRefreshing = true;
-
-          try {
-            const { data: wrap } =
-              await instanceWater.post<SignUpInResponse>("/auth/refresh");
-            const newToken = wrap.data.accessToken;
-            setToken(newToken);
-            originalRequest.headers["Authorization"] =
-              `Bearer ${wrap.data.accessToken}`;
-
-            onTokenRefreshed(newToken);
-            isRefreshing = false;
-            return instanceWater(originalRequest);
-          } catch (refreshErr) {
-            isRefreshing = false;
-            refreshSubs = [];
-            return Promise.reject(refreshErr);
-          }
-        }
-      }
+  async (err: unknown): Promise<AxiosResponse> => {
+    if (!(err instanceof AxiosError)) {
+      return Promise.reject(new Error("Unexpected error occurred"));
+    }
+    const originalRequest = err.config as CustomAxiosRequestConfig;
+    // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
+    const { status, data } = (err.response as AxiosResponse) ?? {};
+    // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
+    if (data.data?.message === "Invalid email or password!") {
       return Promise.reject(err);
     }
+    if (status === 401 && originalRequest.headers) {
+      if (!originalRequest?._retry) {
+        originalRequest._retry = true;
+
+        try {
+          const response =
+            await instanceWater.post<SignUpInResponse>("/auth/refresh");
+          const newToken = response.data.data.accessToken;
+          setToken(newToken);
+          originalRequest.headers.Authorization = `Bearer ${newToken}`;
+
+          return instanceWater(originalRequest);
+        // eslint-disable-next-line @typescript-eslint/no-unused-vars
+        } catch (_) {
+          return Promise.reject(new Error("Token refresh failed"));
+        }
+      }
+    }
+    return Promise.reject(err);
   }
 );
 
