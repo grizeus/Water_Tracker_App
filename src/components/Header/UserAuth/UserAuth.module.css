@@ -1,0 +1,30 @@
+.userAuthBtn{
+  display: flex;
+  align-items: center;
+  font-weight: 400;
+  font-size: 16px;
+  line-height: 1.25em;
+  color: var(--royal-blue);
+  background-color: transparent;
+  padding: 0px;
+
+  @media (min-width:768px ) {
+    font-size: 18px;
+    line-height: 1.33em;
+  }
+}
+
+.userAuthBtn:hover,
+.userAuthBtn:focus {
+ color: var(--sunshade-orange);
+}
+
+
+.signInIcon {
+  margin-left: 8px;
+  width: 28px;
+  height: 28px;
+  stroke: var(--charcoal-black);
+  fill: transparent;
+}
+
