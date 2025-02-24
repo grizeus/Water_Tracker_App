@@ -3,6 +3,7 @@
 @import "tailwindcss/utilities";
 
 :root {
+  --white-original:#ffffff;
   --charcoal-black: #2f2f2f;
   --royal-blue: #407bff;
   --solitude-blue: #ecf2ff;
