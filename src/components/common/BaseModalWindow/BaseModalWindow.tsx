@@ -13,7 +13,7 @@ export const BaseModalWindow = ({
   children,
   title,
   onClose,
-} : BaseModalWindowProps) => {
+}: BaseModalWindowProps) => {
   const modalRoot = document.querySelector("#modal-root") as HTMLElement;
   const modalContainerRef = useRef<HTMLDivElement>(null);
   const backdropRef = useRef<HTMLDivElement>(null);
@@ -21,8 +21,8 @@ export const BaseModalWindow = ({
   useEffect(() => {
     if (!onShow) return;
 
-    const bodyScroll = (disable: boolean) => {
-      document.body.style.overflow = disable ? "hidden" : "auto";
+    const bodyScroll = (isDisable: boolean) => {
+      document.body.style.overflow = isDisable ? "hidden" : "auto";
     };
 
     if (onShow || modalRoot.children.length !== 0) {
@@ -54,9 +54,11 @@ export const BaseModalWindow = ({
           exit: styles.exit,
           exitActive: styles.exitActive,
         }}
-        unmountOnExit
-      >
-        <div className={styles.baseModal} onClick={onClose} ref={backdropRef}></div>
+        unmountOnExit>
+        <div
+          className={styles.baseModal}
+          onClick={onClose}
+          ref={backdropRef}></div>
       </CSSTransition>
 
       <CSSTransition
@@ -69,13 +71,11 @@ export const BaseModalWindow = ({
           exit: styles.modalExit,
           exitActive: styles.modalExitActive,
         }}
-        unmountOnExit
-      >
+        unmountOnExit>
         <div
           className={styles.modalContent}
-          onClick={(e) => e.stopPropagation()}
-          ref={modalContainerRef}
-        >
+          onClick={e => e.stopPropagation()}
+          ref={modalContainerRef}>
           <div className={styles.modalHeader}>
             <h2 className={styles.secondaryTitle}>{title}</h2>
             <button className={styles.closeBtn} onClick={onClose}>

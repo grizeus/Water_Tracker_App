@@ -40,7 +40,9 @@
 .modalEnterActive {
   opacity: 1;
   transform: scale(1);
-  transition: opacity 0.4s ease, transform 0.4s ease;
+  transition:
+    opacity 0.4s ease,
+    transform 0.4s ease;
 }
 
 .modalExit {
@@ -51,10 +53,10 @@
 .modalExitActive {
   opacity: 0;
   transform: scale(0.9);
-  transition: opacity 0.4s ease, transform 0.4s ease;
+  transition:
+    opacity 0.4s ease,
+    transform 0.4s ease;
 }
-
-
 
 .modalContent {
   position: fixed;
@@ -64,7 +66,7 @@
   max-height: 90vh;
   background-color: var(--white-original);
   border-radius: 10px;
-  box-shadow: var(--shadow-sm, --shadow-sm, --shadow-lg);
+  box-shadow: var(--shadow-lg);
   overflow: auto;
   z-index: 1;
   transform: translate(-50%, -50%);
@@ -76,7 +78,7 @@
   }
 }
 
-.modalHeader{
+.modalHeader {
   display: flex;
   justify-content: space-between;
   margin-bottom: 24px;
@@ -92,29 +94,26 @@
 }
 
 .secondaryTitle {
-    font-weight: 500;
-    font-size: 26px;
-    line-height: 1.2;
-    color: var(--charcoal-black);
-  }
+  font-weight: 500;
+  font-size: 26px;
+  line-height: 1.2;
+  color: var(--charcoal-black);
+}
 
+.closeBtn {
+  width: 24px;
+  height: 24px;
+  background-color: transparent;
+}
 
+.closeIcon {
+  width: 24px;
+  height: 24px;
+  stroke: var(--royal-blue);
+  transition: stroke 0.3s ease-in-out;
+}
 
-  .closeBtn {
-    width: 24px;
-    height: 24px;
-    background-color: transparent;
-  }
-  
-  .closeIcon {
-    width: 24px;
-    height: 24px;
-    stroke:var(--royal-blue);
-    transition: stroke 0.3s ease-in-out;
-  }
-  
-  .closeBtn:hover .closeIcon,
-  .closeBtn:focus .closeIcon {
-    stroke:var(--sunset-orange);
-  }
-  
+.closeBtn:hover .closeIcon,
+.closeBtn:focus .closeIcon {
+  stroke: var(--sunset-orange);
+}
