@@ -73,7 +73,7 @@ export const DailyNormaModal = ({ onClose, onShow }) => {
   };
 
   return (
-    <BaseModalWindow onClose={onClose} onShow={true} title="My daily norma">
+    <BaseModalWindow onClose={onClose} onShow={onShow} title="My daily norma">
       <Container>
         <>
           <Formula>

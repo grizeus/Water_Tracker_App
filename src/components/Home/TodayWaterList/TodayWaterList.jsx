@@ -1,8 +1,8 @@
-import { useEffect, useState } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import { selectWaterToday } from "src/redux/water/selectors";
-import { TodayListModal, DeletingEntryModal } from 'components';
-import sprite from 'src/assets/images/sprite/sprite.svg';
+import { TodayListModal, DeletingEntryModal } from "components";
+import sprite from "src/assets/images/sprite/sprite.svg";
 
 import {
   AddWaterBtn,
@@ -17,10 +17,8 @@ import {
   TodayTools,
   TodayVolume,
   TodayWrapper,
-} from './TodayWaterList.styled';
-import {
-  getTodayWater,
-} from "src/redux/water/operations";
+} from "./TodayWaterList.styled";
+import { getTodayWater } from "src/redux/water/operations";
 import { formatCustomTime } from "src/helpers/utils/dateUtils";
 
 const icons = {
@@ -30,26 +28,25 @@ const icons = {
   add: `${sprite}#icon-increment`,
 };
 
-export const TodayWaterList = () => {
+export const TodayWaterList = ({
+  onAddModalOpen,
+  onEditModalOpen,
+  onDeleteModalOpen,
+}) => {
   const dispatch = useDispatch();
   useEffect(() => {
     dispatch(getTodayWater());
   }, []);
-  
+
   const [isModalOpen, setModalOpen] = useState(false);
   const [selectedRecord, setSelectedRecord] = useState(null);
-  const [isDeletingModalOpen, setDeletingModalOpen] = useState(false);
+  // const [isDeletingModalOpen, setDeletingModalOpen] = useState(false);
   const dailyWaterList = useSelector(selectWaterToday);
 
-  const openModalToAdd = () => {
-    setSelectedRecord(null);
-    setModalOpen(true);
-  };
-
-  const openModalToDelete = record => {
-    setSelectedRecord(record);
-    setDeletingModalOpen(true);
-  };
+  // const openModalToDelete = record => {
+  //   setSelectedRecord(record);
+  //   setDeletingModalOpen(true);
+  // };
 
   const openModalToEdit = record => {
     setSelectedRecord(record);
@@ -70,12 +67,12 @@ export const TodayWaterList = () => {
               <TodayTime>{formatCustomTime(record.time)}</TodayTime>
             </TodayInfo>
             <TodayTools>
-              <ButtonChange onClick={() => openModalToEdit(record)}>
+              <ButtonChange onClick={onEditModalOpen}>
                 <svg>
                   <use href={icons.change}></use>
                 </svg>
               </ButtonChange>
-              <ButtonDelete onClick={() => openModalToDelete(record)}>
+              <ButtonDelete onClick={() => onDeleteModalOpen(record?._id)}>
                 <svg>
                   <use href={icons.delete}></use>
                 </svg>
@@ -84,17 +81,17 @@ export const TodayWaterList = () => {
           </TodayItem>
         ))}
       </TodayList>
-      <AddWaterBtn onClick={openModalToAdd}>
+      <AddWaterBtn onClick={onAddModalOpen}>
         <svg>
           <use href={icons.add}></use>
         </svg>
         Add Water
       </AddWaterBtn>
-      <DeletingEntryModal
+      {/* <DeletingEntryModal
         onClose={() => setDeletingModalOpen(false)}
         onShow={isDeletingModalOpen}
         recordId={selectedRecord?._id}
-      />
+      /> */}
       <TodayListModal
         initialAmount={selectedRecord?.amount}
         initialTime={selectedRecord?.time}
@@ -106,4 +103,3 @@ export const TodayWaterList = () => {
     </TodayWrapper>
   );
 };
-

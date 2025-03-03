@@ -22,7 +22,7 @@ export interface ContentLoaderProps {
 }
 
 export interface BaseModalWindowProps {
-  onShow?: boolean;
+  onShow?: () => void;
   children: ReactNode;
   title: string;
   onClose: () => void;

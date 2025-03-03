@@ -1,15 +1,13 @@
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import { createPortal } from "react-dom";
 import { CSSTransition } from "react-transition-group";
 
 import styles from "./BaseModalWindow.module.css";
-
 import sprite from "src/assets/images/sprite/sprite.svg";
-
 import { BaseModalWindowProps } from "../common";
 
 export const BaseModalWindow = ({
-  onShow = true,
+  onShow, // This is a function type, not a boolean
   children,
   title,
   onClose,
@@ -18,14 +16,15 @@ export const BaseModalWindow = ({
   const modalContainerRef = useRef<HTMLDivElement>(null);
   const backdropRef = useRef<HTMLDivElement>(null);
 
-  useEffect(() => {
-    if (!onShow) return;
+  // Create a state variable to use for the CSSTransition 'in' prop
+  const [isVisible, setIsVisible] = useState(false);
 
+  useEffect(() => {
     const bodyScroll = (isDisable: boolean) => {
       document.body.style.overflow = isDisable ? "hidden" : "auto";
     };
 
-    if (onShow || modalRoot.children.length !== 0) {
+    if (isVisible || modalRoot.children.length !== 0) {
       bodyScroll(true);
     }
 
@@ -40,12 +39,19 @@ export const BaseModalWindow = ({
       bodyScroll(false);
       window.removeEventListener("keydown", handleEsc);
     };
-  }, [modalRoot.children.length, onShow, onClose]);
+  }, [modalRoot.children.length, isVisible, onClose]);
+
+  // Call onShow function when component mounts
+  useEffect(() => {
+    if (typeof onShow === "function") {
+      setIsVisible(true);
+    }
+  }, [onShow]);
 
   return createPortal(
     <>
       <CSSTransition
-        in={onShow}
+        in={isVisible} // Use boolean state instead of onShow function
         timeout={400}
         nodeRef={backdropRef}
         classNames={{
@@ -62,7 +68,7 @@ export const BaseModalWindow = ({
       </CSSTransition>
 
       <CSSTransition
-        in={onShow}
+        in={isVisible} // Use boolean state instead of onShow function
         timeout={400}
         nodeRef={modalContainerRef}
         classNames={{

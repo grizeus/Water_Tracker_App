@@ -4,6 +4,7 @@ import styles from "./Home.module.css";
 import {
   DailyNorma,
   DailyNormaModal,
+  DeletingEntryModal,
   MonthStatsTable,
   Section,
   TodayListModal,
@@ -19,6 +20,18 @@ const Home = () => {
   const [isAddModalOpen, setAddModalOpen] = useState(false);
   const openAddModal = () => setAddModalOpen(true);
   const closeAddModal = () => setAddModalOpen(false);
+
+  const [isEditModalOpen, setEditModalOpen] = useState(false);
+  const openEditModal = () => setEditModalOpen(true);
+  const closeEditModal = () => setEditModalOpen(false);
+
+  const [isDeleteModalOpen, setDeleteModalOpen] = useState(false);
+  const [idToDelete, setIdToDelete] = useState<string | null>(null);
+  const openDeleteModal = (id: string | null) => {
+    setIdToDelete(id);
+    setDeleteModalOpen(true);
+  };
+  const closeDeleteModal = () => setDeleteModalOpen(false);
   return (
     <Section secStyles={styles.bg}>
       {isNormaModalOpen && (
@@ -27,13 +40,27 @@ const Home = () => {
       {isAddModalOpen && (
         <TodayListModal onClose={closeAddModal} onShow={openAddModal} />
       )}
+      {isEditModalOpen && (
+        <TodayListModal onClose={closeEditModal} onShow={openEditModal} />
+      )}
+      {isDeleteModalOpen && (
+        <DeletingEntryModal
+          recordId={idToDelete}
+          onClose={closeDeleteModal}
+          onShow={openDeleteModal}
+        />
+      )}
       <div className="relative flex flex-col justify-between gap-10 xl:flex-row">
         <div className=" ">
           <DailyNorma onModalOpen={openNormaModal} />
           <WaterRatioPanel onModalOpen={openAddModal} />
         </div>
         <div className="mb-10 w-[280px] bg-solitude px-2 py-6 shadow-md md:mb-11 md:w-[704px] md:px-6 md:py-8 xl:mt-0 xl:w-[592px]">
-          <TodayWaterList />
+          <TodayWaterList
+            onAddModalOpen={openAddModal}
+            onEditModalOpen={openEditModal}
+            onDeleteModalOpen={openDeleteModal}
+          />
           <MonthStatsTable />
         </div>
       </div>
