@@ -27,4 +27,14 @@ export default [
     files: ["**/*.js"],
     extends: [tseslint.configs.disableTypeChecked],
   },
+  {
+    rules: {
+      "@typescript-eslint/no-misused-promises": [
+        "error",
+        {
+          checksVoidReturn: false,
+        },
+      ],
+    },
+  },
 ];

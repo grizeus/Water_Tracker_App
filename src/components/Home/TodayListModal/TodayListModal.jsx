@@ -31,16 +31,16 @@ import { toast } from "react-toastify";
 import { selectIsLoading } from "src/redux/root/selectors";
 
 export const TodayListModal = ({
-  initialAmount,
+  initialAmount = 0,
   initialTime,
-  isEditing,
+  isEditing = false,
   existingRecordId,
   onClose,
   onShow,
 }) => {
   const dispatch = useDispatch();
   const isLoading = useSelector(selectIsLoading);
-  const [amount, setAmount] = useState(initialAmount !== undefined || 0);
+  const [amount, setAmount] = useState(initialAmount);
   const [time, setTime] = useState(
     isEditing && initialTime
       ? format(new Date(initialTime), "HH:mm")
