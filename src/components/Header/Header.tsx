@@ -1,21 +1,18 @@
-import { FC } from "react"; 
 import { useSelector } from "react-redux";
 
 import { Container, Logo, UserLogo } from "../../components";
-import { UserAuth } from './UserAuth/UserAuth.jsx';
-
-import { selectIsLoggedIn } from '../../redux/auth/selectors';
-import { RootState } from '../../redux/store';
+import UserAuth from "./UserAuth/UserAuth.jsx";
+import { selectIsLoggedIn } from "../../redux/auth/selectors";
 
 import styles from "./Header.module.css";
 
-export const Header: FC = () => {
-  const isLoggedIn = useSelector((state: RootState) => selectIsLoggedIn(state));
+const Header = () => {
+  const isLoggedIn = useSelector(selectIsLoggedIn);
 
   return (
     <header>
       <Container>
-        < div className={styles.containerHeader}>
+        <div className={styles.containerHeader}>
           <Logo />
           {isLoggedIn ? <UserLogo /> : <UserAuth />}
         </div>
@@ -23,3 +20,5 @@ export const Header: FC = () => {
     </header>
   );
 };
+
+export default Header;

@@ -19,7 +19,6 @@ export * from '../components/Home/TodayWaterList/TodayWaterList';
 export * from '../components/Home/WaterRatioPanel/WaterRatioPanel';
 // SignIn
 export * from '../components/SignIn/SignInForm/SignInForm';
-export * from '../components/SignIn/UserAuth/UserAuth';
 export * from '../components/SignIn/UserLogo/UserLogo';
 export * from '../components/SignIn/UserLogoModal/UserLogoModal';
 export * from '../components/SignIn/UserLogoutModal/UserLogoutModal';
