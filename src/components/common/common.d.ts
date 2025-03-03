@@ -1,4 +1,5 @@
 import { ReactNode } from "react";
+import { OpenerType, OpenerTypeWithData } from "../components";
 
 export type ChildrenProps = ReactNode;
 
@@ -22,7 +23,7 @@ export interface ContentLoaderProps {
 }
 
 export interface BaseModalWindowProps {
-  onShow?: () => void;
+  onShow: OpenerType | OpenerTypeWithData;
   children: ReactNode;
   title: string;
   onClose: () => void;

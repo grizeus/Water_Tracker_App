@@ -9,11 +9,12 @@ export const theme = {
       "3xl": "2560px",
     },
     colors: {
-      charcoal: "var(--charcoal)",
+      charcoal: "var(--charcoal-black)",
       royal: "var(--royal-blue)",
       solitude: "var(--solitude-blue)",
       jordy: "var(--jordy-blue)",
       sunshade: "var(--sunshade-orange)",
+      sunset: "var(--sunset-orange)",
       hawkes: "var(--hawkes-blue)",
       perano: "var(--perano-blue)",
     },

@@ -1,7 +1,6 @@
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { selectWaterToday } from "src/redux/water/selectors";
-import { TodayListModal, DeletingEntryModal } from "components";
 import sprite from "src/assets/images/sprite/sprite.svg";
 
 import {
@@ -38,20 +37,7 @@ export const TodayWaterList = ({
     dispatch(getTodayWater());
   }, []);
 
-  const [isModalOpen, setModalOpen] = useState(false);
-  const [selectedRecord, setSelectedRecord] = useState(null);
-  // const [isDeletingModalOpen, setDeletingModalOpen] = useState(false);
   const dailyWaterList = useSelector(selectWaterToday);
-
-  // const openModalToDelete = record => {
-  //   setSelectedRecord(record);
-  //   setDeletingModalOpen(true);
-  // };
-
-  const openModalToEdit = record => {
-    setSelectedRecord(record);
-    setModalOpen(true);
-  };
 
   return (
     <TodayWrapper>
@@ -67,12 +53,12 @@ export const TodayWaterList = ({
               <TodayTime>{formatCustomTime(record.time)}</TodayTime>
             </TodayInfo>
             <TodayTools>
-              <ButtonChange onClick={onEditModalOpen}>
+              <ButtonChange onClick={() => onEditModalOpen(record)}>
                 <svg>
                   <use href={icons.change}></use>
                 </svg>
               </ButtonChange>
-              <ButtonDelete onClick={() => onDeleteModalOpen(record?._id)}>
+              <ButtonDelete onClick={() => onDeleteModalOpen(record)}>
                 <svg>
                   <use href={icons.delete}></use>
                 </svg>
@@ -87,19 +73,6 @@ export const TodayWaterList = ({
         </svg>
         Add Water
       </AddWaterBtn>
-      {/* <DeletingEntryModal
-        onClose={() => setDeletingModalOpen(false)}
-        onShow={isDeletingModalOpen}
-        recordId={selectedRecord?._id}
-      /> */}
-      <TodayListModal
-        initialAmount={selectedRecord?.amount}
-        initialTime={selectedRecord?.time}
-        isEditing={selectedRecord !== null}
-        existingRecordId={selectedRecord?._id}
-        onClose={() => setModalOpen(false)}
-        onShow={isModalOpen}
-      />
     </TodayWrapper>
   );
 };

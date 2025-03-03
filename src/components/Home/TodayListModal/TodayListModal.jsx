@@ -32,9 +32,9 @@ import { selectIsLoading } from "src/redux/root/selectors";
 
 export const TodayListModal = ({
   initialAmount = 0,
-  initialTime = null,
+  initialTime,
   isEditing = false,
-  existingRecordId = null,
+  existingRecordId,
   onClose,
   onShow,
 }) => {

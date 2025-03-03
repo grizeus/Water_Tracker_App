@@ -7,7 +7,7 @@ import sprite from "src/assets/images/sprite/sprite.svg";
 import { BaseModalWindowProps } from "../common";
 
 export const BaseModalWindow = ({
-  onShow, // This is a function type, not a boolean
+  onShow,
   children,
   title,
   onClose,
@@ -16,7 +16,6 @@ export const BaseModalWindow = ({
   const modalContainerRef = useRef<HTMLDivElement>(null);
   const backdropRef = useRef<HTMLDivElement>(null);
 
-  // Create a state variable to use for the CSSTransition 'in' prop
   const [isVisible, setIsVisible] = useState(false);
 
   useEffect(() => {
@@ -41,7 +40,6 @@ export const BaseModalWindow = ({
     };
   }, [modalRoot.children.length, isVisible, onClose]);
 
-  // Call onShow function when component mounts
   useEffect(() => {
     if (typeof onShow === "function") {
       setIsVisible(true);
@@ -51,7 +49,7 @@ export const BaseModalWindow = ({
   return createPortal(
     <>
       <CSSTransition
-        in={isVisible} // Use boolean state instead of onShow function
+        in={isVisible}
         timeout={400}
         nodeRef={backdropRef}
         classNames={{
@@ -68,7 +66,7 @@ export const BaseModalWindow = ({
       </CSSTransition>
 
       <CSSTransition
-        in={isVisible} // Use boolean state instead of onShow function
+        in={isVisible}
         timeout={400}
         nodeRef={modalContainerRef}
         classNames={{

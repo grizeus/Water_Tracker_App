@@ -11,8 +11,10 @@ import {
   TodayWaterList,
   WaterRatioPanel,
 } from "../../components";
+import { EntryData } from "../../redux/redux";
 
 const Home = () => {
+  const [selectedRecord, setSelectedRecord] = useState<EntryData | null>(null);
   const [isNormaModalOpen, setNormaModalOpen] = useState(false);
   const openNormaModal = () => setNormaModalOpen(true);
   const closeNormaModal = () => setNormaModalOpen(false);
@@ -22,13 +24,15 @@ const Home = () => {
   const closeAddModal = () => setAddModalOpen(false);
 
   const [isEditModalOpen, setEditModalOpen] = useState(false);
-  const openEditModal = () => setEditModalOpen(true);
+  const openEditModal = (record: EntryData | null) => {
+    setSelectedRecord(record);
+    setEditModalOpen(true);
+  };
   const closeEditModal = () => setEditModalOpen(false);
 
   const [isDeleteModalOpen, setDeleteModalOpen] = useState(false);
-  const [idToDelete, setIdToDelete] = useState<string | null>(null);
-  const openDeleteModal = (id: string | null) => {
-    setIdToDelete(id);
+  const openDeleteModal = (record: EntryData | null) => {
+    setSelectedRecord(record);
     setDeleteModalOpen(true);
   };
   const closeDeleteModal = () => setDeleteModalOpen(false);
@@ -38,14 +42,27 @@ const Home = () => {
         <DailyNormaModal onClose={closeNormaModal} onShow={openNormaModal} />
       )}
       {isAddModalOpen && (
-        <TodayListModal onClose={closeAddModal} onShow={openAddModal} />
+        <TodayListModal
+          initialTime={null}
+          initialAmount={50}
+          existingRecordId={null}
+          onClose={closeAddModal}
+          onShow={openAddModal}
+        />
       )}
       {isEditModalOpen && (
-        <TodayListModal onClose={closeEditModal} onShow={openEditModal} />
+        <TodayListModal
+          initialAmount={selectedRecord?.amount}
+          initialTime={selectedRecord?.time}
+          isEditing={true}
+          existingRecordId={selectedRecord?._id}
+          onClose={closeEditModal}
+          onShow={openEditModal}
+        />
       )}
-      {isDeleteModalOpen && (
+      {isDeleteModalOpen && selectedRecord && (
         <DeletingEntryModal
-          recordId={idToDelete}
+          recordId={selectedRecord._id}
           onClose={closeDeleteModal}
           onShow={openDeleteModal}
         />
