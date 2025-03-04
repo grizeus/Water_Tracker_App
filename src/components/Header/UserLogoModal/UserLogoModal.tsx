@@ -1,6 +1,8 @@
+import { useEffect, useRef, useState, RefObject } from "react";
+
 import { UserLogoutModal } from "../UserLogoutModal/UserLogoutModal";
 import { SettingModal } from "../SettingModal/SettingModal";
-import { useEffect, useRef, useState, RefObject } from "react";
+
 import sprite from "src/assets/images/sprite/sprite.svg";
 
 const UserLogoModal = ({
@@ -54,10 +56,10 @@ const UserLogoModal = ({
         <ul className="flex flex-col gap-4">
           <li>
             <button
-              className="group flex items-center gap-2 leading-5 text-royal transition-colors duration-300 ease-in-out hover:text-sunshade"
+              className="group flex items-center gap-2 leading-5 text-royal transition-colors duration-300 ease-in-out hover:text-sunshade focus:text-sunshade focus:outline-none"
               type="button"
               onClick={handleSetingsOpen}>
-              <svg className="size-4 fill-transparent stroke-royal transition-colors duration-300 ease-in-out group-hover:stroke-sunshade">
+              <svg className="size-4 fill-transparent stroke-royal transition-colors duration-300 ease-in-out group-hover:stroke-sunshade group-focus:stroke-sunshade">
                 <use href={`${sprite}#icon-settings`}></use>
               </svg>
               Setting
@@ -65,10 +67,10 @@ const UserLogoModal = ({
           </li>
           <li>
             <button
-              className="group flex items-center gap-2 leading-5 text-royal transition-colors duration-300 ease-in-out hover:text-sunshade"
+              className="group flex items-center gap-2 leading-5 text-royal transition-colors duration-300 ease-in-out hover:text-sunshade focus:text-sunshade focus:outline-none"
               type="button"
               onClick={handleLogoutOpen}>
-              <svg className="size-4 fill-transparent stroke-royal transition-colors duration-300 ease-in-out group-hover:stroke-sunshade">
+              <svg className="size-4 fill-transparent stroke-royal transition-colors duration-300 ease-in-out group-hover:stroke-sunshade group-focus:stroke-sunshade">
                 <use href={`${sprite}#icon-exit`}></use>
               </svg>
               Log out
