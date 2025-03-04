@@ -10,7 +10,6 @@ import {
   updateAvatarThunk,
 } from "src/redux/auth/operations";
 import { selectUser } from "src/redux/auth/selectors";
-import defaultAvatar from "../../../assets/images/default_avatar.png";
 
 import {
   Avatar,
@@ -48,6 +47,7 @@ import {
 } from "./SettingModal.styled";
 import { selectIsLoading } from "src/redux/root/selectors";
 
+// NOTE: to figure out in future
 const settingFormValidationSchema = Yup.object().shape({
   gender: Yup.string(),
   name: Yup.string()
@@ -61,19 +61,18 @@ const settingFormValidationSchema = Yup.object().shape({
     .test(
       "isNewPasswordDifferent",
       "New password should be different from the old one",
-      // (value, { parent }) => !value || value !== parent.outdatedPassword,
-      (value, { parent }) => !value || value !== parent.oldPassword,
+      (value, { parent }) => !value || value !== parent.oldPassword
     ),
   oldPassword: Yup.string()
     .min(8, "Old password must be at least 8 characters long")
     .max(64, "Old password must be less then 64 characters long")
     .when("newPassword", (newPassword, field) =>
-      newPassword[0] ? field.required("Please enter old password") : field,
+      newPassword[0] ? field.required("Please enter old password") : field
     ),
   repeatedPassword: Yup.string().test(
     "isRepeatedPasswordValueMatched",
     "The entered password should match the new one",
-    (value, { parent }) => !value || value === parent.newPassword,
+    (value, { parent }) => !value || value === parent.newPassword
   ),
 });
 
@@ -88,7 +87,6 @@ export const SettingModal = ({ onClose, onShow }) => {
     gender: gender || "",
     name: name || "",
     email: email || "",
-    // outdatedPassword: '',
     oldPassword: "",
     newPassword: "",
     repeatedPassword: "",
@@ -98,7 +96,6 @@ export const SettingModal = ({ onClose, onShow }) => {
     if (values.outdatedPassword && !values.newPassword) {
       return;
     }
-    // const { gender, name, email, outdatedPassword, newPassword } = values;
     const { gender, name, email, oldPassword, newPassword } = values;
 
     const formData = {
@@ -121,7 +118,7 @@ export const SettingModal = ({ onClose, onShow }) => {
     onClose();
     actions.resetForm();
   };
-  // ==========================
+
   const getUserInfo = () => {
     const firstLetter = name.charAt(0).toUpperCase();
     if (name && avatarURL) {
@@ -139,8 +136,6 @@ export const SettingModal = ({ onClose, onShow }) => {
     }
   };
   const { avatar } = getUserInfo();
-
-  // ==========================
 
   const handlePasswordVisibility = () => {
     setIsPasswordShown(previsPasswordShown => !previsPasswordShown);
@@ -172,21 +167,6 @@ export const SettingModal = ({ onClose, onShow }) => {
                   <FormField>
                     <FormText>Your photo</FormText>
                     <DownloadWrap>
-                      {/* {isAvatarLoading ? (
-                        <Loader
-                          width={'80px'}
-                          height={'80px'}
-                          strokeColor={'#407bff'}
-                        />
-                      ) : (
-                        <Avatar
-                          src={avatarURL ? avatarURL : defaultAvatar}
-                          alt="user avatar"
-                          width="80px"
-                          height="80px"
-                        />
-                      )} */}
-
                       {avatarURL ? (
                         <UserAvatar src={avatar} alt="user-avatar" />
                       ) : (
