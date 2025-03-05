@@ -1,14 +1,17 @@
-import { BaseModalWindow } from "../../common/BaseModalWindow/BaseModalWindow";
-import { Loader } from "../../common/Loader/Loader";
 import { Form, Formik, FormikHelpers } from "formik";
-import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import * as Yup from "yup";
+import { ChangeEvent, useState } from "react";
+import { BaseModalWindow } from "../../common/BaseModalWindow/BaseModalWindow";
+import { Loader } from "../../common/Loader/Loader";
 import {
   updateUserInfoThunk,
   updateAvatarThunk,
 } from "../../../redux/auth/operations";
-import { selectUser } from "../../../redux/auth/selectors";
+import {
+  selectIsAvatarLoading,
+  selectUser,
+} from "../../../redux/auth/selectors";
 
 import {
   DesktopFormWrap,
@@ -24,14 +27,20 @@ import CredentialsInput from "./CredentialsInput";
 import PasswordSection from "./PasswordSection";
 import { OpenerType, UserFormData } from "../../components";
 import { AppDispatch } from "../../../redux/store";
+import { Gender } from "../../../redux/redux";
 
-// NOTE: to figure out in future
 const settingFormValidationSchema = Yup.object().shape({
   gender: Yup.string(),
   name: Yup.string()
     .min(3, "Username must be more then 3 characters long")
     .max(32, "Username must be less then 32 characters long"),
   email: Yup.string().email("Invalid email"),
+  oldPassword: Yup.string()
+    .min(8, "Old password must be at least 8 characters long")
+    .max(64, "Old password must be less then 64 characters long")
+    .when("newPassword", (newPassword, field) =>
+      newPassword[0] ? field.required("Please enter old password") : field
+    ),
   newPassword: Yup.string()
     .min(8, "New password must be at least 8 characters long")
     .max(64, "New password must be less then 64 characters long")
@@ -39,18 +48,16 @@ const settingFormValidationSchema = Yup.object().shape({
     .test(
       "isNewPasswordDifferent",
       "New password should be different from the old one",
-      (value, { parent }) => !value || value !== parent.oldPassword
-    ),
-  oldPassword: Yup.string()
-    .min(8, "Old password must be at least 8 characters long")
-    .max(64, "Old password must be less then 64 characters long")
-    .when("newPassword", (newPassword, field) =>
-      newPassword[0] ? field.required("Please enter old password") : field
+      function (value) {
+        return !value || value !== (this.parent as UserFormData).oldPassword;
+      }
     ),
   repeatedPassword: Yup.string().test(
     "isRepeatedPasswordValueMatched",
     "The entered password should match the new one",
-    (value, { parent }) => !value || value === parent.newPassword
+    function (value) {
+      return !value || value === (this.parent as UserFormData).newPassword;
+    }
   ),
 });
 
@@ -65,12 +72,12 @@ export const SettingModal = ({
   const { avatarURL, email, name, gender } = useSelector(selectUser);
   const isLoading = useSelector(selectIsLoading);
   const [isPasswordShown, setIsPasswordShown] = useState(false);
-  const [isAvatarLoading, setIsAvatarLoading] = useState(false);
+  const isAvatarLoading = useSelector(selectIsAvatarLoading);
 
-  const initialValues = {
+  const initialValues: UserFormData = {
     gender: gender || "woman",
     name: name || "",
-    email: email,
+    email: email || "example@mail.co.uk",
     oldPassword: "",
     newPassword: "",
     repeatedPassword: "",
@@ -92,7 +99,11 @@ export const SettingModal = ({
       ][]
     ).forEach(([key, value]) => {
       if (value) {
-        dataSend[key] = value;
+        if (key === "gender") {
+          dataSend[key] = value as Gender;
+        } else {
+          dataSend[key] = value;
+        }
       }
     });
     await dispatch(updateUserInfoThunk(dataSend));
@@ -105,16 +116,14 @@ export const SettingModal = ({
     setIsPasswordShown(previsPasswordShown => !previsPasswordShown);
   };
 
-  const handleAvatarUpload = e => {
+  const handleAvatarUpload = async (e: ChangeEvent<HTMLInputElement>) => {
     const formData = new FormData();
-    formData.append("avatarURL", e.target.files[0]);
 
-    dispatch(updateAvatarThunk(formData)).then(data => {
-      if (!data.error) {
-        setIsAvatarLoading(false);
-      }
-    });
-    setIsAvatarLoading(true);
+    if (e.target.files && e.target.files[0]) {
+      formData.append("avatarURL", e.target.files[0]);
+
+      await dispatch(updateAvatarThunk(formData));
+    }
   };
 
   return (

@@ -18,6 +18,7 @@ export const initialState: AuthState = {
   token: null,
   isLoggedIn: false,
   isRefreshing: false,
+  isAvatarLoading: false,
 };
 
 export const handleGetUser = (
@@ -43,11 +44,20 @@ export const handleGetUserReject = (state: AuthState) => {
   state.isLoggedIn = false;
 };
 
-export const handlerUpdateAvatar = (
+export const handleUpdateAvatarPending = (state: AuthState) => {
+  state.isAvatarLoading = true;
+};
+
+export const handleUpdateAvatar = (
   state: AuthState,
   action: PayloadAction<UpdAvatarResponse>
 ) => {
   state.user.avatarURL = action.payload.avatarURL;
+  state.isAvatarLoading = false;
+};
+
+export const handleUpdateAvatarRejected = (state: AuthState) => {
+  state.isAvatarLoading = false;
 };
 
 export const handlerEditUserInfo = (

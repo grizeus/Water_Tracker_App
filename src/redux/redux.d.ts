@@ -39,6 +39,7 @@ export interface AuthState {
   token: string | null;
   isLoggedIn: boolean;
   isRefreshing: boolean;
+  isAvatarLoading: boolean;
 }
 
 export interface WaterDataState {
