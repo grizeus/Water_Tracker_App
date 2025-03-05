@@ -1,37 +1,52 @@
-import {
-  FormField,
-  Input,
-  StyledErrorMessage,
-  StyledLabel,
-} from "./SettingModal.styled";
+import { ErrorMessage, Field, FormikErrors, FormikTouched } from "formik";
+import { UserFormData } from "../../components";
 
 // NOTE: left email disabled for now
-const CredentialsInput = ({ values, errors, touched }) => {
+const CredentialsInput = ({
+  values,
+  errors,
+  touched,
+}: {
+  values: UserFormData;
+  errors: FormikErrors<UserFormData>;
+  touched: FormikTouched<UserFormData>;
+}) => {
   return (
     <>
-      <FormField>
-        <StyledLabel htmlFor="username">Your name</StyledLabel>
-        <Input
+      <div className="mb-6 flex flex-col">
+        <label
+          className="mb-2 text-lg font-medium leading-5"
+          htmlFor="username">
+          Your name
+        </label>
+        <Field
           type="text"
           id="username"
           name="name"
-          className={errors.name && touched.name ? "error-input" : null}
+          className={`${errors.name && touched.name ? "border-sunset text-sunset" : ""} h-11 w-full rounded-md border border-hawkes bg-white px-[10px] py-3 text-base text-perano placeholder:text-perano focus:text-royal focus:outline-none`}
           placeholder={values.name}
         />
-        <StyledErrorMessage component="p" name="name" />
-      </FormField>
-      <FormField>
-        <StyledLabel htmlFor="email">E-mail</StyledLabel>
-        <Input
+        <ErrorMessage
+          component="span"
+          name="name"
+          className="mt-1 text-sm leading-[18px] text-sunset"
+        />
+      </div>
+      <div className="mb-6">
+        <label
+          className="mb-2 inline-block text-lg font-medium leading-5"
+          htmlFor="email">
+          E-mail
+        </label>
+        <Field
           type="email"
           id="email"
           name="email"
           disabled
-          className={errors.email && touched.email ? "error-input" : null}
+          className="h-11 w-full rounded-md border border-hawkes bg-white px-[10px] py-3 text-base text-perano placeholder:text-perano focus:text-royal focus:outline-none"
           placeholder={values.email}
         />
-        <StyledErrorMessage component="p" name="email" />
-      </FormField>
+      </div>
     </>
   );
 };
