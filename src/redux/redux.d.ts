@@ -109,4 +109,3 @@ export interface DailyData {
   dailyGoal: number;
   progress: string;
 }
-

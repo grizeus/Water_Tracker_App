@@ -1,14 +1,14 @@
-import { BaseModalWindow } from "src/components/index";
-import { Loader } from "src/components/index";
-import { Form, Formik } from "formik";
+import { BaseModalWindow } from "../../common/BaseModalWindow/BaseModalWindow";
+import { Loader } from "../../common/Loader/Loader";
+import { Form, Formik, FormikHelpers } from "formik";
 import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import * as Yup from "yup";
 import {
   updateUserInfoThunk,
   updateAvatarThunk,
-} from "src/redux/auth/operations";
-import { selectUser } from "src/redux/auth/selectors";
+} from "../../../redux/auth/operations";
+import { selectUser } from "../../../redux/auth/selectors";
 
 import {
   DesktopFormWrap,
@@ -17,11 +17,13 @@ import {
   SaveBtn,
   SaveBtnWrap,
 } from "./SettingModal.styled";
-import { selectIsLoading } from "src/redux/root/selectors";
+import { selectIsLoading } from "../../../redux/root/selectors";
 import UserPic from "./UserPic";
 import GenderSelect from "./GenderSelect";
 import CredentialsInput from "./CredentialsInput";
 import PasswordSection from "./PasswordSection";
+import { OpenerType, UserFormData } from "../../components";
+import { AppDispatch } from "../../../redux/store";
 
 // NOTE: to figure out in future
 const settingFormValidationSchema = Yup.object().shape({
@@ -52,44 +54,48 @@ const settingFormValidationSchema = Yup.object().shape({
   ),
 });
 
-export const SettingModal = ({ onClose, onShow }) => {
-  const dispatch = useDispatch();
+export const SettingModal = ({
+  onClose,
+  onShow,
+}: {
+  onClose: OpenerType;
+  onShow: OpenerType;
+}) => {
+  const dispatch = useDispatch<AppDispatch>();
   const { avatarURL, email, name, gender } = useSelector(selectUser);
   const isLoading = useSelector(selectIsLoading);
   const [isPasswordShown, setIsPasswordShown] = useState(false);
   const [isAvatarLoading, setIsAvatarLoading] = useState(false);
 
   const initialValues = {
-    gender: gender || "",
+    gender: gender || "woman",
     name: name || "",
-    email: email || "",
+    email: email,
     oldPassword: "",
     newPassword: "",
     repeatedPassword: "",
   };
 
-  const handleSubmit = (values, actions) => {
-    if (values.outdatedPassword && !values.newPassword) {
+  const handleSubmit = async (
+    values: UserFormData,
+    actions: FormikHelpers<UserFormData>
+  ) => {
+    if (values.oldPassword && !values.newPassword) {
       return;
     }
-    const { gender, name, email, oldPassword, newPassword } = values;
+    const dataSend: Partial<UserFormData> = {};
 
-    const formData = {
-      gender,
-      name,
-      email,
-      oldPassword,
-      newPassword,
-    };
-
-    const dataSend = {};
-
-    Object.entries(formData).forEach(([key, value]) => {
+    (
+      Object.entries(values) as [
+        keyof UserFormData,
+        UserFormData[keyof UserFormData],
+      ][]
+    ).forEach(([key, value]) => {
       if (value) {
         dataSend[key] = value;
       }
     });
-    dispatch(updateUserInfoThunk(dataSend));
+    await dispatch(updateUserInfoThunk(dataSend));
 
     onClose();
     actions.resetForm();
@@ -100,7 +106,7 @@ export const SettingModal = ({ onClose, onShow }) => {
   };
 
   const handleAvatarUpload = e => {
-    let formData = new FormData();
+    const formData = new FormData();
     formData.append("avatarURL", e.target.files[0]);
 
     dispatch(updateAvatarThunk(formData)).then(data => {
