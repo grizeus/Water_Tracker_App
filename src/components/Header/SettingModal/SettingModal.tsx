@@ -144,7 +144,7 @@ export const SettingModal = ({
                 />
                 <DesktopFormWrap>
                   <DesktopGenderWrap>
-                    <GenderSelect values={values} />
+                    <GenderSelect />
                     <CredentialsInput
                       values={values}
                       errors={errors}
