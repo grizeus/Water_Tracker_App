@@ -1,13 +1,4 @@
 import { Field } from "formik";
-import {
-  DownloadBtn,
-  DownloadBtnText,
-  DownloadWrap,
-  FormText,
-  IconDownload,
-  UserAvatar,
-  UserDefaultAvatar,
-} from "./SettingModal.styled";
 
 import sprite from "src/assets/images/sprite/sprite.svg";
 import { ChangeEvent, useMemo } from "react";
@@ -35,14 +26,20 @@ const UserPic = ({
 
   return (
     <div className="mb-6">
-      <FormText>Your photo</FormText>
-      <DownloadWrap>
+      <span className="text-lg font-medium leading-5">Your photo</span>
+      <div className="mt-2 flex items-center gap-2">
         {avatarURL ? (
-          <UserAvatar src={avatar} alt="user-avatar" />
+          <img
+            className="size-20 rounded-full"
+            src={avatar}
+            alt="user-avatar"
+          />
         ) : (
-          <UserDefaultAvatar>{avatar}</UserDefaultAvatar>
+          <span className="flex size-20 items-center justify-center rounded-full border border-perano bg-hawkes text-4xl leading-tight text-royal">
+            {avatar}
+          </span>
         )}
-        <DownloadBtn>
+        <div className="flex cursor-pointer gap-2">
           <Field
             type="file"
             name="avatar"
@@ -50,12 +47,14 @@ const UserPic = ({
             accept="image/png, image/jpeg"
             onChange={onUpload}
           />
-          <IconDownload>
+          <svg className="size-4 fill-transparent stroke-royal">
             <use href={`${sprite}#icon-arrow-up`}></use>
-          </IconDownload>
-          <DownloadBtnText>Upload a photo</DownloadBtnText>
-        </DownloadBtn>
-      </DownloadWrap>
+          </svg>
+          <span className="text-sm font-medium leading-[18px] text-royal">
+            Upload a photo
+          </span>
+        </div>
+      </div>
     </div>
   );
 };
