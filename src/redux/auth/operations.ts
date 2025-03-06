@@ -163,7 +163,7 @@ export const getUserThunk = createAsyncThunk(
 
 export const updateAvatarThunk = createAsyncThunk(
   "auth/avatar",
-  async (newPhotoFile: string, { rejectWithValue }) => {
+  async (newPhotoFile: FormData, { rejectWithValue }) => {
     try {
       const { data } = await instanceWater.patch<UpdAvatarResponse>(
         "/user/avatar",

@@ -13,7 +13,9 @@ import {
   handleLogout,
   handleGetUserReject,
   handlerEditUserInfo,
-  handlerUpdateAvatar,
+  handleUpdateAvatarPending,
+  handleUpdateAvatar,
+  handleUpdateAvatarRejected,
   handleGetUser,
   handleUserRefresh,
   handleRefreshPending,
@@ -30,7 +32,9 @@ const slice = createSlice({
       .addCase(signUpThunk.fulfilled, handleLogin)
       .addCase(signInThunk.fulfilled, handleLogin)
       .addCase(logOutThunk.fulfilled, handleLogout)
-      .addCase(updateAvatarThunk.fulfilled, handlerUpdateAvatar)
+      .addCase(updateAvatarThunk.pending, handleUpdateAvatarPending)
+      .addCase(updateAvatarThunk.fulfilled, handleUpdateAvatar)
+      .addCase(updateAvatarThunk.rejected, handleUpdateAvatarRejected)
       .addCase(updateUserInfoThunk.fulfilled, handlerEditUserInfo)
       .addCase(getUserThunk.fulfilled, handleGetUser)
       .addCase(getUserThunk.rejected, handleGetUserReject)

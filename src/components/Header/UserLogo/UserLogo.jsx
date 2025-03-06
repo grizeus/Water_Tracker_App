@@ -2,10 +2,8 @@ import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { AnimatePresence, motion } from "framer-motion";
 
-import { UserLogoModal } from "components";
 import { selectUser } from "src/redux/auth/selectors";
 import { getUserThunk } from "src/redux/auth/operations";
-import { UserLogoModalWrap } from "../UserLogoModal/UserLogoModal.styled";
 import {
   UserAvatar,
   UserDefaultAvatar,
@@ -15,6 +13,7 @@ import {
   UserModalIcon,
 } from "./UserLogo.styled";
 import sprite from "src/assets/images/sprite/sprite.svg";
+import UserLogoModal from "../UserLogoModal/UserLogoModal";
 
 const ANIMATION_CONFIG = {
   initial: { opacity: 0, transform: "scale(0)" },
@@ -64,7 +63,7 @@ export const UserLogo = () => {
           <use href={`${sprite}#icon-arrow-down`}></use>
         </UserModalIcon>
       </UserLogoBtn>
-      <UserLogoModalWrap>
+      <div className="relative z-[1]">
         <AnimatePresence>
           {modalIsOpen && (
             <motion.div {...ANIMATION_CONFIG}>
@@ -75,7 +74,7 @@ export const UserLogo = () => {
             </motion.div>
           )}
         </AnimatePresence>
-      </UserLogoModalWrap>
+      </div>
     </UserLogoContainer>
   );
 };
