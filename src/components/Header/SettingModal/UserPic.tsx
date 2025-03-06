@@ -3,7 +3,6 @@ import {
   DownloadBtn,
   DownloadBtnText,
   DownloadWrap,
-  FormField,
   FormText,
   IconDownload,
   UserAvatar,
@@ -11,9 +10,19 @@ import {
 } from "./SettingModal.styled";
 
 import sprite from "src/assets/images/sprite/sprite.svg";
-import { useMemo } from "react";
+import { ChangeEvent, useMemo } from "react";
 
-const UserPic = ({ avatarURL, name, email, onUpload }) => {
+const UserPic = ({
+  avatarURL,
+  name,
+  email,
+  onUpload,
+}: {
+  avatarURL: string | null;
+  name: string | null;
+  email: string | null;
+  onUpload: (e: ChangeEvent<HTMLInputElement>) => Promise<void>;
+}) => {
   const getUserInfo = useMemo(() => {
     const placeholder =
       name?.charAt(0).toUpperCase() || email?.charAt(0).toUpperCase();
@@ -25,7 +34,7 @@ const UserPic = ({ avatarURL, name, email, onUpload }) => {
   const { avatar } = getUserInfo;
 
   return (
-    <FormField>
+    <div className="mb-6">
       <FormText>Your photo</FormText>
       <DownloadWrap>
         {avatarURL ? (
@@ -47,7 +56,7 @@ const UserPic = ({ avatarURL, name, email, onUpload }) => {
           <DownloadBtnText>Upload a photo</DownloadBtnText>
         </DownloadBtn>
       </DownloadWrap>
-    </FormField>
+    </div>
   );
 };
 
