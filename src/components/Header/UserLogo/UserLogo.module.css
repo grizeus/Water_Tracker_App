@@ -3,17 +3,13 @@
   display: flex;
   justify-content: space-around;
   align-items: center;
-  gap: 8px;
 }
 
 .userLogoTitle {
-  font-size: 18px;
-  line-height: 1.33em;
-
-  @media (min-width: 768px) {
-    font-size: 16px;
-    line-height: 1.25em;
-  }
+  font-weight: 400;
+  font-size: 16px;
+  line-height: 1.25em;
+  margin-right: 8px;
 }
 
 .userLogoBtn {
@@ -38,26 +34,37 @@
   width: 28px;
   height: 28px;
   border-radius: 50%;
-
+  background-color: var(--solitude-blue);
   display: flex;
   align-items: center;
   justify-content: center;
-
-  @media (min-width: 768px) {
-    font-size: 22px;
-    line-height: 1.25em;
-  }
+  font-weight: 400;
+  font-size: 20px;
+  line-height: 1.25;
+  color: var(--royal-blue);
 }
 
 .userModalIcon {
   width: 16px;
   height: 16px;
-  fill: red;
-  stroke: blue;
+  stroke: var(--royal-blue);
+  fill: var(--royal-blue);
   transition: transform 0.5s ease;
 }
 
-.userModalIcon:hover,
-.userModalIcon:focus {
-  stroke: green;
+@media (min-width: 768px) {
+  .userLogoTitle {
+    font-size: 24px;
+    line-height: 1.33;
+  }
+
+  .userDefaultAvatar {
+    font-size: 24px;
+    line-height: 1.33em;
+  }
+
+  .userDefaultAvatar {
+    width: 32px;
+    height: 32px;
+  }
 }

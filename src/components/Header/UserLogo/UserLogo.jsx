@@ -58,7 +58,7 @@ export const UserLogo = () => {
         {avatarURL ? (
           <img className={styles.userAvatar} src={avatar} alt="user-avatar" />
         ) : (
-          <span className={styles.userDefaultAvatar}>{defaultAvatar}</span>
+          <p className={styles.userDefaultAvatar}>{defaultAvatar}</p>
         )}
 
         <svg
