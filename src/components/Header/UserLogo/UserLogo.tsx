@@ -1,16 +1,17 @@
 import styles from "./UserLogo.module.css";
-
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { AnimatePresence, motion } from "framer-motion";
 
-import { selectUser } from "src/redux/auth/selectors";
-import { getUserThunk } from "src/redux/auth/operations";
+import { selectUser } from "../../../redux/auth/selectors";
+import { getUserThunk } from "../../../redux/auth/operations";
 
 import sprite from "src/assets/images/sprite/sprite.svg";
 import UserLogoModal from "../UserLogoModal/UserLogoModal";
 
-import { determineFirstLetter } from "../../../helpers/determineFirstLetter";
+import { determineFirstLetter } from "../../../helpers/helpers";
+import { AppDispatch, RootState } from "../../../redux/store";
+import { User } from "../../../redux/redux";
 
 const ANIMATION_CONFIG = {
   initial: { opacity: 0, transform: "scale(0)" },
@@ -18,15 +19,14 @@ const ANIMATION_CONFIG = {
   exit: { opacity: 0, transform: "scale(0)" },
   transition: { ease: "backOut", duration: 0.7 },
 };
+export const UserLogo: React.FC = () => {
+  const dispatch = useDispatch<AppDispatch>();
+  const user: User = useSelector((state: RootState) => selectUser(state));
 
-export const UserLogo = () => {
-  const dispatch = useDispatch();
-  const { name, email, avatarURL } = useSelector(selectUser);
+  const defaultAvatar: string = determineFirstLetter(user.name ?? "");
 
-  const defaultAvatar = determineFirstLetter(name);
-
-  const [modalIsOpen, setModalIsOpen] = useState(false);
-  const btnRef = useRef(null);
+  const [modalIsOpen, setModalIsOpen] = useState<boolean>(false);
+  const btnRef = useRef<HTMLButtonElement | null>(null);
 
   useEffect(() => {
     dispatch(getUserThunk());
@@ -36,27 +36,20 @@ export const UserLogo = () => {
     setModalIsOpen(prev => !prev);
   }, []);
 
-  const getUserInfo = useMemo(() => {
-    const placeholder =
-      name?.charAt(0).toUpperCase() || email?.charAt(0).toUpperCase();
-
-    return {
-      userName: name || placeholder,
-      avatar: avatarURL || placeholder,
-    };
-  }, [name, email, avatarURL]);
-  const { userName, avatar } = getUserInfo;
-
   return (
     <div className={styles.userLogoContainer}>
-      <p className={styles.userLogoTitle}>{userName}</p>
+      <p className={styles.userLogoTitle}>{user.name}</p>
       <button
         type="button"
         className={styles.userLogoBtn}
         onClick={toggleModal}
         ref={btnRef}>
-        {avatarURL ? (
-          <img className={styles.userAvatar} src={avatar} alt="user-avatar" />
+        {user.avatarURL ? (
+          <img
+            className={styles.userAvatar}
+            src={user.avatarURL}
+            alt="user-avatar"
+          />
         ) : (
           <p className={styles.userDefaultAvatar}>{defaultAvatar}</p>
         )}
@@ -64,7 +57,7 @@ export const UserLogo = () => {
         <svg
           className={styles.userModalIcon}
           style={{ transform: `rotate(${modalIsOpen ? 180 : 0}deg)` }}>
-          <use href={`${sprite}#icon-arrow-down`}></use>
+          <use href={`${sprite}#icon-arrow-down`} />
         </svg>
       </button>
       <div className="relative z-[1]">

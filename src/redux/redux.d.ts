@@ -72,8 +72,8 @@ interface AuthData {
 
 interface UserData {
   name: string;
-  email: string;
-  dailyGoal: number;
+  daily: string;
+  emailGoal: number;
   gender: Gender;
   avatarURL?: string;
 }
