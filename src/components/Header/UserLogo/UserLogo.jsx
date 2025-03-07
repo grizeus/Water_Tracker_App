@@ -1,19 +1,16 @@
+import styles from "./UserLogo.module.css";
+
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { AnimatePresence, motion } from "framer-motion";
 
 import { selectUser } from "src/redux/auth/selectors";
 import { getUserThunk } from "src/redux/auth/operations";
-import {
-  UserAvatar,
-  UserDefaultAvatar,
-  UserLogoBtn,
-  UserLogoContainer,
-  UserLogoTitle,
-  UserModalIcon,
-} from "./UserLogo.styled";
+
 import sprite from "src/assets/images/sprite/sprite.svg";
 import UserLogoModal from "../UserLogoModal/UserLogoModal";
+
+import { determineFirstLetter } from "../../../helpers/determineFirstLetter";
 
 const ANIMATION_CONFIG = {
   initial: { opacity: 0, transform: "scale(0)" },
@@ -25,6 +22,8 @@ const ANIMATION_CONFIG = {
 export const UserLogo = () => {
   const dispatch = useDispatch();
   const { name, email, avatarURL } = useSelector(selectUser);
+
+  const defaultAvatar = determineFirstLetter(name);
 
   const [modalIsOpen, setModalIsOpen] = useState(false);
   const btnRef = useRef(null);
@@ -49,20 +48,25 @@ export const UserLogo = () => {
   const { userName, avatar } = getUserInfo;
 
   return (
-    <UserLogoContainer>
-      <UserLogoTitle>{userName}</UserLogoTitle>
-      <UserLogoBtn onClick={toggleModal} ref={btnRef}>
+    <div className={styles.userLogoContainer}>
+      <p className={styles.userLogoTitle}>{userName}</p>
+      <button
+        type="button"
+        className={styles.userLogoBtn}
+        onClick={toggleModal}
+        ref={btnRef}>
         {avatarURL ? (
-          <UserAvatar src={avatar} alt="user-avatar" />
+          <img className={styles.userAvatar} src={avatar} alt="user-avatar" />
         ) : (
-          <UserDefaultAvatar>{avatar}</UserDefaultAvatar>
+          <span className={styles.userDefaultAvatar}>{defaultAvatar}</span>
         )}
 
-        <UserModalIcon
+        <svg
+          className={styles.userModalIcon}
           style={{ transform: `rotate(${modalIsOpen ? 180 : 0}deg)` }}>
           <use href={`${sprite}#icon-arrow-down`}></use>
-        </UserModalIcon>
-      </UserLogoBtn>
+        </svg>
+      </button>
       <div className="relative z-[1]">
         <AnimatePresence>
           {modalIsOpen && (
@@ -75,6 +79,6 @@ export const UserLogo = () => {
           )}
         </AnimatePresence>
       </div>
-    </UserLogoContainer>
+    </div>
   );
 };
