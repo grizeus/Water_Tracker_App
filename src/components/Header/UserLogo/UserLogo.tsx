@@ -1,5 +1,5 @@
 import styles from "./UserLogo.module.css";
-import { useCallback, useEffect, useMemo, useRef, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { AnimatePresence, motion } from "framer-motion";
 
@@ -9,8 +9,7 @@ import { getUserThunk } from "../../../redux/auth/operations";
 import sprite from "src/assets/images/sprite/sprite.svg";
 import UserLogoModal from "../UserLogoModal/UserLogoModal";
 
-import { determineFirstLetter } from "../../../helpers/helpers";
-import { AppDispatch, RootState } from "../../../redux/store";
+import { AppDispatch } from "../../../redux/store";
 import { User } from "../../../redux/redux";
 
 const ANIMATION_CONFIG = {
@@ -19,11 +18,13 @@ const ANIMATION_CONFIG = {
   exit: { opacity: 0, transform: "scale(0)" },
   transition: { ease: "backOut", duration: 0.7 },
 };
-export const UserLogo: React.FC = () => {
+export const UserLogo = () => {
   const dispatch = useDispatch<AppDispatch>();
-  const user: User = useSelector((state: RootState) => selectUser(state));
+  const user: User = useSelector(selectUser);
 
-  const defaultAvatar: string = determineFirstLetter(user.name ?? "");
+  const defaultAvatar: string = !user.name
+    ? ""
+    : user.name.charAt(0).toUpperCase();
 
   const [modalIsOpen, setModalIsOpen] = useState<boolean>(false);
   const btnRef = useRef<HTMLButtonElement | null>(null);
@@ -51,7 +52,7 @@ export const UserLogo: React.FC = () => {
             alt="user-avatar"
           />
         ) : (
-          <p className={styles.userDefaultAvatar}>{defaultAvatar}</p>
+          <span className={styles.userDefaultAvatar}>{defaultAvatar}</span>
         )}
 
         <svg
