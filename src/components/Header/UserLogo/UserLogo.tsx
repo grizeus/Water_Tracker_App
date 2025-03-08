@@ -21,11 +21,7 @@ const ANIMATION_CONFIG = {
 export const UserLogo = () => {
   const dispatch = useDispatch<AppDispatch>();
   const user: User = useSelector(selectUser);
-
-  const defaultAvatar: string = !user.name
-    ? ""
-    : user.name.charAt(0).toUpperCase();
-
+  const defaultAvatar: string = (user?.name as string).charAt(0).toUpperCase();
   const [modalIsOpen, setModalIsOpen] = useState<boolean>(false);
   const btnRef = useRef<HTMLButtonElement | null>(null);
 

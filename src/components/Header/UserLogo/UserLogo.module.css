@@ -54,17 +54,12 @@
 
 @media (min-width: 768px) {
   .userLogoTitle {
-    font-size: 24px;
+    font-size: 18px;
     line-height: 1.33;
   }
 
   .userDefaultAvatar {
-    font-size: 24px;
+    font-size: 18px;
     line-height: 1.33em;
-  }
-
-  .userDefaultAvatar {
-    width: 32px;
-    height: 32px;
   }
 }
