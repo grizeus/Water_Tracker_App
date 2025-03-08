@@ -7,14 +7,9 @@ import type {
   EntryData,
   MonthlyWaterResponse,
   NormaWaterResponse,
-} from "../redux.d.ts";
+  EditWaterEntry,
+} from "../../../types/global";
 import axios from "axios";
-
-interface EditWaterEntry {
-  id: string;
-  amount: number;
-  time: number;
-}
 
 export const addWaterThunk = createAsyncThunk(
   "water/addWater",
@@ -69,7 +64,7 @@ export const editWaterThunk = createAsyncThunk(
 
 export const updateWaterNormaThunk = createAsyncThunk(
   "water/daily-norma",
-  async (dailyGoal: {dailyGoal: number}, { rejectWithValue }) => {
+  async (dailyGoal: { dailyGoal: number }, { rejectWithValue }) => {
     try {
       const { data } = await instanceWater.patch<NormaWaterResponse>(
         "/water/daily-norma",

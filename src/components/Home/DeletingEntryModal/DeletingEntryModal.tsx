@@ -4,7 +4,8 @@ import { deleteWaterThunk } from "../../../redux/water/operations";
 
 import { selectIsLoading } from "../../../redux/root/selectors";
 import { ContentLoader } from "../../common/Loader/Loader";
-import { OpenerType, OpenerTypeWithData } from "../../components";
+import { OpenerTypeWithData } from "../../../../types/components";
+import { OpenerType } from "../../../../types/global";
 import { AppDispatch } from "../../../redux/store";
 
 export const DeletingEntryModal = ({
@@ -31,7 +32,7 @@ export const DeletingEntryModal = ({
         </span>
         <div className="flex flex-col gap-6 md:flex-row-reverse">
           <button
-            className="bg-sunset inline-block w-full rounded-[10px] px-[30px] py-2 text-[18px] font-medium leading-6 text-white shadow-sm transition-shadow duration-300 ease-in-out hover:shadow-lg active:shadow-none md:w-40 md:py-[10px]"
+            className="inline-block w-full rounded-[10px] bg-sunset px-[30px] py-2 text-[18px] font-medium leading-6 text-white shadow-sm transition-shadow duration-300 ease-in-out hover:shadow-lg active:shadow-none md:w-40 md:py-[10px]"
             onClick={handleDelete}>
             Delete {isLoading && <ContentLoader />}
           </button>

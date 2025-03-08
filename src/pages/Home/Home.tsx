@@ -11,7 +11,7 @@ import {
   TodayWaterList,
   WaterRatioPanel,
 } from "../../components";
-import { EntryData } from "../../redux/redux";
+import { EntryData } from "../../../types/global";
 
 const Home = () => {
   const [selectedRecord, setSelectedRecord] = useState<EntryData | null>(null);

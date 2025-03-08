@@ -10,7 +10,7 @@ import sprite from "src/assets/images/sprite/sprite.svg";
 import UserLogoModal from "../UserLogoModal/UserLogoModal";
 
 import { AppDispatch } from "../../../redux/store";
-import { User } from "../../../redux/redux";
+import { User } from "../../../../types/global";
 
 const ANIMATION_CONFIG = {
   initial: { opacity: 0, transform: "scale(0)" },

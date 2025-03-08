@@ -1,8 +1,6 @@
 import { Field, FieldProps } from "formik";
 
-interface FormValues {
-  gender: "woman" | "man";
-}
+import type { Gender } from "../../../../types/global";
 
 const GenderSelect = () => {
   return (
@@ -22,7 +20,7 @@ const GenderSelect = () => {
             className="relative inline-block cursor-pointer pl-6">
             <span className="absolute left-0 top-1/2 h-3.5 w-3.5 -translate-y-1/2 rounded-full border border-royal bg-white"></span>
             <Field name="gender">
-              {({ field }: FieldProps<string, FormValues>) => (
+              {({ field }: FieldProps<string, Gender>) => (
                 <span
                   className={`absolute left-1 top-1/2 size-1.5 -translate-y-1/2 rounded-full bg-royal transition-opacity duration-200 ${
                     field.value === "woman" ? "opacity-100" : "opacity-0"
@@ -45,7 +43,7 @@ const GenderSelect = () => {
             className="relative inline-block cursor-pointer pl-6">
             <span className="absolute left-0 top-1/2 h-3.5 w-3.5 -translate-y-1/2 rounded-full border border-royal bg-white"></span>
             <Field name="gender">
-              {({ field }: FieldProps<string, FormValues>) => (
+              {({ field }: FieldProps<string, Gender>) => (
                 <span
                   className={`absolute left-1 top-1/2 size-1.5 -translate-y-1/2 rounded-full bg-royal transition-opacity duration-200 ${
                     field.value === "man" ? "opacity-100" : "opacity-0"

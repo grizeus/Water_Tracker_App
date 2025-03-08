@@ -5,8 +5,9 @@ import type {
   DailyWaterResponse,
   MonthData,
   NormaWaterResponse,
-  WaterDataState,
-} from "../redux";
+} from "../../../types/global";
+
+import type { WaterDataState } from "../../../types/redux";
 
 const handleProgress = (state: WaterDataState) => {
   const currentAmount = state.today.dailyWaterList.reduce(
@@ -121,7 +122,7 @@ export const handleGetTodayWater = (
 
 export const handlerUpdateNorma = (
   state: WaterDataState,
-  action: PayloadAction< NormaWaterResponse >
+  action: PayloadAction<NormaWaterResponse>
 ) => {
   const dailyGoal = action.payload.data;
   state.today.dailyGoal = dailyGoal;
