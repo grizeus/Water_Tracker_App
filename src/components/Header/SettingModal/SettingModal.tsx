@@ -1,7 +1,7 @@
 import { Form, Formik, FormikHelpers } from "formik";
 import { useDispatch, useSelector } from "react-redux";
 import * as Yup from "yup";
-import { ChangeEvent, useState } from "react";
+import { ChangeEvent } from "react";
 import { BaseModalWindow } from "../../common/BaseModalWindow/BaseModalWindow";
 import { Loader } from "../../common/Loader/Loader";
 import {
@@ -71,7 +71,6 @@ export const SettingModal = ({
   const dispatch = useDispatch<AppDispatch>();
   const { avatarURL, email, name, gender } = useSelector(selectUser);
   const isLoading = useSelector(selectIsLoading);
-  const [isPasswordShown, setIsPasswordShown] = useState(false);
   const isAvatarLoading = useSelector(selectIsAvatarLoading);
 
   const initialValues: UserFormData = {
@@ -99,6 +98,9 @@ export const SettingModal = ({
       ][]
     ).forEach(([key, value]) => {
       if (value) {
+        if (key === "repeatedPassword") {
+          return;
+        }
         if (key === "gender") {
           dataSend[key] = value as Gender;
         } else {
@@ -110,10 +112,6 @@ export const SettingModal = ({
 
     onClose();
     actions.resetForm();
-  };
-
-  const handlePasswordVisibility = () => {
-    setIsPasswordShown(previsPasswordShown => !previsPasswordShown);
   };
 
   const handleAvatarUpload = async (e: ChangeEvent<HTMLInputElement>) => {
@@ -155,8 +153,6 @@ export const SettingModal = ({
                     values={values}
                     errors={errors}
                     touched={touched}
-                    isPasswordShown={isPasswordShown}
-                    onVisible={handlePasswordVisibility}
                   />
                 </DesktopFormWrap>
                 <SaveBtnWrap>
