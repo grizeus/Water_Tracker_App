@@ -1,5 +1,4 @@
 import { BaseModalWindow } from "src/components/index.js";
-import { Loader } from "src/components/index.js";
 import {
   ModalWrap,
   ModalTitle,
@@ -11,6 +10,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { logOutThunk } from "src/redux/auth/operations";
 
 import { selectIsLoading } from "src/redux/root/selectors";
+import { ContentLoader } from "../../common/Loader/Loader";
 
 export const UserLogoutModal = ({ onClose, onShow }) => {
   const dispatch = useDispatch();
@@ -33,7 +33,7 @@ export const UserLogoutModal = ({ onClose, onShow }) => {
             </li>
             <li>
               <LogOutBtn type="button" onClick={() => dispatch(logOutThunk())}>
-                Log out {isLoading && <Loader />}
+                Log out {isLoading && <ContentLoader />}
               </LogOutBtn>
             </li>
           </List>
