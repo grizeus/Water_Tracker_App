@@ -26,7 +26,7 @@ export const UserLogo = () => {
   const btnRef = useRef<HTMLButtonElement | null>(null);
 
   useEffect(() => {
-    dispatch(getUserThunk());
+    void dispatch(getUserThunk());
   }, [dispatch]);
 
   const toggleModal = useCallback(() => {

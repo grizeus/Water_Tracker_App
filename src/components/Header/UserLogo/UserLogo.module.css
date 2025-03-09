@@ -6,6 +6,7 @@
 }
 
 .userLogoTitle {
+  color: var(--charcoal-black);
   font-weight: 400;
   font-size: 16px;
   line-height: 1.25em;
