@@ -1,13 +1,14 @@
-import { Loader } from "components";
+import { useDispatch, useSelector } from "react-redux";
 import { lazy, Suspense, useEffect } from "react";
 import { Navigate, Route, Routes } from "react-router-dom";
-import PrivateRoute from "./PrivateRoute";
-import RestrictedRoute from "./RestrictedRoute";
 
-import { useDispatch, useSelector } from "react-redux";
-import { selectIsRefreshing } from "src/redux/auth/selectors";
+import RestrictedRoute from "./RestrictedRoute";
 import SharedLayout from "./SharedLayout";
-import { refreshUserThunk } from "src/redux/auth/operations";
+import PrivateRoute from "./PrivateRoute";
+import { Loader } from "../components/common/Loader/Loader";
+import { selectIsRefreshing } from "../redux/auth/selectors";
+import { refreshUserThunk } from "../redux/auth/operations";
+import { AppDispatch } from "../redux/store";
 
 const WelcomePage = lazy(() => import("../pages/WelcomePage/WelcomePage"));
 const HomePage = lazy(() => import("../pages/Home/Home"));
@@ -15,16 +16,12 @@ const SigninPage = lazy(() => import("../pages/SignIn/SignIn"));
 const SignUpPage = lazy(() => import("../pages/SignUp/SignUp"));
 const ErrorPage = lazy(() => import("../pages/Error/Error"));
 
-const ResetPassPage = lazy(
-  () => import("../pages/ResetPasswordPage/ResetPassword")
-);
-
 const App = () => {
-  const dispatch = useDispatch();
+  const dispatch = useDispatch<AppDispatch>();
   const isRefreshing = useSelector(selectIsRefreshing);
 
   useEffect(() => {
-    dispatch(refreshUserThunk());
+    void dispatch(refreshUserThunk());
   }, [dispatch]);
 
   return !isRefreshing ? (
@@ -38,7 +35,7 @@ const App = () => {
         />
         <Route
           path="home"
-          element={<PrivateRoute component={HomePage} redirectTo={"/"} />}
+          element={<PrivateRoute component={<HomePage />} redirectTo={"/"} />}
         />
         <Route
           path="signin"
@@ -52,7 +49,6 @@ const App = () => {
             <RestrictedRoute component={<SignUpPage />} redirectTo="/home" />
           }
         />
-        <Route path="reset-pass" element={<ResetPassPage />} />
       </Route>
 
       <Route

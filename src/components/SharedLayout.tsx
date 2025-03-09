@@ -1,9 +1,10 @@
-import { Loader } from "components";
 import { Suspense } from "react";
 import { Outlet, useLocation, matchPath } from "react-router-dom";
 import { ToastContainer, Zoom } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css";
+
 import Header from "./Header/Header";
+import { Loader } from "../components/common/Loader/Loader"
+import "react-toastify/dist/ReactToastify.css";
 
 const SharedLayout = () => {
   const location = useLocation();
