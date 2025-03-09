@@ -1,0 +1,66 @@
+.userLogoContainer {
+  position: relative;
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+}
+
+.userLogoTitle {
+  color: var(--charcoal-black);
+  font-weight: 400;
+  font-size: 16px;
+  line-height: 1.25em;
+  margin-right: 8px;
+}
+
+.userLogoBtn {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  gap: 4px;
+  background-color: transparent;
+  font-weight: 400;
+  font-size: 18px;
+  line-height: 1.33em;
+  padding: 0;
+}
+
+.userAvatar {
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+}
+
+.userDefaultAvatar {
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  background-color: var(--solitude-blue);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 400;
+  font-size: 20px;
+  line-height: 1.25;
+  color: var(--royal-blue);
+}
+
+.userModalIcon {
+  width: 16px;
+  height: 16px;
+  stroke: var(--royal-blue);
+  fill: var(--royal-blue);
+  transition: transform 0.5s ease;
+}
+
+@media (min-width: 768px) {
+  .userLogoTitle {
+    font-size: 18px;
+    line-height: 1.33;
+  }
+
+  .userDefaultAvatar {
+    font-size: 18px;
+    line-height: 1.33em;
+  }
+}

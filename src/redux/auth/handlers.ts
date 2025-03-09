@@ -1,11 +1,11 @@
 import { PayloadAction } from "@reduxjs/toolkit";
 import type {
-  AuthState,
   GetUserResponse,
-  PersistedUser,
   SignUpInResponse,
   UpdAvatarResponse,
-} from "../redux.d.ts";
+} from "../../../types/global";
+
+import type { AuthState, PersistedUser } from "../../../types/redux";
 
 export const initialState: AuthState = {
   user: {

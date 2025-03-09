@@ -1,8 +1,8 @@
 import { createSlice } from "@reduxjs/toolkit";
 import { handleFulfilled, handlePending, handleRejected } from "./handlers";
-import { RootState } from "../redux";
+import { LoadErorState } from "../../../types/redux";
 
-const initialState: RootState = {
+const initialState: LoadErorState = {
   isLoading: false,
   error: null,
 };

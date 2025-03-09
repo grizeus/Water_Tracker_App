@@ -2,7 +2,7 @@ import { ReactNode, useState } from "react";
 import { ErrorMessage, Field, FormikErrors, FormikTouched } from "formik";
 
 import sprite from "src/assets/images/sprite/sprite.svg";
-import { UserFormData } from "../../components";
+import { UserFormData } from "../../../../types/global";
 
 const PasswordField = ({
   id,

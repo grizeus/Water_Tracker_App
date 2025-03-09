@@ -4,26 +4,20 @@ import instanceWater from "../api/api";
 import type {
   Credentials,
   GetUserResponse,
-  PersistedUser,
   SignUpInResponse,
   UpdAvatarResponse,
   UpdUserReq,
-} from "../redux.d.ts";
+} from "../../../types/global";
+import type { IntermediateData, PersistedUser } from "../../../types/redux";
 import axios from "axios";
 import type { RootState } from "../store";
-
-interface intermediateData {
-  user: string;
-  token: string;
-  _persist: string;
-}
 
 const getPersistedUser = (jsonString: string | null): PersistedUser | null => {
   if (!jsonString) {
     return null;
   }
   try {
-    const parsedData = JSON.parse(jsonString) as intermediateData;
+    const parsedData = JSON.parse(jsonString) as IntermediateData;
     if (parsedData) {
       return JSON.parse(parsedData.user) as PersistedUser;
     }
@@ -48,7 +42,7 @@ export const signUpThunk = createAsyncThunk(
     try {
       const { data } = await instanceWater.post<SignUpInResponse>(
         "/auth/signup",
-        credentials,
+        credentials
       );
       setToken(data.data.accessToken);
       return data;
@@ -64,7 +58,7 @@ export const signUpThunk = createAsyncThunk(
         return rejectWithValue("An unknown error occurred");
       }
     }
-  },
+  }
 );
 
 export const signInThunk = createAsyncThunk(
@@ -73,7 +67,7 @@ export const signInThunk = createAsyncThunk(
     try {
       const { data } = await instanceWater.post<SignUpInResponse>(
         "/auth/signin",
-        credentials,
+        credentials
       );
       setToken(data.data.accessToken);
       return data;
@@ -89,7 +83,7 @@ export const signInThunk = createAsyncThunk(
         return rejectWithValue("An unknown error occurred");
       }
     }
-  },
+  }
 );
 
 export const logOutThunk = createAsyncThunk(
@@ -107,7 +101,7 @@ export const logOutThunk = createAsyncThunk(
         return rejectWithValue("An unknown error occurred");
       }
     }
-  },
+  }
 );
 
 export const refreshUserThunk = createAsyncThunk(
@@ -140,7 +134,7 @@ export const refreshUserThunk = createAsyncThunk(
         return thunkAPI.rejectWithValue("An unknown error occurred");
       }
     }
-  },
+  }
 );
 
 export const getUserThunk = createAsyncThunk(
@@ -158,7 +152,7 @@ export const getUserThunk = createAsyncThunk(
         return rejectWithValue("An unknown error occurred");
       }
     }
-  },
+  }
 );
 
 export const updateAvatarThunk = createAsyncThunk(
@@ -172,7 +166,7 @@ export const updateAvatarThunk = createAsyncThunk(
           headers: {
             "Content-Type": "multipart/form-data",
           },
-        },
+        }
       );
       return data;
     } catch (error: unknown) {
@@ -187,14 +181,17 @@ export const updateAvatarThunk = createAsyncThunk(
         return rejectWithValue("An unknown error occurred");
       }
     }
-  },
+  }
 );
 
 export const updateUserInfoThunk = createAsyncThunk(
   "auth/edit",
   async (updInfo: UpdUserReq, { rejectWithValue }) => {
     try {
-      const { data } = await instanceWater.patch<GetUserResponse>("/user", updInfo);
+      const { data } = await instanceWater.patch<GetUserResponse>(
+        "/user",
+        updInfo
+      );
       return data;
     } catch (error: unknown) {
       if (axios.isAxiosError(error) && error.response) {
@@ -207,5 +204,5 @@ export const updateUserInfoThunk = createAsyncThunk(
         return rejectWithValue("An unknown error occurred");
       }
     }
-  },
+  }
 );

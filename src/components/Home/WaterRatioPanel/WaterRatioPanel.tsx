@@ -2,7 +2,7 @@ import { useSelector } from "react-redux";
 import { selectProgress } from "../../../redux/water/selectors";
 import sprite from "src/assets/images/sprite/sprite.svg";
 
-import { OpenerType } from "../../components";
+import { OpenerType } from "../../../../types/global";
 
 export const WaterRatioPanel = ({
   onModalOpen,

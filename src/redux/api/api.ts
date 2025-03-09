@@ -1,6 +1,6 @@
 import axios, { AxiosError, AxiosRequestConfig, AxiosResponse } from "axios";
 import { setToken } from "../auth/operations";
-import type { SignUpInResponse } from "../redux.d.ts";
+import type { SignUpInResponse } from "../../../types/global";
 
 interface CustomAxiosRequestConfig extends AxiosRequestConfig {
   _retry?: boolean;
@@ -39,7 +39,7 @@ instanceWater.interceptors.response.use(
           originalRequest.headers.Authorization = `Bearer ${newToken}`;
 
           return instanceWater(originalRequest);
-        // eslint-disable-next-line @typescript-eslint/no-unused-vars
+          // eslint-disable-next-line @typescript-eslint/no-unused-vars
         } catch (_) {
           return Promise.reject(new Error("Token refresh failed"));
         }

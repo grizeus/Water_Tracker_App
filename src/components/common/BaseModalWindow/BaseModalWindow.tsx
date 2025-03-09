@@ -4,7 +4,7 @@ import { CSSTransition } from "react-transition-group";
 
 import styles from "./BaseModalWindow.module.css";
 import sprite from "src/assets/images/sprite/sprite.svg";
-import { BaseModalWindowProps } from "../common";
+import { BaseModalWindowProps } from "../../../../types/common";
 
 export const BaseModalWindow = ({
   onShow,
