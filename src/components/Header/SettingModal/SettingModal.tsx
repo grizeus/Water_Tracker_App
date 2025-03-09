@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import * as Yup from "yup";
 import { ChangeEvent } from "react";
 import { BaseModalWindow } from "../../common/BaseModalWindow/BaseModalWindow";
-import { Loader } from "../../common/Loader/Loader";
+import { ContentLoader } from "../../common/Loader/Loader";
 import {
   updateUserInfoThunk,
   updateAvatarThunk,
@@ -25,9 +25,8 @@ import UserPic from "./UserPic";
 import GenderSelect from "./GenderSelect";
 import CredentialsInput from "./CredentialsInput";
 import PasswordSection from "./PasswordSection";
-import { OpenerType, UserFormData } from "../../components";
 import { AppDispatch } from "../../../redux/store";
-import { Gender } from "../../../redux/redux";
+import { Gender, OpenerType, UserFormData } from "../../../../types/global";
 
 const settingFormValidationSchema = Yup.object().shape({
   gender: Yup.string(),
@@ -158,7 +157,7 @@ export const SettingModal = ({
                 <SaveBtnWrap>
                   <li>
                     <SaveBtn type="submit">
-                      Save {isLoading && !isAvatarLoading && <Loader />}
+                      Save {isLoading && !isAvatarLoading && <ContentLoader />}
                     </SaveBtn>
                   </li>
                 </SaveBtnWrap>

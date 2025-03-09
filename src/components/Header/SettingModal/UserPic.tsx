@@ -2,6 +2,7 @@ import { Field } from "formik";
 
 import sprite from "src/assets/images/sprite/sprite.svg";
 import { ChangeEvent, useMemo } from "react";
+import firstLetterExtrudor from "../../../helpers/utils/firstLetterExtrudor";
 
 const UserPic = ({
   avatarURL,
@@ -15,8 +16,7 @@ const UserPic = ({
   onUpload: (e: ChangeEvent<HTMLInputElement>) => Promise<void>;
 }) => {
   const getUserInfo = useMemo(() => {
-    const placeholder =
-      name?.charAt(0).toUpperCase() || email?.charAt(0).toUpperCase();
+    const placeholder = firstLetterExtrudor(name);
 
     return {
       avatar: avatarURL || placeholder,

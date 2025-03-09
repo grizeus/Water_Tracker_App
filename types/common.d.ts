@@ -1,4 +1,3 @@
-import { ReactNode } from "react";
 import { OpenerTypeWithData } from "./components";
 import { OpenerType, ChildrenProps } from "./global";
 

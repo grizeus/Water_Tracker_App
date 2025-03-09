@@ -12,6 +12,7 @@ export default defineConfig({
       src: "/src",
       components: "/src/components",
       pages: "/src/pages",
+      types: "/types",
     },
   },
   base: "/",
