@@ -1,3 +1,5 @@
+import { ReactNode } from "react";
+
 export type Gender = "woman" | "man";
 
 export interface MonthData {

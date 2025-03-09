@@ -15,7 +15,7 @@ import {
   getTodayWater,
   updateWaterNormaThunk,
 } from "./operations";
-import type { WaterDataState } from "../redux";
+import { WaterDataState } from "../../../types/redux";
 
 const initialState: WaterDataState = {
   month: [],
