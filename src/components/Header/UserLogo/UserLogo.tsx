@@ -11,6 +11,7 @@ import UserLogoModal from "../UserLogoModal/UserLogoModal";
 
 import { AppDispatch } from "../../../redux/store";
 import { User } from "../../../../types/global";
+import firstLetterExtrudor from "../../../helpers/utils/firstLetterExtrudor";
 
 const ANIMATION_CONFIG = {
   initial: { opacity: 0, transform: "scale(0)" },
@@ -21,7 +22,7 @@ const ANIMATION_CONFIG = {
 export const UserLogo = () => {
   const dispatch = useDispatch<AppDispatch>();
   const user: User = useSelector(selectUser);
-  const defaultAvatar: string = user?.name ? user.name.charAt(0).toUpperCase() : "";
+  const defaultAvatar = firstLetterExtrudor(user.name);
   const [modalIsOpen, setModalIsOpen] = useState<boolean>(false);
   const btnRef = useRef<HTMLButtonElement | null>(null);
 
