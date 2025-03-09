@@ -1,6 +1,6 @@
 import { useDispatch, useSelector } from "react-redux";
-import { lazy, Suspense, useEffect } from "react";
-import { Navigate, Route, Routes } from "react-router-dom";
+import { lazy, useEffect } from "react";
+import { Route, Routes } from "react-router-dom";
 
 import RestrictedRoute from "./RestrictedRoute";
 import SharedLayout from "./SharedLayout";
@@ -14,7 +14,7 @@ const WelcomePage = lazy(() => import("../pages/WelcomePage/WelcomePage"));
 const HomePage = lazy(() => import("../pages/Home/Home"));
 const SigninPage = lazy(() => import("../pages/SignIn/SignIn"));
 const SignUpPage = lazy(() => import("../pages/SignUp/SignUp"));
-const ErrorPage = lazy(() => import("../pages/Error/Error"));
+const NotFoundPage = lazy(() => import("../pages/NotFoundPage"));
 
 const App = () => {
   const dispatch = useDispatch<AppDispatch>();
@@ -49,17 +49,8 @@ const App = () => {
             <RestrictedRoute component={<SignUpPage />} redirectTo="/home" />
           }
         />
+        <Route path="*" element={<NotFoundPage />} />
       </Route>
-
-      <Route
-        path="/404"
-        element={
-          <Suspense fallback={<Loader />}>
-            <ErrorPage />
-          </Suspense>
-        }
-      />
-      <Route path="*" element={<Navigate to="/404" replace />} />
     </Routes>
   ) : (
     <Loader />
