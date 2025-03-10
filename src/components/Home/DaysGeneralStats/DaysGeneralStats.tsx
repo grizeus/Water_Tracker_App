@@ -24,40 +24,47 @@ const DaysGeneralStats = ({
   isVisible: boolean;
 }) => {
   const { date, drinkCount, dailyGoal, waterVolumePercentage } = stats;
-  const modalRef = useRef(null);
-  const day = parseInt(stats.date.split("-").pop());
+  const modalRef = useRef<HTMLDivElement>(null);
+  const dayString = date.split("-").pop();
+  if (dayString === undefined) {
+    return;
+  }
+  const day = parseInt(dayString);
+  if (Number.isNaN(day)) {
+    return;
+  }
+
   useEffect(() => {
-    if (!modalRef.current) return;
+    const modal = modalRef.current;
+    if (!modal) {
+      return;
+    }
 
     const { top, left, width } = position;
-    const modal = modalRef.current;
     const modalWidth = modal.offsetWidth;
-    const isMobile = window.innerWidth <= 767;
-    const isTablet = window.innerWidth > 767 && window.innerWidth <= 1439;
-    const isDesktop = window.innerWidth > 1439;
-    const margin = 14;
+    const modalHeight = modal.offsetHeight;
+    const btnHeight = 58;
 
-    if (isMobile) {
-      modal.style.top = `${top - (modal.offsetHeight + 58)}px`;
-    }
+    const screenW = window.innerWidth;
+    const isTablet = screenW > 767 && screenW <= 1439;
+    const isDesktop = screenW > 1439;
+
+    modal.style.top = `${top - (modalHeight + btnHeight)}px`;
+
     if (isTablet) {
-      if (
-        day <= 4 ||
-        (day >= 11 && day <= 14) ||
-        (day >= 21 && day <= 24) ||
-        day === 31
-      ) {
-        modal.style.left = `${left + 17}px`;
-      } else {
-        modal.style.left = `${left - (modal.offsetWidth - 17)}px`;
-      }
+      const shouldAlignLeft = [
+        ...Array.from({ length: 4 }, (_, i) => i + 1),
+        ...Array.from({ length: 4 }, (_, i) => i + 11),
+        ...Array.from({ length: 4 }, (_, i) => i + 21),
+        31,
+      ].includes(day);
 
-      modal.style.top = `${top - (modal.offsetHeight + 58)}px`;
+      modal.style.left = shouldAlignLeft
+        ? `${left + width / 2}px`
+        : `${left - (modalWidth - width / 2)}px`;
     }
     if (isDesktop) {
-      modal.style.transform = "translateX(0)";
-      modal.style.top = top - modal.offsetHeight - 20 + "px";
-      modal.style.left = left + width + "px";
+      modal.style.left = `${left + width / 2}px`;
     }
   }, [position, day]);
 

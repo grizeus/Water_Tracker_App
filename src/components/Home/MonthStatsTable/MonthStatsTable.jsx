@@ -133,7 +133,6 @@ export const MonthStatsTable = () => {
               <DaysPercentage>
                 <DaysButton
                   ref={el => (dayRefs.current[dayKey] = el)}
-                  // NOTE: try to set relative on click
                   onClick={() => onDayClick(day)}
                   isHighlighted={isHighlighted}
                   isFullfiled={isFullfiled}>
