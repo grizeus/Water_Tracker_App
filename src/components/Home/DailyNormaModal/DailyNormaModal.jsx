@@ -21,6 +21,7 @@ import { BaseModalWindow } from "src/components/index";
 import { updateWaterNormaThunk } from "src/redux/water/operations";
 import { selectDailyGoal } from "src/redux/water/selectors";
 import { selectDaily } from "src/redux/auth/selectors";
+import { Field } from "formik";
 
 export const DailyNormaModal = ({ onClose, onShow }) => {
   const selectDailyNorm = useSelector(selectDailyGoal); // Отримуємо щоденну норму води
@@ -75,27 +76,71 @@ export const DailyNormaModal = ({ onClose, onShow }) => {
   return (
     <BaseModalWindow onClose={onClose} onShow={onShow} title="My daily norma">
       <Container>
-        <>
-          <Formula>
-            <Paragraph>
-              For woman:<span> V=(M*0,03) + (T*0,4)</span>
-            </Paragraph>
-            <Paragraph>
-              For man:<span> V=(M*0,04) + (T*0,6)</span>
-            </Paragraph>
-          </Formula>
+        <Formula>
+          <Paragraph>
+            For woman:<span> V=(M*0,03) + (T*0,4)</span>
+          </Paragraph>
+          <Paragraph>
+            For man:<span> V=(M*0,04) + (T*0,6)</span>
+          </Paragraph>
+        </Formula>
 
-          <Description>
-            <p>
-              <span>*</span>V is the volume of the water norm in liters per day,
-              M is your body weight, T is the time of active sports, or another
-              type of activity commensurate in terms of loads (in the absence of
-              these, you must set 0)
-            </p>
-          </Description>
-        </>
+        <Description>
+          <p>
+            <span>*</span>V is the volume of the water norm in liters per day, M
+            is your body weight, T is the time of active sports, or another type
+            of activity commensurate in terms of loads (in the absence of these,
+            you must set 0)
+          </p>
+        </Description>
 
         <Form>
+          <div className="flex gap-6">
+            <div className="flex">
+              <Field
+                className="absolute opacity-0"
+                type="radio"
+                name="gender"
+                value="woman"
+                id="gender-woman"
+              />
+              <label
+                htmlFor="gender-woman"
+                className="relative inline-block cursor-pointer pl-6">
+                <span className="absolute left-0 top-1/2 h-3.5 w-3.5 -translate-y-1/2 rounded-full border border-royal bg-white"></span>
+                <Field name="gender">
+                  <span
+                    onClick={setGender("woman")}
+                    className={`absolute left-1 top-1/2 size-1.5 -translate-y-1/2 rounded-full bg-royal transition-opacity duration-200 ${
+                      gender === "woman" ? "opacity-100" : "opacity-0"
+                    }`}></span>
+                </Field>
+                <span className="text-base leading-5">Woman</span>
+              </label>
+            </div>
+            <div className="flex">
+              <Field
+                className="absolute opacity-0"
+                type="radio"
+                name="gender"
+                value="man"
+                id="gender-man"
+              />
+              <label
+                htmlFor="gender-man"
+                className="relative inline-block cursor-pointer pl-6">
+                <span className="absolute left-0 top-1/2 h-3.5 w-3.5 -translate-y-1/2 rounded-full border border-royal bg-white"></span>
+                <Field name="gender">
+                  <span
+                    onClick={setGender("woman")}
+                    className={`absolute left-1 top-1/2 size-1.5 -translate-y-1/2 rounded-full bg-royal transition-opacity duration-200 ${
+                      gender === "man" ? "opacity-100" : "opacity-0"
+                    }`}></span>
+                </Field>
+                <span className="text-base leading-5">Man</span>
+              </label>
+            </div>
+          </div>
           <FormRadio>
             <FormSubTitle>Calculate your rate:</FormSubTitle>
             <label>
