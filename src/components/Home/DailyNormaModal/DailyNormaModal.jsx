@@ -86,7 +86,7 @@ export const DailyNormaModal = ({ onClose, onShow }) => {
         </Formula>
 
         <Description>
-          <p>
+          <p className="text-neutral-400">
             <span>*</span>V is the volume of the water norm in liters per day, M
             is your body weight, T is the time of active sports, or another type
             of activity commensurate in terms of loads (in the absence of these,
@@ -95,77 +95,36 @@ export const DailyNormaModal = ({ onClose, onShow }) => {
         </Description>
 
         <Form>
+          <h3 className="text-lg font-medium leading-5">Calculate your rate:</h3>
           <div className="flex gap-6">
             <div className="flex">
-              <Field
-                className="absolute opacity-0"
-                type="radio"
-                name="gender"
-                value="woman"
-                id="gender-woman"
-              />
               <label
-                htmlFor="gender-woman"
+                onClick={() => setGender("woman")}
                 className="relative inline-block cursor-pointer pl-6">
                 <span className="absolute left-0 top-1/2 h-3.5 w-3.5 -translate-y-1/2 rounded-full border border-royal bg-white"></span>
-                <Field name="gender">
+                <div name="gender">
                   <span
-                    onClick={setGender("woman")}
-                    className={`absolute left-1 top-1/2 size-1.5 -translate-y-1/2 rounded-full bg-royal transition-opacity duration-200 ${
-                      gender === "woman" ? "opacity-100" : "opacity-0"
-                    }`}></span>
-                </Field>
-                <span className="text-base leading-5">Woman</span>
+                    className={`absolute left-1 top-1/2 size-1.5 -translate-y-1/2 rounded-full bg-royal transition-opacity duration-200 ${gender === "woman" ? "opacity-100" : "opacity-0"
+                      }`}></span>
+                </div>
+                <span className="text-base leading-5">For woman</span>
               </label>
             </div>
             <div className="flex">
-              <Field
-                className="absolute opacity-0"
-                type="radio"
-                name="gender"
-                value="man"
-                id="gender-man"
-              />
               <label
-                htmlFor="gender-man"
+                onClick={() => setGender("man")}
                 className="relative inline-block cursor-pointer pl-6">
                 <span className="absolute left-0 top-1/2 h-3.5 w-3.5 -translate-y-1/2 rounded-full border border-royal bg-white"></span>
-                <Field name="gender">
+                <div name="gender">
                   <span
-                    onClick={setGender("woman")}
-                    className={`absolute left-1 top-1/2 size-1.5 -translate-y-1/2 rounded-full bg-royal transition-opacity duration-200 ${
-                      gender === "man" ? "opacity-100" : "opacity-0"
-                    }`}></span>
-                </Field>
-                <span className="text-base leading-5">Man</span>
+                    className={`absolute left-1 top-1/2 size-1.5 -translate-y-1/2 rounded-full bg-royal transition-opacity duration-200 ${gender === "man" ? "opacity-100" : "opacity-0"
+                      }`}></span>
+                </div>
+                <span className="text-base leading-5">For man</span>
               </label>
             </div>
           </div>
-          <FormRadio>
-            <FormSubTitle>Calculate your rate:</FormSubTitle>
-            <label>
-              <InputRadio
-                type="radio"
-                name="gender"
-                value="woman"
-                checked={gender === "woman"}
-                onChange={() => setGender("woman")}
-              />
-              <span>For woman</span>
-            </label>
-            <label>
-              <InputRadio
-                type="radio"
-                name="gender"
-                value="man"
-                checked={gender === "man"}
-                onChange={() => setGender("man")}
-              />
-              <span>For man</span>
-            </label>
-          </FormRadio>
-
-          <div>
+                    <div>
             <Paragraph>Your weight in kilograms:</Paragraph>
             <Input
               type="number"
