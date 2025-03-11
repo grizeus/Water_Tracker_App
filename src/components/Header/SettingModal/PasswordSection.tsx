@@ -24,14 +24,16 @@ const PasswordField = ({
   };
 
   return (
-    <div className="mb-3 h-[82px] last-of-type:mb-0">
-      <label htmlFor={id}>{label}</label>
+    <div className="mb-3 h-[72px] last-of-type:mb-0">
+      <label className="text-base leading-tight" htmlFor={id}>
+        {label}
+      </label>
       <div className="relative mt-2">
         <Field
           type={isPasswordShown ? "text" : "password"}
           id={id}
           name={name}
-          className={`${errorStyle} py3 h-11 w-full rounded-md border border-perano bg-white px-2.5 text-base leading-tight text-perano outline-none placeholder:text-perano focus:text-royal`}
+          className={`${errorStyle} py3 h-11 w-full rounded-md border border-hawkes bg-white px-2.5 text-base leading-tight text-perano outline-none placeholder:text-perano focus:text-royal`}
           placeholder="Password"
         />
         <button
@@ -64,7 +66,7 @@ const PasswordSection = ({
   touched: FormikTouched<UserFormData>;
 }) => {
   return (
-    <div className="min-h-80 md:w-[392px]">
+    <div className="min-h-80 md:w-[392px] text-charcoal">
       <p className="mb-3 text-lg font-medium leading-5">Password</p>
 
       <PasswordField

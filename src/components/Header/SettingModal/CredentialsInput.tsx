@@ -32,7 +32,7 @@ const CredentialsInput = ({
           className="mt-1 text-sm leading-[18px] text-sunset"
         />
       </div>
-      <div className="mb-6">
+      <div className="mb-6 xl:mb-0">
         <label
           className="mb-2 inline-block text-lg font-medium leading-5"
           htmlFor="email">
