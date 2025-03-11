@@ -14,7 +14,6 @@ export * from "./Header/Header";
 // Home
 
 export * from "./Home/DailyNorma/DailyNorma";
-export * from "./Home/DailyNormaModal/DailyNormaModal";
 export * from "./Home/DeletingEntryModal/DeletingEntryModal";
 export * from "./Home/MonthStatsTable/MonthStatsTable";
 export * from "./Home/TodayListModal/TodayListModal";
