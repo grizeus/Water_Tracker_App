@@ -16,7 +16,7 @@ import DaysGeneralStats from "../DaysGeneralStats/DaysGeneralStats";
 
 import { AppDispatch } from "../../../redux/store";
 import { MonthData } from "../../../../types/global";
-
+import sprite from "../../../assets/images/sprite/sprite.svg";
 
 // NOTE: lieve this interfaces here for now
 interface Position {
@@ -129,18 +129,23 @@ export const MonthStatsTable = () => {
         <h3 className="text-2xl font-medium leading-tight text-charcoal md:text-[26px] md:leading-8">
           Month
         </h3>
-        <div className="flex items-baseline gap-3 text-base leading-5 text-royal">
-          <button
-            className={`${activeButton === "prev" ? "text-royal" : "text-perano"} size-3.5 bg-transparent transition-colors duration-300 ease-in-out hover:text-sunshade`}
-            onClick={handlePreviousMonth}>
-            &lt;
+        <div className="flex items-center gap-3 text-base leading-5 text-royal">
+          <button onClick={handlePreviousMonth}>
+            <svg
+              className={`${activeButton === "prev" ? "stroke-royal" : "stroke-perano"} size-3.5 fill-transparent transition-colors duration-300 ease-in-out hover:stroke-sunshade`}
+              style={{ transform: `rotate(90deg)` }}>
+              <use href={`${sprite}#icon-arrow-down`} />
+            </svg>
           </button>
           <span>{format(selectedMonth, "MMMM, yyyy")}</span>
           <button
-            className={`${activeButton === "next" ? "text-royal" : "text-perano"} size-3.5 bg-transparent transition-colors duration-300 ease-in-out hover:text-sunshade`}
             onClick={handleNextMonth}
             disabled={selectedMonth >= new Date()}>
-            &gt;
+            <svg
+              className={`${activeButton === "next" ? "stroke-royal" : "stroke-perano"} size-3.5 fill-transparent transition-colors duration-300 ease-in-out hover:stroke-sunshade`}
+              style={{ transform: `rotate(-90deg)` }}>
+              <use href={`${sprite}#icon-arrow-down`} />
+            </svg>
           </button>
         </div>
       </div>
