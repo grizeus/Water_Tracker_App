@@ -1,5 +1,6 @@
 import { useRef, useEffect } from "react";
 import { formatDate } from "../../../helpers/utils/dateUtils";
+import { OpenerType } from "../../../../types/global";
 
 interface DayStats {
   date: string;
@@ -18,10 +19,12 @@ const DaysGeneralStats = ({
   stats,
   position,
   isVisible,
+  onClose,
 }: {
   stats: DayStats;
   position: Position;
   isVisible: boolean;
+  onClose: OpenerType;
 }) => {
   const { date, drinkCount, dailyGoal, waterVolumePercentage } = stats;
   const modalRef = useRef<HTMLDivElement>(null);
@@ -66,12 +69,24 @@ const DaysGeneralStats = ({
     if (isDesktop) {
       modal.style.left = `${left + width / 2}px`;
     }
-  }, [position, day]);
+
+    const handleClickOutside = (e: MouseEvent) => {
+      if (isVisible && !modal.contains(e.target as Node)) {
+        onClose();
+      }
+    };
+
+    document.addEventListener("mousedown", handleClickOutside);
+
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, [position, day, isVisible, onClose]);
 
   const formattedDate = formatDate(date, "d, MMMM");
   return (
     <div
-      className={`${!isVisible ? "hidden" : null} absolute -left-2 w-[280px] rounded-[10px] bg-white px-4 py-6 shadow-[0_4px_4px_0_rgba(64,123,255,0.3)] md:w-[292px]`}
+      className={`${!isVisible && "hidden"} absolute -left-2 w-[280px] rounded-[10px] bg-white px-4 py-6 shadow-[0_4px_4px_0_rgba(64,123,255,0.3)] md:w-[292px]`}
       ref={modalRef}>
       <ul className="flex flex-col gap-4">
         <li className="flex items-center gap-1.5 text-base leading-5">

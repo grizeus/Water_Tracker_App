@@ -5,12 +5,12 @@ import {
   DailyNorma,
   DailyNormaModal,
   DeletingEntryModal,
-  MonthStatsTable,
   Section,
   TodayListModal,
   TodayWaterList,
   WaterRatioPanel,
 } from "../../components";
+import { MonthStatsTable } from "../../components/Home/MonthStatsTable/MonthStatsTable";
 import { EntryData } from "../../../types/global";
 
 const Home = () => {

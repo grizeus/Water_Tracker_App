@@ -148,7 +148,6 @@ export const GlobalStyles = () => {
 
     button {
       cursor: pointer;
-      border: none;
     }
 
     img {
