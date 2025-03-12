@@ -1,9 +1,8 @@
 import { useState } from "react";
 
-import styles from "./Home.module.css";
+import DailyNormaModal from "../../components/Home/DailyNormaModal/DailyNormaModal";
 import {
   DailyNorma,
-  DailyNormaModal,
   DeletingEntryModal,
   Section,
   TodayListModal,
@@ -12,6 +11,7 @@ import {
 } from "../../components";
 import { MonthStatsTable } from "../../components/Home/MonthStatsTable/MonthStatsTable";
 import { EntryData } from "../../../types/global";
+import styles from "./Home.module.css";
 
 const Home = () => {
   const [selectedRecord, setSelectedRecord] = useState<EntryData | null>(null);
