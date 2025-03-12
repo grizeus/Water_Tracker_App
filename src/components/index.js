@@ -24,7 +24,6 @@ export * from "./Header/SettingModal/SettingModal";
 export * from "./SignInForm";
 export * from "./Header/UserAuth/UserAuth";
 export * from "./Header/UserLogo/UserLogo";
-export * from "./Header/UserLogoutModal/UserLogoutModal";
 
 // SignUp
 
