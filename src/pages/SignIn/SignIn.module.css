@@ -1,27 +1,60 @@
 .bg {
+  min-height: 680px;
   padding-top: 40px;
-  background-position: center center;
-  background-image: image-set(
-    url("../../assets/images/background/homePage/mobile/bubbleMob.png") 1x,
-    url("../../assets/images/background/homePage/mobile/bubbleMob@2x.png") 2x
-  );
-  background-size: cover;
+  background-image:
+    image-set(
+      url("../../assets/images/background/homePage/mobile/bubbleMob.png") 1x,
+      url("../../assets/images/background/homePage/mobile/bubbleMob@2x.png") 2x
+    ),
+    image-set(
+      url("../../assets/images/background/SignPages/bottle-mob.png") 1x,
+      url("../../assets/images/background/SignPages/bottle-mob@2x.png") 2x
+    );
+  background-size:
+    cover,
+    280px 210px;
+  background-position:
+    center center,
+    bottom center;
   background-repeat: no-repeat;
   width: 100%;
 
   @media screen and (min-width: 768px) {
-    background-image: image-set(
-      url("../../assets/images/background/homePage/tablet/bubbleTablet.png") 1x,
-      url("../../assets/images/background/homePage/tablet/bubbleTablet@2x.png")
-        2x
-    );
+    background-image:
+      image-set(
+        url("../../assets/images/background/homePage/tablet/bubbleTablet.png")
+          1x,
+        url("../../assets/images/background/homePage/tablet/bubbleTablet@2x.png")
+          2x
+      ),
+      image-set(
+        url("../../assets/images/background/SignPages/bottle-tab.png") 1x,
+        url("../../assets/images/background/SignPages/bottle-tab@2x.png") 2x
+      );
+    background-size:
+      contain,
+      768px 680px;
+    background-position:
+      center center,
+      bottom right;
   }
 
   @media screen and (min-width: 1440px) {
-    background-image: image-set(
-      url("../../assets/images/background/homePage/desktop/bubbleDesk.png") 1x,
-      url("../../assets/images/background/homePage/desktop/bubbleDesk@2x.png")
-        2x
-    );
+    background-image:
+      image-set(
+        url("../../assets/images/background/homePage/desktop/bubbleDesk.png") 1x,
+        url("../../assets/images/background/homePage/desktop/bubbleDesk@2x.png")
+          2x
+      ),
+      image-set(
+        url("../../assets/images/background/SignPages/bottle.png") 1x,
+        url("../../assets/images/background/SignPages/bottle@2x.png") 2x
+      );
+      background-size:
+      1404px 582px,
+      916px 680px;
+    background-position:
+      center center,
+      bottom left;
   }
 }

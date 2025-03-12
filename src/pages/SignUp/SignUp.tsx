@@ -1,5 +1,5 @@
 import { Section } from "../../components";
-import { SignUpForm } from "../../components/SignUp/SignUpForm/SignUpForm";
+import { SignUpForm } from "../../components/SignUpForm";
 import styles from "./SignUp.module.css";
 
 const SignUp = () => {
