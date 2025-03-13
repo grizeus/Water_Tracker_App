@@ -4,7 +4,7 @@ import instanceWater from "../api/api";
 import type {
   AddEditWaterResponse,
   DailyWaterResponse,
-  EntryData,
+  AddEntryData,
   MonthlyWaterResponse,
   NormaWaterResponse,
   EditWaterEntry,
@@ -13,7 +13,7 @@ import axios from "axios";
 
 export const addWaterThunk = createAsyncThunk(
   "water/addWater",
-  async (newWater: EntryData, { rejectWithValue }) => {
+  async (newWater: AddEntryData, { rejectWithValue }) => {
     try {
       const { data } = await instanceWater.post<AddEditWaterResponse>(
         "/water/entry",

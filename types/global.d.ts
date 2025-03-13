@@ -15,10 +15,15 @@ export interface EntryData {
   amount: number;
 }
 
+export interface AddEntryData {
+  time: string;
+  amount: number;
+}
+
 export interface EditWaterEntry {
   id: string;
   amount: number;
-  time: number;
+  time: string;
 }
 
 export interface User {

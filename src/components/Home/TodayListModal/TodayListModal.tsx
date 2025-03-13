@@ -1,19 +1,28 @@
 import { useEffect, useState } from "react";
-import { BaseModalWindow } from "components";
-import { ContentLoader } from "src/components/index";
 import { useDispatch, useSelector } from "react-redux";
-import sprite from "src/assets/images/sprite/sprite.svg";
-import { format } from "date-fns";
-import { addWaterThunk, editWaterThunk } from "src/redux/water/operations";
-import {
-  formatCustomTime,
-  formatTimeToLocalISO,
-} from "../../../helpers/utils/dateUtils";
-
 import { Formik, Form, Field, ErrorMessage } from "formik";
+import { format, parseISO } from "date-fns";
+
+import {
+  formatTimeToLocalISO,
+  convertTo24HourFormat,
+  cleanTimeInput,
+  formatTo12Hour,
+} from "../../../helpers/utils/dateUtils";
 import { validationSchemaAddEntryData } from "../../../helpers/utils/validationSchema";
+
+import { addWaterThunk, editWaterThunk } from "../../../redux/water/operations";
+import { selectIsLoading } from "../../../redux/root/selectors";
+
+import { AppDispatch } from "../../../redux/store";
+import { TodayListModalProps } from "../../../../types/components";
+import { AddEntryData, EditWaterEntry } from "../../../../types/global";
+
+import sprite from "src/assets/images/sprite/sprite.svg";
 import styles from "./TodayListModal.module.css";
-import { selectIsLoading } from "src/redux/root/selectors";
+
+import { BaseModalWindow } from "../../common/BaseModalWindow/BaseModalWindow";
+import { ContentLoader } from "../../common/Loader/Loader";
 
 export const TodayListModal = ({
   initialAmount = 50,
@@ -22,23 +31,23 @@ export const TodayListModal = ({
   existingRecordId,
   onClose,
   onShow,
-}) => {
-  const dispatch = useDispatch();
+}: TodayListModalProps) => {
+  const dispatch = useDispatch<AppDispatch>();
   const isLoading = useSelector(selectIsLoading);
-
   const title = isEditing ? "Edit the entered amount of water" : "Add water";
   const displayTime =
-    isEditing && initialTime ? formatCustomTime(initialTime) : "";
-
-  const [currentTime, setCurrentTime] = useState(format(new Date(), "HH:mm"));
+    isEditing && initialTime ? formatTo12Hour(initialTime) : "";
+  const parsedInitialTime: Date | null =
+    isEditing && initialTime ? parseISO(initialTime) : null;
+  const [currentTime, setCurrentTime] = useState<string>(
+    format(new Date(), "h:mm a")
+  );
 
   useEffect(() => {
     if (!isEditing) {
       const interval = setInterval(() => {
-        const updatedTime = format(new Date(), "HH:mm");
-        setCurrentTime(updatedTime);
+        setCurrentTime(format(new Date(), "h:mm a"));
       }, 1000);
-
       return () => clearInterval(interval);
     }
   }, [isEditing]);
@@ -54,9 +63,7 @@ export const TodayListModal = ({
             <div className={styles.todayVolume}>
               {initialAmount ? `${initialAmount} ml` : "No notes yet"}
             </div>
-            <div className={styles.todayTime}>
-              {initialTime ? `${displayTime}` : ""}
-            </div>
+            <div className={styles.todayTime}>{displayTime || ""}</div>
           </div>
         )}
         <Formik
@@ -64,29 +71,33 @@ export const TodayListModal = ({
           initialValues={{
             amount: initialAmount,
             time:
-              isEditing && initialTime
-                ? format(new Date(initialTime), "HH:mm")
+              isEditing && parsedInitialTime
+                ? format(parsedInitialTime, "h:mm a")
                 : currentTime,
           }}
           validationSchema={validationSchemaAddEntryData}
           onSubmit={(values, { setSubmitting }) => {
+            const cleanedTime = cleanTimeInput(values.time);
+            const formattedTime = convertTo24HourFormat(cleanedTime);
             const isoDate = formatTimeToLocalISO(
-              values.time,
-              initialTime,
+              formattedTime,
+              initialTime || "",
               isEditing
             );
-
-            const waterData = {
+            const waterData: AddEntryData = {
               time: isoDate,
               amount: values.amount,
             };
-
-            if (isEditing) {
-              dispatch(editWaterThunk({ id: existingRecordId, ...waterData }));
+            if (isEditing && existingRecordId) {
+              const editData: EditWaterEntry = {
+                id: existingRecordId,
+                time: isoDate,
+                amount: values.amount,
+              };
+              dispatch(editWaterThunk(editData));
             } else {
               dispatch(addWaterThunk(waterData));
             }
-
             setSubmitting(false);
             onClose();
           }}>
@@ -96,7 +107,9 @@ export const TodayListModal = ({
                 {isEditing ? "Correct entered data:" : "Choose a value:"}
               </h3>
               <div className={styles.addWater}>
-                <label className={styles.addParagraph}>Amount of water:</label>
+                <label className={styles.addParagraph}>
+                  Amount of water (ml):
+                </label>
                 <div>
                   <button
                     type="button"
@@ -134,12 +147,14 @@ export const TodayListModal = ({
                 <label className={styles.addParagraph}>Recording time:</label>
                 <Field
                   className={styles.inputTime}
-                  type="time"
+                  type="text"
                   name="time"
-                  value={values.time}
-                  onChange={e => {
-                    console.log("⌛ Зміна часу у `Formik`:", e.target.value);
+                  value={cleanTimeInput(values.time)}
+                  onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
                     setFieldValue("time", e.target.value);
+                  }}
+                  onBlur={() => {
+                    setFieldValue("time", formatTo12Hour(values.time));
                   }}
                 />
                 <ErrorMessage
