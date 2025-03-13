@@ -25,7 +25,7 @@ import {
   Label,
   PreviousInfo,
 } from "./TodayListModal.styled";
-import { formatCustomTime } from "src/helpers/utils/dateUtils.js";
+import { formatCustomTime } from "src/helpers/utils/dateUtils";
 import { toast } from "react-toastify";
 
 import { selectIsLoading } from "src/redux/root/selectors";

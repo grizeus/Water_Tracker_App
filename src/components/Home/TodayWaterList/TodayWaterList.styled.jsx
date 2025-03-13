@@ -1,4 +1,4 @@
-import styled from '@emotion/styled';
+import styled from "@emotion/styled";
 
 export const TodayWrapper = styled.div`
   margin-bottom: 24px;
@@ -131,5 +131,3 @@ export const AddWaterBtn = styled.button`
     stroke: ${({ theme }) => theme.color.secondaryYellow};
   }
 `;
-
-
