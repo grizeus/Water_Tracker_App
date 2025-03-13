@@ -2,6 +2,7 @@ import { Form, Formik, FormikHelpers } from "formik";
 import { useDispatch, useSelector } from "react-redux";
 import * as Yup from "yup";
 import { ChangeEvent } from "react";
+
 import { BaseModalWindow } from "../../common/BaseModalWindow/BaseModalWindow";
 import { ContentLoader } from "../../common/Loader/Loader";
 import {
@@ -13,13 +14,6 @@ import {
   selectUser,
 } from "../../../redux/auth/selectors";
 
-import {
-  DesktopFormWrap,
-  DesktopGenderWrap,
-  ModalWrap,
-  SaveBtn,
-  SaveBtnWrap,
-} from "./SettingModal.styled";
 import { selectIsLoading } from "../../../redux/root/selectors";
 import UserPic from "./UserPic";
 import GenderSelect from "./GenderSelect";
@@ -125,7 +119,7 @@ export const SettingModal = ({
 
   return (
     <BaseModalWindow onClose={onClose} onShow={onShow} title="Setting">
-      <ModalWrap>
+      <div className="rounded-[10px] px-3 pb-8 md:w-[704px] md:px-6 xl:w-[1008px]">
         {
           <Formik
             initialValues={initialValues}
@@ -139,33 +133,32 @@ export const SettingModal = ({
                   email={email}
                   onUpload={handleAvatarUpload}
                 />
-                <DesktopFormWrap>
-                  <DesktopGenderWrap>
+                <div className="xl:flex xl:gap-6">
+                  <div className="md:w-[392px]">
                     <GenderSelect />
                     <CredentialsInput
                       values={values}
                       errors={errors}
                       touched={touched}
                     />
-                  </DesktopGenderWrap>
+                  </div>
                   <PasswordSection
                     values={values}
                     errors={errors}
                     touched={touched}
                   />
-                </DesktopFormWrap>
-                <SaveBtnWrap>
-                  <li>
-                    <SaveBtn type="submit">
-                      Save {isLoading && !isAvatarLoading && <ContentLoader />}
-                    </SaveBtn>
-                  </li>
-                </SaveBtnWrap>
+                </div>
+
+                <button
+                  className="flex w-full items-center justify-center rounded-[10px] bg-royal px-[30px] py-2 text-base leading-5 text-white shadow-sm transition-shadow duration-300 ease-in-out hover:shadow-lg focus:shadow-lg focus:outline-none md:ml-auto md:w-40 md:py-2.5 md:text-lg md:leading-6"
+                  type="submit">
+                  Save {isLoading && !isAvatarLoading && <ContentLoader />}
+                </button>
               </Form>
             )}
           </Formik>
         }
-      </ModalWrap>
+      </div>
     </BaseModalWindow>
   );
 };

@@ -8,7 +8,7 @@ export const Section = ({
   contStyles,
 }: {
   children: ChildrenProps;
-  secStyles: string;
+  secStyles?: string;
   contStyles?: string | undefined;
 }) => {
   return (
