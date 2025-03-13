@@ -3,7 +3,7 @@
 @import "tailwindcss/utilities";
 
 :root {
-  --white-original:#ffffff;
+  --white-original: #ffffff;
   --charcoal-black: #2f2f2f;
   --royal-blue: #407bff;
   --solitude-blue: #ecf2ff;
@@ -16,4 +16,8 @@
   --shadow-sm: 0 4px 8px 0 rgba(64, 123, 255, 0.34);
   --shadow-md: 0 4px 14px 0 rgba(64, 123, 255, 0.3);
   --shadow-lg: 0 4px 14px 0 rgba(64, 123, 255, 0.54);
+}
+
+button:focus {
+  outline: none;
 }
