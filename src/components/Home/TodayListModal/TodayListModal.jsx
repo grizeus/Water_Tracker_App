@@ -8,7 +8,7 @@ import { addWaterThunk, editWaterThunk } from "src/redux/water/operations";
 import {
   formatCustomTime,
   formatTimeToLocalISO,
-} from "src/helpers/utils/dateUtils.js";
+} from "../../../helpers/utils/dateUtils";
 
 import { Formik, Form, Field, ErrorMessage } from "formik";
 import { validationSchemaAddEntryData } from "../../../helpers/utils/validationSchema";
