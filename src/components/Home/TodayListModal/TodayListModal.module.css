@@ -1,0 +1,170 @@
+.boxAddModal {
+  padding-left: 12px;
+  padding-right: 12px;
+  padding-bottom: 24px;
+  display: flex;
+  flex-direction: column;
+}
+
+.previousInfo {
+  display: flex;
+  align-items: center;
+  padding: 8px 24px;
+  border-radius: 10px;
+  max-width: 256px;
+  margin: 0px auto 24px auto;
+  background-color: var(--solitude-blue);
+}
+
+.iconGlass {
+  width: 36px;
+  height: 36px;
+  margin-right: 8px;
+}
+
+.todayVolume {
+  font-weight: 400;
+  font-size: 18px;
+  line-height: 1.33;
+  color: var(--royal-blue);
+  margin-right: 16px;
+}
+
+.todayTime {
+  font-weight: 400;
+  font-size: 12px;
+  line-height: 2;
+  color: var(--charcoal-black);
+}
+
+.label {
+  font-size: 16px;
+  font-weight: 400;
+  line-height: 1.25;
+  margin-bottom: 12px;
+  color: var(--charcoal-black);
+  display: inline-block;
+}
+
+.amountChangeContainer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  max-width: 194px;
+  margin-bottom: 24px;
+}
+
+.inputAmountContainer {
+  display: flex;
+  align-items: center;
+  background-color: var(--solitude-blue);
+  border-radius: 40px;
+  padding: 6px 10px 6px 10px;
+}
+
+.inputAmount,
+.inputAmountBtn {
+  font-weight: 700;
+  font-size: 18px;
+  line-height: 1.33;
+  color: var(--royal-blue);
+  background-color: transparent;
+}
+
+.buttonMl {
+  border: 1px solid var(--royal-blue);
+  border-radius: 30px;
+  width: 44px;
+  height: 44px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 4px;
+  transition: box-shadow 0.3s ease-in-out;
+}
+
+.buttonMl:hover,
+.buttonMl:focus {
+  box-shadow: var(--shadow-sm);
+}
+
+.icon {
+  width: 24px;
+  height: 24px;
+  stroke: var(--royal-blue);
+  fill: var(--royal-blue);
+}
+
+.input {
+  font-size: 16px;
+  font-weight: 400;
+  line-height: 1.25;
+  color: var(--royal-blue);
+  width: 100%;
+  padding: 12px 10px;
+  border-radius: 6px;
+  border: 1px solid var(--hawkes-blue);
+  margin-bottom: 24px;
+}
+
+::-webkit-outer-spin-button,
+::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+.footerModal {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.footerAmountText {
+  text-align: center;
+  font-size: 18px;
+  font-weight: 700;
+  line-height: 1.33;
+  color: var(--royal-blue);
+}
+
+.addButtonSave {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 5px;
+  color: #fff;
+  padding: 10px 30px;
+  border-radius: 10px;
+  font-size: 18px;
+  width: 100%;
+  background-color: var(--royal-blue);
+  transition: box-shadow 0.3s ease-in-out;
+}
+
+.addButtonSave:hover,
+.addButtonSave:focus {
+  box-shadow: var(--shadow-sm);
+}
+
+@media screen and (min-width: 768px) {
+  .boxAddModal {
+    padding-left: 24px;
+    padding-right: 24px;
+    padding-bottom: 32px;
+  }
+
+  .previousInfo {
+    margin-left: 0px;
+  }
+
+  .footerModal {
+    flex-direction: row;
+    justify-content: end;
+    align-items: center;
+    gap: 24px;
+  }
+
+  .addButtonSave {
+    width: 160px;
+  }
+}

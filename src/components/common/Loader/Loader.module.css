@@ -6,25 +6,31 @@
   transform: translate(-50%, -50%);
   width: 60px;
   height: 60px;
-
-  @media screen and (min-width: 768px) {
-    width: 70px;
-    height: 70px;
-  }
-
-  @media screen and (min-width: 1440px) {
-    width: 80px;
-    height: 80px;
-  }
-
-  @media screen and (min-width: 1920px) {
-    width: 90px;
-    height: 90px;
-  }
 }
 
 .rotatingLines {
   display: flex;
   justify-content: center;
   align-items: center;
+}
+
+@media (min-width: 768px) {
+  .threeDots {
+    width: 70px;
+    height: 70px;
+  }
+}
+
+@media (min-width: 1440px) {
+  .threeDots {
+    width: 80px;
+    height: 80px;
+  }
+}
+
+@media (min-width: 1920px) {
+  .threeDots {
+    width: 90px;
+    height: 90px;
+  }
 }
