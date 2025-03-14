@@ -60,10 +60,8 @@ export const TodayListModal = ({
             <svg className={styles.iconGlass}>
               <use href={`${sprite}#icon-glass`}></use>
             </svg>
-            <div className={styles.todayVolume}>
-              {initialAmount ? `${initialAmount} ml` : "No notes yet"}
-            </div>
-            <div className={styles.todayTime}>{displayTime || ""}</div>
+            <p className={styles.todayVolume}>{initialAmount} ml</p>
+            <p className={styles.todayTime}>{displayTime}</p>
           </div>
         )}
         <Formik
@@ -103,68 +101,88 @@ export const TodayListModal = ({
           }}>
           {({ values, setFieldValue }) => (
             <Form>
-              <h3 className={styles.thirdTitle}>
+              <h3 className="thirdTitle">
                 {isEditing ? "Correct entered data:" : "Choose a value:"}
               </h3>
-              <div className={styles.addWater}>
-                <label className={styles.addParagraph}>
-                  Amount of water (ml):
-                </label>
-                <div>
-                  <button
-                    type="button"
-                    className={styles.buttonMl}
-                    onClick={() =>
-                      setFieldValue("amount", Math.max(50, values.amount - 50))
-                    }>
-                    <svg className={styles.icon}>
-                      <use href={`${sprite}#icon-decrement-outline`}></use>
-                    </svg>
-                  </button>
-                  <div className={styles.label}>
-                    <Field
-                      className={styles.input}
-                      type="number"
-                      name="amount"
-                    />
-                    <ErrorMessage
-                      className={styles.error}
-                      name="amount"
-                      component="div"
-                    />
-                  </div>
-                  <button
-                    type="button"
-                    className={styles.buttonMl}
-                    onClick={() => setFieldValue("amount", values.amount + 50)}>
-                    <svg className={styles.icon}>
-                      <use href={`${sprite}#icon-increment`}></use>
-                    </svg>
-                  </button>
+
+              <label className={styles.label}>Amount of water:</label>
+              <div className={styles.amountChangeContainer}>
+                <button
+                  type="button"
+                  className={styles.buttonMl}
+                  onClick={() =>
+                    setFieldValue("amount", Math.max(50, values.amount - 50))
+                  }>
+                  <svg className={styles.icon}>
+                    <use href={`${sprite}#icon-decrement-outline`}></use>
+                  </svg>
+                </button>
+                <div className={styles.inputAmountContainer}>
+                  <Field
+                    className={styles.inputAmount}
+                    type="number"
+                    name="amount"
+                    value={values.amount}
+                    onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
+                      setFieldValue("amount", e.target.value);
+                    }}
+                    style={{
+                      width: `${values.amount.toString().length}ch`,
+                    }}
+                  />
+                  <span className={styles.inputAmountBtn}>ml</span>
                 </div>
+                <button
+                  type="button"
+                  className={styles.buttonMl}
+                  onClick={() => setFieldValue("amount", values.amount + 50)}>
+                  <svg className={styles.icon}>
+                    <use href={`${sprite}#icon-increment`}></use>
+                  </svg>
+                </button>
               </div>
-              <div className={styles.addTime}>
-                <label className={styles.addParagraph}>Recording time:</label>
-                <Field
-                  className={styles.inputTime}
-                  type="text"
-                  name="time"
-                  value={cleanTimeInput(values.time)}
-                  onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
-                    setFieldValue("time", e.target.value);
-                  }}
-                  onBlur={() => {
-                    setFieldValue("time", formatTo12Hour(values.time));
-                  }}
-                />
-                <ErrorMessage
-                  className={styles.error}
-                  name="time"
-                  component="div"
-                />
-              </div>
+              <ErrorMessage
+                className="errorMessage"
+                name="amount"
+                component="p"
+              />
+
+              <label className={styles.label}>Recording time:</label>
+              <Field
+                className={styles.input}
+                type="text"
+                name="time"
+                value={cleanTimeInput(values.time)}
+                onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
+                  setFieldValue("time", e.target.value);
+                }}
+                onBlur={() => {
+                  setFieldValue("time", formatTo12Hour(values.time));
+                }}
+              />
+              <ErrorMessage
+                className="errorMessage"
+                name="time"
+                component="p"
+              />
+
+              <h3 className="thirdTitle">Enter the value of the water used:</h3>
+              <Field
+                className={styles.input}
+                type="number"
+                name="amount"
+                value={values.amount}
+                onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
+                  setFieldValue("amount", e.target.value);
+                }}
+              />
+              <ErrorMessage
+                className="errorMessage"
+                name="amount"
+                component="p"
+              />
               <div className={styles.footerModal}>
-                <span>{values.amount}ml</span>
+                <p className={styles.footerAmountText}>{values.amount}ml</p>
                 <button type="submit" className={styles.addButtonSave}>
                   Save {isLoading && <ContentLoader />}
                 </button>

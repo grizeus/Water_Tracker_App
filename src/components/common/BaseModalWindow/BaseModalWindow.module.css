@@ -72,25 +72,14 @@
   transform: translate(-50%, -50%);
 }
 
-@media (min-width: 768px) {
-  .ModalContent {
-    min-width: 592px;
-  }
-}
-
 .modalHeader {
   display: flex;
   justify-content: space-between;
   margin-bottom: 24px;
   padding-left: 12px;
   padding-right: 12px;
+  gap: 32px;
   padding-top: 24px;
-
-  @media (min-width: 768px) {
-    padding-left: 24px;
-    padding-right: 24px;
-    padding-top: 32px;
-  }
 }
 
 .secondaryTitle {
@@ -116,4 +105,16 @@
 .closeBtn:hover .closeIcon,
 .closeBtn:focus .closeIcon {
   stroke: var(--sunset-orange);
+}
+
+@media (min-width: 768px) {
+  .ModalContent {
+    min-width: 592px;
+  }
+
+  .modalHeader {
+    padding-left: 24px;
+    padding-right: 24px;
+    padding-top: 32px;
+  }
 }
