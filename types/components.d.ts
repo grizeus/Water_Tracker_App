@@ -8,5 +8,5 @@ export interface TodayListModalProps {
   isEditing?: boolean;
   existingRecordId?: string | null;
   onClose: () => void;
-  onShow?: OpenerType | OpenerTypeWithData; // ✅ Додаємо можливість передавати `onShow`
+  onShow?: OpenerType | OpenerTypeWithData;
 }
