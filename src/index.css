@@ -18,6 +18,60 @@
   --shadow-lg: 0 4px 14px 0 rgba(64, 123, 255, 0.54);
 }
 
-button:focus {
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+p {
+  margin: 0;
+}
+
+ul,
+ol {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+a {
   outline: none;
+  color: currentColor;
+  text-decoration: none;
+}
+
+button {
+  border: none;
+  outline: none;
+  cursor: pointer;
+  display: block;
+  background-color: transparent;
+}
+
+input {
+  width: 100%;
+  outline: none;
+}
+
+img {
+  display: block;
+  max-width: 100%;
+  height: auto;
+}
+
+.thirdTitle {
+  margin-bottom: 16px;
+  font-size: 18px;
+  font-weight: 500;
+  line-height: 1.1;
+  color: var(--charcoal-black);
+}
+
+.errorMessage {
+  font-size: 12px;
+  font-weight: 600;
+  line-height: 1.2;
+  margin-bottom: 6px;
+  color: var(--sunset-orange);
 }
