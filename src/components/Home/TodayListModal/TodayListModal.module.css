@@ -74,6 +74,8 @@
   line-height: 1.33;
   color: var(--royal-blue);
   background-color: transparent;
+  max-width: 72px;
+  overflow: hidden;
 }
 
 .buttonMl {
@@ -130,6 +132,8 @@
   font-weight: 700;
   line-height: 1.33;
   color: var(--royal-blue);
+  max-width: 72px;
+  overflow: hidden;
 }
 
 .addButtonSave {
