@@ -108,10 +108,6 @@
 }
 
 @media (min-width: 768px) {
-  .ModalContent {
-    min-width: 592px;
-  }
-
   .modalHeader {
     padding-left: 24px;
     padding-right: 24px;

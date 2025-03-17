@@ -4,6 +4,7 @@
   padding-bottom: 24px;
   display: flex;
   flex-direction: column;
+  width: 90vw;
 }
 
 .previousInfo {
@@ -11,7 +12,7 @@
   align-items: center;
   padding: 8px 24px;
   border-radius: 10px;
-  max-width: 256px;
+  width: 100%;
   margin: 0px auto 24px auto;
   background-color: var(--solitude-blue);
 }
@@ -57,13 +58,17 @@
 .inputAmountContainer {
   display: flex;
   align-items: center;
+  justify-content: center;
   background-color: var(--solitude-blue);
   border-radius: 40px;
   padding: 6px 10px 6px 10px;
+  min-width: 92px;
 }
 
 .inputAmount,
 .inputAmountBtn {
+  text-align: left;
+  text-align: center;
   font-weight: 700;
   font-size: 18px;
   line-height: 1.33;
@@ -151,9 +156,11 @@
     padding-left: 24px;
     padding-right: 24px;
     padding-bottom: 32px;
+    max-width: 592px;
   }
 
   .previousInfo {
+    max-width: 256px;
     margin-left: 0px;
   }
 
