@@ -28,9 +28,9 @@ import { AppDispatch } from "../../../redux/store";
 
 interface TodayListModalProps {
   initialAmount: number | null | undefined;
-  initialTime: Date | null | undefined;
+  initialTime?: string;
   isEditing?: boolean;
-  existingRecordId: string | null;
+  existingRecordId?: string;
   onClose: OpenerType;
   onShow: OpenerType | OpenerTypeWithData;
 }
@@ -61,7 +61,7 @@ export const TodayListModal = ({
     );
 
   useEffect(() => {
-    if (isEditing) {
+    if (isEditing && initialTime) {
       setAmount(initialAmount || 0);
       setTime(formatCustomTime(initialTime, "HH:mm"));
     } else {
@@ -71,9 +71,9 @@ export const TodayListModal = ({
   }, [isEditing, initialAmount, initialTime]);
 
   useEffect(() => {
-    let interval;
+    let interval: number;
 
-    if (onShow && !isEditing) {
+    if (!isEditing) {
       interval = setInterval(() => {
         setTime(format(new Date(), "HH:mm"));
       }, 2000);
@@ -84,7 +84,7 @@ export const TodayListModal = ({
         clearInterval(interval);
       }
     };
-  }, [onShow, isEditing]);
+  }, [isEditing]);
 
   const handleSubmit = () => {
     let isoDate;
