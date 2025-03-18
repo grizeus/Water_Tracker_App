@@ -13,7 +13,7 @@ import axios from "axios";
 
 export const addWaterThunk = createAsyncThunk(
   "water/addWater",
-  async (newWater: EntryData, { rejectWithValue }) => {
+  async (newWater: Omit<EntryData, "_id">, { rejectWithValue }) => {
     try {
       const { data } = await instanceWater.post<AddEditWaterResponse>(
         "/water/entry",

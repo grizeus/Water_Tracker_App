@@ -10,11 +10,12 @@ import { selectIsLoading } from "../../../redux/root/selectors";
 
 import { formatCustomTime } from "../../../helpers/utils/dateUtils";
 
-import sprite from "src/assets/images/sprite/sprite.svg";
 import { safeParse } from "../../../helpers/utils/safeParse";
 import { OpenerType } from "../../../../types/global";
 import { OpenerTypeWithData } from "../../../../types/components";
 import { AppDispatch } from "../../../redux/store";
+
+import sprite from "src/assets/images/sprite/sprite.svg";
 
 interface TodayListModalProps {
   initialAmount?: number;
@@ -96,7 +97,7 @@ export const TodayListModal = ({
     } else if (time) {
       const currentDate = new Date();
       const [hours, minutes] = time.split(":");
-      currentDate.setHours(hours, minutes);
+      currentDate.setHours(parseInt(hours), parseInt(minutes));
       isoDate = currentDate.toISOString().slice(0, 16);
 
       const currentDate2 = new Date(isoDate);
@@ -115,15 +116,12 @@ export const TodayListModal = ({
         ("0" + newDate.getMinutes()).slice(-2);
     }
 
-    const waterData = {
-      time: isoDate,
-      amount,
-    };
+    const date = isoDate as string;
 
     if (isEditing && existingRecordId) {
-      dispatch(editWaterThunk({ id: existingRecordId, ...waterData }));
+      void dispatch(editWaterThunk({ id: existingRecordId, time: date, amount }));
     } else {
-      dispatch(addWaterThunk(waterData));
+      void dispatch(addWaterThunk({ time: date, amount }));
     }
 
     onClose();
