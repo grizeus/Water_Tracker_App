@@ -2,7 +2,32 @@
 @import "tailwindcss/components";
 @import "tailwindcss/utilities";
 
+@font-face {
+  font-family: "Roboto";
+  src: url("./assets/fonts/Roboto-Regular.ttf") format("ttf");
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Roboto";
+  src: url("./assets/fonts/Roboto-Medium.ttf") format("ttf");
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Roboto";
+  src: url("./assets/fonts/Roboto-Bold.ttf") format("ttf");
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+}
+
 :root {
+  --main-font: "Roboto";
   --white-original: #ffffff;
   --charcoal-black: #2f2f2f;
   --royal-blue: #407bff;
@@ -16,8 +41,33 @@
   --shadow-sm: 0 4px 8px 0 rgba(64, 123, 255, 0.34);
   --shadow-md: 0 4px 14px 0 rgba(64, 123, 255, 0.3);
   --shadow-lg: 0 4px 14px 0 rgba(64, 123, 255, 0.54);
+
+  font-family: var(--main-font);
+  font-weight: 400;
+  font-size: 16px;
+  color: var(--charcoal-black);
 }
 
 button:focus {
   outline: none;
+}
+
+::-webkit-scrollbar {
+  width: 4px;
+}
+
+::-webkit-scrollbar-thumb {
+  background-color: var(--perano-blue);
+  border-radius: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background-color: rgba(239, 237, 232, 0.1);
+  border-radius: 8px;
+  margin-block: 0.5em;
+}
+
+* {
+  scrollbar-color: var(--perano-blue);
+  scrollbar-track-color: rgba(239, 237, 232, 0.1);
 }
