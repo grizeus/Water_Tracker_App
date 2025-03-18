@@ -1,34 +1,39 @@
-import { BaseModalWindow } from "components";
-import { ContentLoader } from "src/components/index";
 import { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import sprite from "src/assets/images/sprite/sprite.svg";
 import { format } from "date-fns";
-import { addWaterThunk, editWaterThunk } from "src/redux/water/operations";
+import { toast } from "react-toastify";
+
+import { BaseModalWindow } from "../../common/BaseModalWindow/BaseModalWindow";
+import { ContentLoader } from "../../common/Loader/Loader";
+import { addWaterThunk, editWaterThunk } from "../../../redux/water/operations";
+import { selectIsLoading } from "../../../redux/root/selectors";
+
 import {
-  IconGlass,
-  TodayTime,
-  TodayVolume,
-} from "../TodayWaterList/TodayWaterList.styled";
-import {
-  AddButtonSave,
-  AddParagraph,
   AddTime,
   AddWater,
-  BoxAddModal,
   ButtonMl,
-  FooterModal,
   Icon,
-  Input,
   InputTime,
   Water,
   Label,
   PreviousInfo,
 } from "./TodayListModal.styled";
-import { formatCustomTime } from "src/helpers/utils/dateUtils";
-import { toast } from "react-toastify";
+import { formatCustomTime } from "../../../helpers/utils/dateUtils";
 
-import { selectIsLoading } from "src/redux/root/selectors";
+import sprite from "src/assets/images/sprite/sprite.svg";
+import { safeParse } from "../../../helpers/utils/safeParse";
+import { OpenerType } from "../../../../types/global";
+import { OpenerTypeWithData } from "../../../../types/components";
+import { AppDispatch } from "../../../redux/store";
+
+interface TodayListModalProps {
+  initialAmount: number | null | undefined;
+  initialTime: Date | null | undefined;
+  isEditing?: boolean;
+  existingRecordId: string | null;
+  onClose: OpenerType;
+  onShow: OpenerType | OpenerTypeWithData;
+}
 
 export const TodayListModal = ({
   initialAmount = 0,
@@ -37,8 +42,8 @@ export const TodayListModal = ({
   existingRecordId,
   onClose,
   onShow,
-}) => {
-  const dispatch = useDispatch();
+}: TodayListModalProps) => {
+  const dispatch = useDispatch<AppDispatch>();
   const isLoading = useSelector(selectIsLoading);
   const [amount, setAmount] = useState(initialAmount);
   const [time, setTime] = useState(
@@ -48,20 +53,12 @@ export const TodayListModal = ({
   );
 
   const increaseAmount = () => {
-    setAmount(prevAmount => prevAmount + 50);
+    setAmount(prevAmount => (prevAmount ? prevAmount + 50 : 50));
   };
   const decreaseAmount = () =>
-    setAmount(prevAmount => (prevAmount > 100 ? prevAmount - 50 : 50));
-
-  const handleAmountChange = e => {
-    let newValue = e.target.value;
-
-    if (newValue.startsWith("0") && newValue.length > 1) {
-      newValue = parseFloat(newValue.substring(1));
-    }
-
-    setAmount(parseFloat(newValue));
-  };
+    setAmount(prevAmount =>
+      prevAmount ? (prevAmount > 100 ? prevAmount - 50 : 50) : 50
+    );
 
   useEffect(() => {
     if (isEditing) {
@@ -133,7 +130,7 @@ export const TodayListModal = ({
       amount,
     };
 
-    if (isEditing) {
+    if (isEditing && existingRecordId) {
       dispatch(editWaterThunk({ id: existingRecordId, ...waterData }));
     } else {
       dispatch(addWaterThunk(waterData));
@@ -158,21 +155,27 @@ export const TodayListModal = ({
 
   return (
     <BaseModalWindow onClose={handleOnClose} onShow={onShow} title={title}>
-      <BoxAddModal>
+      <div className="flex flex-col gap-6 px-3 pb-6 md:w-[704px] md:px-6 md:pb-8 xl:w-[592px]">
         {isEditing && (
           <PreviousInfo>
-            <IconGlass>
+            <svg className="size-[26px] md:size-9">
               <use href={`${sprite}#icon-glass`}></use>
-            </IconGlass>
-            <TodayVolume>
+            </svg>
+            <span className="text-lg leading-6 text-royal">
               {initialAmount ? `${initialAmount} ml` : "No notes yet"}
-            </TodayVolume>
-            <TodayTime>{initialTime ? `${displayTime}` : ""}</TodayTime>
+            </span>
+            <span className="text-xs leading-loose text-charcoal">
+              {initialTime ? `${displayTime}` : ""}
+            </span>
           </PreviousInfo>
         )}
-        <h3>{isEditing ? "Correct entered data:" : "Choose a value:"}</h3>
+        <h3 className="mb-4 text-lg font-medium leading-5 text-charcoal">
+          {isEditing ? "Correct entered data:" : "Choose a value:"}
+        </h3>
         <AddWater>
-          <AddParagraph>Amount of water:</AddParagraph>
+          <p className="mb-3 text-base leading-6 text-charcoal">
+            Amount of water:
+          </p>
           <div>
             <ButtonMl onClick={decreaseAmount}>
               <Icon>
@@ -190,7 +193,9 @@ export const TodayListModal = ({
           </div>
         </AddWater>
         <AddTime>
-          <AddParagraph>Recording time:</AddParagraph>
+          <p className="mb-3 text-base leading-6 text-charcoal">
+            Recording time:
+          </p>
           <InputTime
             type="time"
             value={time}
@@ -198,24 +203,30 @@ export const TodayListModal = ({
             step="300"
           />
         </AddTime>
-        <div>
-          <h3>Enter the value of the water used:</h3>
-          <Input
-            type="number"
+        <div className="flex flex-col gap-4">
+          <span className="text-lg font-medium leading-5 text-charcoal">
+            Enter the value of the water used:
+          </span>
+          <input
+            className="w-full rounded-md border border-hawkes px-2.5 py-3 text-royal transition-colors duration-300 ease-in-out placeholder:text-perano hover:border-royal focus:border-royal focus:outline-none"
             value={amount}
-            onChange={handleAmountChange}
+            onChange={e => setAmount(safeParse(e))}
             onBlur={() =>
               setAmount(prevAmount => prevAmount || initialAmount || 0)
             }
           />
         </div>
-        <FooterModal>
-          <span>{amount}ml</span>
-          <AddButtonSave onClick={handleSubmit}>
+        <div className="mt-6 flex flex-col gap-4 md:flex-row md:items-center md:justify-end md:gap-6">
+          <span className="text-lg font-bold leading-6 text-royal">
+            {amount}ml
+          </span>
+          <button
+            className="flex w-full items-center justify-center rounded-[10px] bg-royal px-[30px] py-2 text-base leading-5 text-white shadow-sm transition-shadow duration-300 ease-in-out hover:shadow-lg focus:shadow-lg focus:outline-none md:w-40 md:self-end md:py-2.5 md:text-lg md:leading-6"
+            onClick={handleSubmit}>
             Save {isLoading && <ContentLoader />}
-          </AddButtonSave>
-        </FooterModal>
-      </BoxAddModal>
+          </button>
+        </div>
+      </div>
     </BaseModalWindow>
   );
 };
