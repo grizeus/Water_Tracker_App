@@ -88,7 +88,7 @@ export const BaseModalWindow = ({
               </svg>
             </button>
           </div>
-          <div>{children}</div>
+          {children}
         </div>
       </CSSTransition>
     </>,

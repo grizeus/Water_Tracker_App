@@ -62,20 +62,12 @@
   position: fixed;
   top: 50%;
   left: 50%;
-  min-width: 280px;
   max-height: 90vh;
   background-color: var(--white-original);
   border-radius: 10px;
   box-shadow: var(--shadow-lg);
-  overflow: auto;
   z-index: 1;
   transform: translate(-50%, -50%);
-}
-
-@media (min-width: 768px) {
-  .ModalContent {
-    min-width: 592px;
-  }
 }
 
 .modalHeader {
@@ -83,7 +75,7 @@
   justify-content: space-between;
   margin-bottom: 24px;
   padding-left: 12px;
-  padding-right: 12px;
+  padding-right: 32px;
   padding-top: 24px;
 
   @media (min-width: 768px) {

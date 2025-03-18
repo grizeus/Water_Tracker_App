@@ -8,16 +8,6 @@ import { ContentLoader } from "../../common/Loader/Loader";
 import { addWaterThunk, editWaterThunk } from "../../../redux/water/operations";
 import { selectIsLoading } from "../../../redux/root/selectors";
 
-import {
-  AddTime,
-  AddWater,
-  ButtonMl,
-  Icon,
-  InputTime,
-  Water,
-  Label,
-  PreviousInfo,
-} from "./TodayListModal.styled";
 import { formatCustomTime } from "../../../helpers/utils/dateUtils";
 
 import sprite from "src/assets/images/sprite/sprite.svg";
@@ -27,7 +17,7 @@ import { OpenerTypeWithData } from "../../../../types/components";
 import { AppDispatch } from "../../../redux/store";
 
 interface TodayListModalProps {
-  initialAmount: number | null | undefined;
+  initialAmount?: number;
   initialTime?: string;
   isEditing?: boolean;
   existingRecordId?: string;
@@ -155,58 +145,65 @@ export const TodayListModal = ({
 
   return (
     <BaseModalWindow onClose={handleOnClose} onShow={onShow} title={title}>
-      <div className="flex flex-col gap-6 px-3 pb-6 md:w-[704px] md:px-6 md:pb-8 xl:w-[592px]">
+      <div className="flex w-[280px] flex-col gap-6 px-3 pb-6 md:w-[704px] md:px-6 md:pb-8 xl:w-[592px]">
         {isEditing && (
-          <PreviousInfo>
+          <div className="flex w-64 items-center gap-3 rounded-[10px] bg-solitude px-6 py-2 md:w-[254px]">
             <svg className="size-[26px] md:size-9">
               <use href={`${sprite}#icon-glass`}></use>
             </svg>
             <span className="text-lg leading-6 text-royal">
               {initialAmount ? `${initialAmount} ml` : "No notes yet"}
             </span>
-            <span className="text-xs leading-loose text-charcoal">
+            <span className="ml-1 text-xs leading-loose text-charcoal">
               {initialTime ? `${displayTime}` : ""}
             </span>
-          </PreviousInfo>
+          </div>
         )}
         <h3 className="text-lg font-medium leading-5 text-charcoal">
           {isEditing ? "Correct entered data:" : "Choose a value:"}
         </h3>
         <div>
-          <p className="mb-3 text-base leading-6 text-charcoal">
+          <label className="mb-3 block text-base leading-6 text-charcoal">
             Amount of water:
-          </p>
-          <div className="flex items-center">
-            <ButtonMl onClick={decreaseAmount}>
-              <Icon>
+          </label>
+          <div className="flex items-center gap-2.5">
+            <button
+              type="button"
+              onClick={decreaseAmount}
+              className="focus flex size-11 items-center justify-center rounded-full border border-perano bg-white text-royal shadow-sm transition-shadow duration-300 ease-in-out hover:shadow-lg focus:shadow-lg">
+              <svg className="size-6 fill-royal">
                 <use href={`${sprite}#icon-decrement-outline`}></use>
-              </Icon>
-            </ButtonMl>
-            <Label>
-              <Water>{amount} ml</Water>
-            </Label>
-            <ButtonMl onClick={increaseAmount}>
-              <Icon>
+              </svg>
+            </button>
+            <span className="flex w-[92px] items-center justify-center rounded-[40px] bg-hawkes px-2.5 py-1.5 text-lg font-bold leading-6 text-royal">
+              {amount} ml
+            </span>
+            <button
+              type="button"
+              onClick={increaseAmount}
+              className="focus flex size-11 items-center justify-center rounded-full border border-perano bg-white text-royal shadow-sm transition-shadow duration-300 ease-in-out hover:shadow-lg focus:shadow-lg">
+              <svg className="size-6 fill-royal">
                 <use href={`${sprite}#icon-increment`}></use>
-              </Icon>
-            </ButtonMl>
+              </svg>
+            </button>
           </div>
         </div>
-        <div>
-          <p className="mb-3 text-base leading-6 text-charcoal">
+        <div className="flex flex-col gap-3">
+          <label className="text-base leading-6 text-charcoal">
             Recording time:
-          </p>
-          <InputTime
+          </label>
+          <input
+            className="flex h-11 w-full rounded-md border border-hawkes px-2.5 py-3 text-royal transition-colors duration-300 ease-in-out placeholder:text-perano hover:border-royal focus:border-royal focus:outline-none"
             type="time"
             value={time}
             onChange={e => setTime(e.target.value)}
-            step="300"
+            step="60"
           />
         </div>
         <div className="flex flex-col gap-4">
-          <span className="text-lg font-medium leading-5 text-charcoal">
+          <label className="text-lg font-medium leading-5 text-charcoal">
             Enter the value of the water used:
-          </span>
+          </label>
           <input
             className="w-full rounded-md border border-hawkes px-2.5 py-3 text-royal transition-colors duration-300 ease-in-out placeholder:text-perano hover:border-royal focus:border-royal focus:outline-none"
             value={amount}
