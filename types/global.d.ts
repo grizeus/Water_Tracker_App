@@ -18,7 +18,7 @@ export interface EntryData {
 export interface EditWaterEntry {
   id: string;
   amount: number;
-  time: number;
+  time: string;
 }
 
 export interface User {

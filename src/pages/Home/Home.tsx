@@ -43,9 +43,7 @@ const Home = () => {
       )}
       {isAddModalOpen && (
         <TodayListModal
-          initialTime={null}
           initialAmount={50}
-          existingRecordId={null}
           onClose={closeAddModal}
           onShow={openAddModal}
         />
