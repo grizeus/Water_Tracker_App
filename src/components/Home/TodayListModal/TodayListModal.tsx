@@ -169,14 +169,14 @@ export const TodayListModal = ({
             </span>
           </PreviousInfo>
         )}
-        <h3 className="mb-4 text-lg font-medium leading-5 text-charcoal">
+        <h3 className="text-lg font-medium leading-5 text-charcoal">
           {isEditing ? "Correct entered data:" : "Choose a value:"}
         </h3>
-        <AddWater>
+        <div>
           <p className="mb-3 text-base leading-6 text-charcoal">
             Amount of water:
           </p>
-          <div>
+          <div className="flex items-center">
             <ButtonMl onClick={decreaseAmount}>
               <Icon>
                 <use href={`${sprite}#icon-decrement-outline`}></use>
@@ -191,8 +191,8 @@ export const TodayListModal = ({
               </Icon>
             </ButtonMl>
           </div>
-        </AddWater>
-        <AddTime>
+        </div>
+        <div>
           <p className="mb-3 text-base leading-6 text-charcoal">
             Recording time:
           </p>
@@ -202,7 +202,7 @@ export const TodayListModal = ({
             onChange={e => setTime(e.target.value)}
             step="300"
           />
-        </AddTime>
+        </div>
         <div className="flex flex-col gap-4">
           <span className="text-lg font-medium leading-5 text-charcoal">
             Enter the value of the water used:
@@ -216,8 +216,8 @@ export const TodayListModal = ({
             }
           />
         </div>
-        <div className="mt-6 flex flex-col gap-4 md:flex-row md:items-center md:justify-end md:gap-6">
-          <span className="text-lg font-bold leading-6 text-royal">
+        <div className="flex flex-col gap-4 md:flex-row md:items-center md:justify-end md:gap-6">
+          <span className="self-center text-lg font-bold leading-6 text-royal">
             {amount}ml
           </span>
           <button
