@@ -2,7 +2,6 @@ import { useEffect, useRef, useState, RefObject } from "react";
 
 import { UserLogoutModal } from "../UserLogoutModal/UserLogoutModal";
 import { SettingModal } from "../SettingModal/SettingModal";
-
 import sprite from "src/assets/images/sprite/sprite.svg";
 
 const UserLogoModal = ({

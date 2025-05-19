@@ -1,17 +1,15 @@
-import styles from "./UserLogo.module.css";
 import { useCallback, useEffect, useRef, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { AnimatePresence, motion } from "framer-motion";
 
 import { selectUser } from "../../../redux/auth/selectors";
 import { getUserThunk } from "../../../redux/auth/operations";
-
-import sprite from "src/assets/images/sprite/sprite.svg";
 import UserLogoModal from "../UserLogoModal/UserLogoModal";
-
 import { AppDispatch } from "../../../redux/store";
 import { User } from "../../../../types/global";
 import firstLetterExtrudor from "../../../helpers/utils/firstLetterExtrudor";
+import sprite from "src/assets/images/sprite/sprite.svg";
+import styles from "./UserLogo.module.css";
 
 const ANIMATION_CONFIG = {
   initial: { opacity: 0, transform: "scale(0)" },

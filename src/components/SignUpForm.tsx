@@ -8,11 +8,10 @@ import * as Yup from "yup";
 import { ContentLoader } from "./common/Loader/Loader";
 import { signUpThunk } from "../redux/auth/operations";
 import { selectIsLoading } from "../redux/root/selectors";
-
-import sprite from "../assets/images/sprite/sprite.svg"
 import { AppDispatch } from "../redux/store";
 import { FcHighPriority, FcOk } from "react-icons/fc";
 import { emailRegExp } from "../helpers/utils/constants";
+import sprite from "../assets/images/sprite/sprite.svg"
 
 const validationSchema = Yup.object({
   email: Yup.string()

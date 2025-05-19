@@ -1,7 +1,6 @@
 import { ErrorMessage, Field, FormikErrors, FormikTouched } from "formik";
 import { UserFormData } from "../../../../types/global";
 
-// NOTE: left email disabled for now
 const CredentialsInput = ({
   values,
   errors,

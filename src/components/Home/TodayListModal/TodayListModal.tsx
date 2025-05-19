@@ -7,14 +7,11 @@ import { BaseModalWindow } from "../../common/BaseModalWindow/BaseModalWindow";
 import { ContentLoader } from "../../common/Loader/Loader";
 import { addWaterThunk, editWaterThunk } from "../../../redux/water/operations";
 import { selectIsLoading } from "../../../redux/root/selectors";
-
 import { formatCustomTime } from "../../../helpers/utils/dateUtils";
-
 import { safeParse } from "../../../helpers/utils/safeParse";
 import { OpenerType } from "../../../../types/global";
 import { OpenerTypeWithData } from "../../../../types/components";
 import { AppDispatch } from "../../../redux/store";
-
 import sprite from "src/assets/images/sprite/sprite.svg";
 
 interface TodayListModalProps {
