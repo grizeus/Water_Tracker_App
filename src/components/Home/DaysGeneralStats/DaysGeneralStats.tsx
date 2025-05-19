@@ -67,7 +67,7 @@ const DaysGeneralStats = ({
         : `${left - (modalWidth - width / 2)}px`;
     }
     if (isDesktop) {
-      modal.style.left = `${left + width / 2}px`;
+      modal.style.left = `${left - (modalWidth - width / 2)}px`;
     }
 
     const handleClickOutside = (e: MouseEvent) => {

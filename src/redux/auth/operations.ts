@@ -28,8 +28,12 @@ const getPersistedUser = (jsonString: string | null): PersistedUser | null => {
   return null;
 };
 
-export const setToken = (token: string) => {
-  instanceWater.defaults.headers.common["Authorization"] = `Bearer ${token}`;
+export const setToken = (token: string | null) => {
+  if (token) {
+    instanceWater.defaults.headers.common["Authorization"] = `Bearer ${token}`;
+  } else {
+    instanceWater.defaults.headers.common.Authorization = "";
+  }
 };
 
 const unsetToken = () => {

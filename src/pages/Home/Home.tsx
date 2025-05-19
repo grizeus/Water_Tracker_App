@@ -1,16 +1,14 @@
 import { useState } from "react";
 
 import DailyNormaModal from "../../components/Home/DailyNormaModal/DailyNormaModal";
-import {
-  DailyNorma,
-  DeletingEntryModal,
-  Section,
-  TodayListModal,
-  TodayWaterList,
-  WaterRatioPanel,
-} from "../../components";
 import { MonthStatsTable } from "../../components/Home/MonthStatsTable/MonthStatsTable";
 import { EntryData } from "../../../types/global";
+import { Section } from "../../components/common/Section/Section";
+import { TodayListModal } from "../../components/Home/TodayListModal/TodayListModal";
+import { DeletingEntryModal } from "../../components/Home/DeletingEntryModal/DeletingEntryModal";
+import { DailyNorma } from "../../components/Home/DailyNorma/DailyNorma";
+import { WaterRatioPanel } from "../../components/Home/WaterRatioPanel/WaterRatioPanel";
+import { TodayWaterList } from "../../components/Home/TodayWaterList/TodayWaterList";
 import styles from "./Home.module.css";
 
 const Home = () => {
