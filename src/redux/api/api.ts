@@ -15,7 +15,7 @@ interface ResponseData {
 
 const instanceWater = axios.create({
   withCredentials: true,
-  baseURL: "http://localhost:3001",
+  baseURL: "https://water-tracker-back.onrender.com",
   headers: {
     "Content-Type": "application/json",
   },

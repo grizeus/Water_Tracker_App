@@ -3,7 +3,7 @@ import { Outlet, useLocation, matchPath } from "react-router-dom";
 import { ToastContainer, Zoom } from "react-toastify";
 
 import Header from "./Header/Header";
-import { Loader } from "../components/common/Loader/Loader"
+import { Loader } from "./common/Loader/Loader"
 import "react-toastify/dist/ReactToastify.css";
 
 const SharedLayout = () => {

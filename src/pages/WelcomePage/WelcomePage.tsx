@@ -1,7 +1,7 @@
 import { WaterConsumptionTracker } from "../../components/Welcome/WaterConsumptionTracker/WaterConsumptionTracker"
 import { WhyDrinkWater } from "../../components/Welcome/WhyDrinkWater/WhyDrinkWater";
+import { Section } from "../../components/common/Section/Section";
 import styles from "./WelcomePage.module.css";
-import { Section } from "../../components";
 
 const WelcomePage = () => {
   return (

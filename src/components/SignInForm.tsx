@@ -8,11 +8,9 @@ import { FcHighPriority, FcOk } from "react-icons/fc";
 import { ContentLoader } from "./common/Loader/Loader";
 import { AppDispatch } from "../redux/store";
 import { signInThunk } from "../redux/auth/operations";
-
 import { selectIsLoading } from "../redux/root/selectors";
-
-import sprite from "../assets/images/sprite/sprite.svg";
 import { emailRegExp } from "../helpers/utils/constants";
+import sprite from "../assets/images/sprite/sprite.svg";
 
 const validationSchema = Yup.object({
   email: Yup.string()

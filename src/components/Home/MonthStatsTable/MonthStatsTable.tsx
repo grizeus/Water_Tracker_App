@@ -18,7 +18,6 @@ import { AppDispatch } from "../../../redux/store";
 import { MonthData } from "../../../../types/global";
 import sprite from "../../../assets/images/sprite/sprite.svg";
 
-// NOTE: lieve this interfaces here for now
 interface Position {
   top: number;
   left: number;

@@ -1,4 +1,4 @@
-import { Section } from "../../components";
+import { Section } from "../../components/common/Section/Section";
 import { SignUpForm } from "../../components/SignUpForm";
 import styles from "./SignUp.module.css";
 
